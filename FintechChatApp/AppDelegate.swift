@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>: <\(#function)>")
-    
+        LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
+        
         return true
     }
 
@@ -26,23 +26,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        LogginClass.printAppLifeCycleEvent("Application moved from <Inactive> to <Active>: <\(#function)>")
+        LogginClass.printAppLifeCycleEvent("Application moved from <Inactive> to <Active>", #function)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        LogginClass.printAppLifeCycleEvent("Application moved from <Active> to <Inactive>: <\(#function)>")
+        LogginClass.printAppLifeCycleEvent("Application moved from <Active> to <Inactive>", #function)
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        LogginClass.printAppLifeCycleEvent("Application moved from <Inactive> to <Background>: <\(#function)>")
+        LogginClass.printAppLifeCycleEvent("Application moved from <Inactive> to <Background>", #function)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        LogginClass.printAppLifeCycleEvent("Application moved from <Background> to <Inactive>: <\(#function)>")
+        LogginClass.printAppLifeCycleEvent("Application moved from <Background> to <Inactive>", #function)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        LogginClass.printAppLifeCycleEvent("Application moved from <Background> to <Suspended>: <\(#function)>")
+        LogginClass.printAppLifeCycleEvent("Application moved from <Background> to <Suspended>", #function)
     }
     
 

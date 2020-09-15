@@ -11,43 +11,42 @@ import UIKit
 class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
-
+        LogginClass.printVCLifeCycleEvent(nil, #function, String(describing: type(of: self)))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
+        LogginClass.printVCLifeCycleEvent("\(String(describing: type(of: self))) moved from <Disappeared> to <Appearing>", #function, String(describing: type(of: self)))
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
+        LogginClass.printVCLifeCycleEvent("\(String(describing: type(of: self))) moved from <Appearing> to <Appeared>", #function, String(describing: type(of: self)))
         
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
+        LogginClass.printVCLifeCycleEvent(nil, #function, String(describing: type(of: self)))
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
+        LogginClass.printVCLifeCycleEvent(nil, #function, String(describing: type(of: self)))
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
+        LogginClass.printVCLifeCycleEvent("\(String(describing: type(of: self))) moved from <Appeared> to <Disappearing>", #function, String(describing: type(of: self)))
         
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        LogginClass.printVCLifeCycleEvent(#function, String(describing: type(of: self)))
+        LogginClass.printVCLifeCycleEvent("\(String(describing: type(of: self))) moved from <Disappearing> to <Disappeared>", #function, String(describing: type(of: self)))
         
     }
 }

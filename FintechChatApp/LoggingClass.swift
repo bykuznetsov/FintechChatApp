@@ -25,17 +25,17 @@ class LogginClass {
         return uniqueInstance!
     }
     
-    static func printAppLifeCycleEvent(_ description: String){
+    static func printAppLifeCycleEvent(_ description: String, _ event: String){
         if self.printingAppEvents{
-            print(description)
+            print("\(description): \(event)")
         } else {
             
         }
     }
     
-    static func printVCLifeCycleEvent(_ event: String, _ nameOfVC: String){
+    static func printVCLifeCycleEvent(_ description: String?, _ event: String, _ nameOfVC: String){
         if self.printingVCEvents{
-            print("\(event) in \(nameOfVC)")
+            print("\(description ?? ""): \(event) in \(nameOfVC)")
         } else {
             
         }
