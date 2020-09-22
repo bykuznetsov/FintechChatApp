@@ -47,6 +47,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LogginClass.printAppLifeCycleEvent("Application moved from <Background> to <Suspended>", #function)
     }
     
-
 }
 
