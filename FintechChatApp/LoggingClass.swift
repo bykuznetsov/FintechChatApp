@@ -8,22 +8,16 @@
 
 import Foundation
 
-//Singleton
+//Class for logs of life cycle of ViewController's and App.
+
 class LogginClass {
     
     private static var uniqueInstance: LogginClass?
     
-    private static var printingAppEvents: Bool = true
+    private static var printingAppEvents: Bool = false
     private static var printingVCEvents: Bool = true
     
     private init() {}
-    
-    static func shared() -> LogginClass {
-        if uniqueInstance == nil {
-            uniqueInstance = LogginClass()
-        }
-        return uniqueInstance!
-    }
     
     static func printAppLifeCycleEvent(_ description: String, _ event: String){
         if self.printingAppEvents{

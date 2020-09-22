@@ -15,14 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
+        LogginClass.printAppLifeCycleEvent("Application moved from <> to <>", #function)
         
         return true
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        LogginClass.printAppLifeCycleEvent("Application moved from <> to <>", #function)
+        LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
         
         return true
     }
