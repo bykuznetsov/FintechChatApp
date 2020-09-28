@@ -10,8 +10,13 @@
 		502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FDAC0251403E400478792 /* ProfileViewController.swift */; };
 		5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */; };
 		5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */; };
+		50700C31251F84C0003A060B /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C30251F84C0003A060B /* ConversationsListViewController.swift */; };
+		50700C33251F851C003A060B /* ConversationsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50700C32251F851C003A060B /* ConversationsListViewController.storyboard */; };
+		50700C36251F87A2003A060B /* ConversationListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C34251F87A2003A060B /* ConversationListTableViewCell.swift */; };
+		50700C37251F87A2003A060B /* ConversationListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50700C35251F87A2003A060B /* ConversationListTableViewCell.xib */; };
+		50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */; };
 		50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CCDB25250E5E1C00348C98 /* AppDelegate.swift */; };
-		50CCDB2D250E5E1C00348C98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2B250E5E1C00348C98 /* Main.storyboard */; };
+		50CCDB2D250E5E1C00348C98 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */; };
 		50CCDB2F250E5E2300348C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2E250E5E2300348C98 /* Assets.xcassets */; };
 		50CCDB32250E5E2300348C98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */; };
 		50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEBD6250E85CF00C85DDA /* LoggingClass.swift */; };
@@ -21,9 +26,14 @@
 		502FDAC0251403E400478792 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleViewController.swift; sourceTree = "<group>"; };
+		50700C30251F84C0003A060B /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		50700C32251F851C003A060B /* ConversationsListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsListViewController.storyboard; sourceTree = "<group>"; };
+		50700C34251F87A2003A060B /* ConversationListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListTableViewCell.swift; sourceTree = "<group>"; };
+		50700C35251F87A2003A060B /* ConversationListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationListTableViewCell.xib; sourceTree = "<group>"; };
+		50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		50CCDB22250E5E1C00348C98 /* FintechChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FintechChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CCDB25250E5E1C00348C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		50CCDB2C250E5E1C00348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		50CCDB2C250E5E1C00348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
 		50CCDB2E250E5E2300348C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50CCDB31250E5E2300348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50CCDB33250E5E2300348C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */,
+				50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -81,7 +92,11 @@
 				5058C7C925194C0E00DAD08C /* Extensions */,
 				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
 				502FDAC0251403E400478792 /* ProfileViewController.swift */,
-				50CCDB2B250E5E1C00348C98 /* Main.storyboard */,
+				50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */,
+				50700C30251F84C0003A060B /* ConversationsListViewController.swift */,
+				50700C34251F87A2003A060B /* ConversationListTableViewCell.swift */,
+				50700C35251F87A2003A060B /* ConversationListTableViewCell.xib */,
+				50700C32251F851C003A060B /* ConversationsListViewController.storyboard */,
 				50CCDB2E250E5E2300348C98 /* Assets.xcassets */,
 				50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */,
 				50CCDB33250E5E2300348C98 /* Info.plist */,
@@ -148,8 +163,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CCDB32250E5E2300348C98 /* LaunchScreen.storyboard in Resources */,
+				50700C37251F87A2003A060B /* ConversationListTableViewCell.xib in Resources */,
 				50CCDB2F250E5E2300348C98 /* Assets.xcassets in Resources */,
-				50CCDB2D250E5E1C00348C98 /* Main.storyboard in Resources */,
+				50700C33251F851C003A060B /* ConversationsListViewController.storyboard in Resources */,
+				50CCDB2D250E5E1C00348C98 /* ProfileViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,19 +181,22 @@
 				502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */,
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
 				50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */,
+				50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */,
 				50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */,
+				50700C36251F87A2003A060B /* ConversationListTableViewCell.swift in Sources */,
+				50700C31251F84C0003A060B /* ConversationsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		50CCDB2B250E5E1C00348C98 /* Main.storyboard */ = {
+		50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				50CCDB2C250E5E1C00348C98 /* Base */,
 			);
-			name = Main.storyboard;
+			name = ProfileViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */ = {

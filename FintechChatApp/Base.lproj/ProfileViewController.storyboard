@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ycT-Fr-rxU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QcL-yH-v8I">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Profile View Controller-->
+        <!--My profile-->
         <scene sceneID="Bdg-3o-rbg">
             <objects>
-                <viewController id="ycT-Fr-rxU" customClass="ProfileViewController" customModule="FintechChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="ycT-Fr-rxU" customClass="ProfileViewController" customModule="FintechChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="geY-qT-WKm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,7 +29,7 @@
                                 </connections>
                             </button>
                             <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1TJ-IK-FNr">
-                                <rect key="frame" x="67.5" y="45" width="240" height="240"/>
+                                <rect key="frame" x="67.5" y="103" width="240" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jn-SX-9vf">
                                         <rect key="frame" x="29" y="48.5" width="182" height="144"/>
@@ -56,7 +56,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marina Dudarenko" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiQ-0f-quT">
-                                <rect key="frame" x="87.5" y="317" width="200" height="29"/>
+                                <rect key="frame" x="87.5" y="375" width="200" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="fOX-1m-lg2"/>
                                 </constraints>
@@ -65,7 +65,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UX/UI designer, web-designer Moscow, Russia" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARw-mO-20N">
-                                <rect key="frame" x="78.5" y="378" width="218" height="40"/>
+                                <rect key="frame" x="78.5" y="436" width="218" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="218" id="VfT-Fk-uHs"/>
                                     <constraint firstAttribute="height" constant="40" id="bPM-hE-Jid"/>
@@ -75,7 +75,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aa5-De-C9e">
-                                <rect key="frame" x="275" y="259" width="40" height="40"/>
+                                <rect key="frame" x="275" y="317" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="81o-mh-esQ"/>
                                     <constraint firstAttribute="height" constant="40" id="OKe-pU-VHC"/>
@@ -95,7 +95,7 @@
                             <constraint firstItem="kiQ-0f-quT" firstAttribute="top" secondItem="1TJ-IK-FNr" secondAttribute="bottom" constant="32" id="Hc8-Wo-0kM"/>
                             <constraint firstItem="Aa5-De-C9e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tHh-x1-HHu" secondAttribute="leading" symbolic="YES" id="Qqe-ue-xVO"/>
                             <constraint firstItem="kiQ-0f-quT" firstAttribute="top" secondItem="Aa5-De-C9e" secondAttribute="bottom" constant="18" id="TdD-BI-fAF"/>
-                            <constraint firstItem="1TJ-IK-FNr" firstAttribute="top" secondItem="tHh-x1-HHu" secondAttribute="top" constant="45" id="UHE-X7-zEt"/>
+                            <constraint firstItem="1TJ-IK-FNr" firstAttribute="top" secondItem="tHh-x1-HHu" secondAttribute="top" constant="7" id="UHE-X7-zEt"/>
                             <constraint firstItem="ARw-mO-20N" firstAttribute="centerX" secondItem="geY-qT-WKm" secondAttribute="centerX" id="YOa-D0-rvz"/>
                             <constraint firstItem="tHh-x1-HHu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OQm-JK-bTA" secondAttribute="trailing" id="gYc-rG-PuJ"/>
                             <constraint firstItem="kiQ-0f-quT" firstAttribute="centerX" secondItem="geY-qT-WKm" secondAttribute="centerX" id="jyA-KG-Qvh"/>
@@ -105,6 +105,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tHh-x1-HHu"/>
                     </view>
+                    <navigationItem key="navigationItem" title="My profile" id="ZPm-an-hC4"/>
                     <connections>
                         <outlet property="editButton" destination="Aa5-De-C9e" id="46K-1h-8AT"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
@@ -114,7 +115,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iq5-IP-rnI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-309.60000000000002" y="112.3152709359606"/>
+            <point key="canvasLocation" x="1568.8" y="111.99400299850076"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dRH-ZH-55j">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8YM-na-2Ij" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QcL-yH-v8I" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="VyB-XX-CZC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ycT-Fr-rxU" kind="relationship" relationship="rootViewController" id="yRU-po-axt"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="743" y="112"/>
         </scene>
     </scenes>
 </document>
