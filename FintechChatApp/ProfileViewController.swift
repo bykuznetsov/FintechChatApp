@@ -59,6 +59,11 @@ class ProfileViewController: UIViewController{
         selectingImage()
     }
     
+    @IBAction func closeProfile(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     //Navigation Setup.
     func setupNavigationController() {
         self.navigationController?.title = "My profile"

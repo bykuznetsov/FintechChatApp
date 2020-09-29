@@ -47,12 +47,13 @@ class ConversationsListViewController: UIViewController {
         let hasUnreadMessages: Bool
     }
     
-    private let cellIdentifier = String(describing: ConversationListTableViewCell.self)
+    private let cellIdentifier = String(describing: ConversationListCell.self)
     
-    private lazy var tableView: UITableView = {
+   private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .plain)
-        tableView.register(UINib(nibName: String(describing: ConversationListTableViewCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        tableView.register(UINib(nibName: String(describing: ConversationListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
 
@@ -66,10 +67,7 @@ class ConversationsListViewController: UIViewController {
     
     @IBAction func openProfile(_ sender: Any) {
         guard let profileViewController = ProfileViewController.storyboardInstance() else { return }
-        let navBarOnModal = UINavigationController(rootViewController: profileViewController)
-        self.present(navBarOnModal, animated: true)
-
-       //self.navigationController?.pushViewController(profileViewController, animated: true)
+        self.present(profileViewController, animated: true)
     }
     
     
@@ -97,7 +95,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         let dialog = dialogs[indexPath.section]
         let dialogInfo = dialog.dialogInfo[indexPath.row]
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else {return UITableViewCell()}
         cell.configure(with: .init(name: dialogInfo.name, date: dialogInfo.date, message: dialogInfo.message, isOnline: dialog.isOnline, hasUnreadMessages: dialogInfo.hasUnreadMessages))
         return cell
     }
@@ -112,4 +110,17 @@ extension ConversationsListViewController: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(110) //Constant size (like in ConversationListTableViewCell.xib)
+    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension ConversationsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let conversationViewController = ConversationViewController.storyboardInstance() else { return }
+        self.navigationController?.pushViewController(conversationViewController, animated: true)
+    }
 }

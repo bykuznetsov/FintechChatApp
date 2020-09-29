@@ -105,7 +105,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tHh-x1-HHu"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My profile" id="ZPm-an-hC4"/>
+                    <navigationItem key="navigationItem" title="My profile" id="ZPm-an-hC4">
+                        <barButtonItem key="rightBarButtonItem" title="Close" width="10" id="LfY-ht-aIy">
+                            <inset key="largeContentSizeImageInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
+                            <connections>
+                                <action selector="closeProfile:" destination="ycT-Fr-rxU" id="9nJ-Wf-AaH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="Aa5-De-C9e" id="46K-1h-8AT"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
@@ -120,7 +127,6 @@
         <!--Navigation Controller-->
         <scene sceneID="dRH-ZH-55j">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8YM-na-2Ij" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QcL-yH-v8I" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="VyB-XX-CZC">
@@ -132,6 +138,7 @@
                         <segue destination="ycT-Fr-rxU" kind="relationship" relationship="rootViewController" id="yRU-po-axt"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8YM-na-2Ij" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="743" y="112"/>
         </scene>

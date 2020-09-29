@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class ConversationListTableViewCell: UITableViewCell, ConfigurableView {
+class ConversationListCell: UITableViewCell, ConfigurableView {
     
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var textOfLastMessage: UILabel!
@@ -77,14 +77,3 @@ class ConversationListTableViewCell: UITableViewCell, ConfigurableView {
     }
     
 }
-
-protocol ConfigurableView {
-    
-    associatedtype ConfigurationModel
-    
-    func configure(with model: ConfigurationModel)
-}
-
-
-
-

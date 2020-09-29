@@ -11,12 +11,12 @@ import UIKit
 
 extension UIViewController {
     //Method with initialization of View Controller (for Navigation between VC's)
-    //Rule: .swift & .storyboard & StoryboardID -> the same name
-    private class func storyboardInstancePrivate<T: UIViewController>() -> T? {
+    //Rule: .swift & .storyboard -> the same name
+    private class func storyboardInstancePrivate() -> UIViewController? {
         let storyboard = UIStoryboard(name: String(describing: self), bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: String(describing: self)) as? T
+        return storyboard.instantiateInitialViewController()
     }
-    class func storyboardInstance() -> Self? {
+    class func storyboardInstance() -> UIViewController? {
         return storyboardInstancePrivate()
     }
 }
