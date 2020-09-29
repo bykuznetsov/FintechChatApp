@@ -16,20 +16,20 @@ class ProfileViewController: UIViewController{
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileFieldForImage: UIView!
     
-//    convenience init() {
-//        self.init()
-//        print(saveButton.frame) //Не печатается
-//        //Из документации Apple: "When using a storyboard to define
-//        //your view controller and its associated views, you
-//        //never initialize your view controller class directly."
-//        //Значит, что используя .storyboard, мы не сможем пользоваться методом init()
-//        //напрямую и инициализация происходит средствами .storyboard
-//        //Но и в принципе на этом моменте мы не смогли бы получить значение .frame
-//        //т.к. эти значения будут известны после инициализации самой кнопки,
-//        //которая произойдет во время вызова метода awakeFromNib() у ViewController,
-//        //который возовется позже, чем init() (Рассматриваем случай с использованием
-//        //.storyboard).
-//    }
+    //    convenience init() {
+    //        self.init()
+    //        print(saveButton.frame) //Не печатается
+    //        //Из документации Apple: "When using a storyboard to define
+    //        //your view controller and its associated views, you
+    //        //never initialize your view controller class directly."
+    //        //Значит, что используя .storyboard, мы не сможем пользоваться методом init()
+    //        //напрямую и инициализация происходит средствами .storyboard
+    //        //Но и в принципе на этом моменте мы не смогли бы получить значение .frame
+    //        //т.к. эти значения будут известны после инициализации самой кнопки,
+    //        //которая произойдет во время вызова метода awakeFromNib() у ViewController,
+    //        //который возовется позже, чем init() (Рассматриваем случай с использованием
+    //        //.storyboard).
+    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +62,6 @@ class ProfileViewController: UIViewController{
     @IBAction func closeProfile(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
     
     //Navigation Setup.
     func setupNavigationController() {
