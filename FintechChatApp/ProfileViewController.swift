@@ -19,16 +19,16 @@ class ProfileViewController: UIViewController{
     convenience init() {
         self.init()
         print(saveButton.frame) //Не печатается
-        //Из документации Apple: "When using a storyboard to define
-        //your view controller and its associated views, you
-        //never initialize your view controller class directly."
-        //Значит, что используя .storyboard, мы не сможем пользоваться методом init()
-        //напрямую и инициализация происходит средствами .storyboard
-        //Но и в принципе на этом моменте мы не смогли бы получить значение .frame
-        //т.к. эти значения будут известны после инициализации самой кнопки,
-        //которая произойдет во время вызова метода awakeFromNib() у ViewController,
-        //который возовется позже, чем init() (Рассматриваем случай с использованием
-        //.storyboard).
+//        //Из документации Apple: "When using a storyboard to define
+//        //your view controller and its associated views, you
+//        //never initialize your view controller class directly."
+//        //Значит, что используя .storyboard, мы не сможем пользоваться методом init()
+//        //напрямую и инициализация происходит средствами .storyboard
+//        //Но и в принципе на этом моменте мы не смогли бы получить значение .frame
+//        //т.к. эти значения будут известны после инициализации самой кнопки,
+//        //которая произойдет во время вызова метода awakeFromNib() у ViewController,
+//        //который возовется позже, чем init() (Рассматриваем случай с использованием
+//        //.storyboard).
     }
     
     override func viewDidLoad() {
@@ -37,6 +37,7 @@ class ProfileViewController: UIViewController{
         
         setupProfileFieldForImage()
         setupSaveButton()
+        setupNavigationBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,15 +59,27 @@ class ProfileViewController: UIViewController{
         selectingImage()
     }
     
+    //Right navigationBarItem.
+    @IBAction func closeProfile(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //NavigationBar Setup.
+    func setupNavigationBar() {
+        self.navigationController?.title = "My profile"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+    }
+    
     //UI Setups.
-    func setupProfileFieldForImage(){
+    func setupProfileFieldForImage() {
         profileFieldForImage.layer.cornerRadius = profileFieldForImage.bounds.height/2
         profileFieldForImage.layer.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
         profileFieldForImage.layer.borderWidth = 7
         profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
     }
     
-    func setupSaveButton(){
+    func setupSaveButton() {
         saveButton.layer.cornerRadius = 14
         saveButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
     }
