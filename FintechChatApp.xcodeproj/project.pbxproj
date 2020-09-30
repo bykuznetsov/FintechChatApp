@@ -61,6 +61,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5050580F2525158800FD73CA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				50505811252515B200FD73CA /* ConversationListViewController */,
+				50505812252515CD00FD73CA /* ConversationViewController */,
+				50505810252515A000FD73CA /* ProfileViewController */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		50505810252515A000FD73CA /* ProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				502FDAC0251403E400478792 /* ProfileViewController.swift */,
+				50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */,
+			);
+			name = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		50505811252515B200FD73CA /* ConversationListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				50700C30251F84C0003A060B /* ConversationsListViewController.swift */,
+				50700C32251F851C003A060B /* ConversationsListViewController.storyboard */,
+				50700C34251F87A2003A060B /* ConversationListCell.swift */,
+				50700C35251F87A2003A060B /* ConversationListCell.xib */,
+			);
+			name = ConversationListViewController;
+			sourceTree = "<group>";
+		};
+		50505812252515CD00FD73CA /* ConversationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				50B63E9725227D9400B9E6CA /* ConversationViewController.swift */,
+				50B63E9925227F8900B9E6CA /* ConversationViewController.storyboard */,
+				50B63E9F2523B57100B9E6CA /* ConversationCell.swift */,
+				50B63EA02523B57100B9E6CA /* ConversationCell.xib */,
+			);
+			name = ConversationViewController;
+			sourceTree = "<group>";
+		};
 		5058C7C925194C0E00DAD08C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,20 +147,11 @@
 		50CCDB24250E5E1C00348C98 /* FintechChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
 				5058C7CF251955C800DAD08C /* Debugging */,
 				5058C7C925194C0E00DAD08C /* Extensions */,
-				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
-				502FDAC0251403E400478792 /* ProfileViewController.swift */,
-				50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */,
-				50700C30251F84C0003A060B /* ConversationsListViewController.swift */,
-				50700C32251F851C003A060B /* ConversationsListViewController.storyboard */,
-				50700C34251F87A2003A060B /* ConversationListCell.swift */,
-				50700C35251F87A2003A060B /* ConversationListCell.xib */,
-				50B63E9725227D9400B9E6CA /* ConversationViewController.swift */,
-				50B63E9925227F8900B9E6CA /* ConversationViewController.storyboard */,
-				50B63E9F2523B57100B9E6CA /* ConversationCell.swift */,
-				50B63EA02523B57100B9E6CA /* ConversationCell.xib */,
+				5050580F2525158800FD73CA /* ViewControllers */,
 				50CCDB2E250E5E2300348C98 /* Assets.xcassets */,
 				50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */,
 				50CCDB33250E5E2300348C98 /* Info.plist */,

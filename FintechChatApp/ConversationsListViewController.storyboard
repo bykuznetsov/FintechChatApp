@@ -24,11 +24,6 @@
                                 <action selector="openSettings:" destination="aTP-aC-K4p" id="0xB-GM-ZBx"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Profile" id="Y0M-EB-KWf">
-                            <connections>
-                                <action selector="openProfile:" destination="aTP-aC-K4p" id="ecF-vG-Hif"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lVT-Ex-w7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

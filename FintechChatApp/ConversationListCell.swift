@@ -30,21 +30,21 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     
     func configure(with model: ConversationCellModel) {
         
-        //Name
+        //Name.
         userName.text = model.name
         userName.font = UIFont.boldSystemFont(ofSize: self.nameFontSize)
         
         //Message
-        if model.message == nil { //nil
+        if (model.message == nil) || model.message == "" { //nil.
             textOfLastMessage.text = "No messages yet"
             textOfLastMessage.textColor = .systemGray
             textOfLastMessage.font = UIFont.italicSystemFont(ofSize: self.nameFontSize - 6)
-        } else { //not nil
-            if model.hasUnreadMessages { //unread
+        } else { //not nil.
+            if model.hasUnreadMessages { //unread.
                 textOfLastMessage.text = model.message
                 textOfLastMessage.textColor = .black
                 textOfLastMessage.font = UIFont.boldSystemFont(ofSize: self.nameFontSize - 5)
-            } else { //standart
+            } else { //standart.
                 textOfLastMessage.text = model.message
                 textOfLastMessage.textColor = .systemGray
                 textOfLastMessage.font = .systemFont(ofSize: self.nameFontSize - 5)
@@ -52,22 +52,21 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
         }
         
         //Date
-        let dateFormatter = DateFormatter() // "HH:mm" or "dd MMM"
+        let dateFormatter = DateFormatter() // "HH:mm" or "dd MMM".
         
-        if model.message != nil { //Last message exist - time of it
-            if Calendar.current.isDateInToday(model.date) { //is today
+        if model.message != nil && model.message != "" { //Last message exist - time of it.
+            if Calendar.current.isDateInToday(model.date) { //is today.
                 dateFormatter.dateFormat = "HH:mm"
                 dateOfLastMessage.text = dateFormatter.string(from: model.date)
-            } else { //not today
+            } else { //not today.
                 dateFormatter.dateFormat = "dd MMM"
                 dateOfLastMessage.text = dateFormatter.string(from: model.date)
             }
-        } else { //Last message doesn't exist - time of now
-            dateFormatter.dateFormat = "HH:mm"
-            dateOfLastMessage.text = dateFormatter.string(from: Date())
+        } else { //Last message doesn't exist - not time.
+            dateOfLastMessage.text = ""
         }
         
-        //Cell
+        //Cell.
         if model.isOnline {
             self.backgroundColor = #colorLiteral(red: 1, green: 0.9722861648, blue: 0.9016311765, alpha: 1)
         } else {
