@@ -71,9 +71,12 @@ class ConversationsListViewController: UIViewController {
         filterDialogs(dialogs: self.dialogs)
         view.addSubview(tableView)
     }
-    
-    //Left navigationBarItem.
-    @IBAction func openSettings(_ sender: Any) {}
+
+    //Func of left navigationBarItem.
+    @objc func openSettings() {
+        guard let themesViewController = ThemesViewController.storyboardInstance() else { return }
+        self.navigationController?.pushViewController(themesViewController, animated: true)
+    }
     
     //Func of right navigationBarItem.
     @objc func openProfile() {
@@ -99,17 +102,29 @@ class ConversationsListViewController: UIViewController {
     //NavigationBar Setup.
     func setupNavigationController() {
         
+        //Left navigationBarItem.
+        let btnLeft = UIButton(type: UIButton.ButtonType.custom)
+        btnLeft.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        btnLeft.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        btnLeft.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        btnLeft.setImage(UIImage(named: "settings"), for: .normal)
+        btnLeft.addTarget(self, action:#selector(openSettings), for: .touchUpInside)
+        let barLeftButton = UIBarButtonItem(customView: btnLeft)
+        self.navigationItem.leftBarButtonItems = [barLeftButton]
+ 
         //Right navigationBarItem.
         let btnRight = UIButton(type: .custom)
-        btnRight.frame = CGRect(x: 0, y: 0, width: 37, height: 37)
+        btnRight.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
         btnRight.layer.cornerRadius = btnRight.bounds.height/2
         btnRight.clipsToBounds = true
         btnRight.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
+        btnRight.layer.borderWidth = 1
+        btnRight.layer.borderColor = #colorLiteral(red: 0.9175510406, green: 0.91209656, blue: 0.9217438698, alpha: 1)
         btnRight.setTitle("MD", for: .normal)
         btnRight.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
         btnRight.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
-        let item1 = UIBarButtonItem(customView: btnRight)
-        self.navigationItem.rightBarButtonItems = [item1]
+        let barRightButton = UIBarButtonItem(customView: btnRight)
+        self.navigationItem.rightBarButtonItems = [barRightButton]
         
         self.navigationController?.title = "Tinkoff Chat"
         self.navigationItem.largeTitleDisplayMode = .always

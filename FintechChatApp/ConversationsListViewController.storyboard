@@ -18,13 +18,7 @@
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="RKW-1u-prm"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="rlj-mY-qjx">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="hqr-lE-9Pf">
-                            <connections>
-                                <action selector="openSettings:" destination="aTP-aC-K4p" id="0xB-GM-ZBx"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="rlj-mY-qjx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lVT-Ex-w7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

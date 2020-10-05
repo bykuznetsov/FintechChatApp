@@ -66,7 +66,7 @@ class ProfileViewController: UIViewController{
     
     //NavigationBar Setup.
     func setupNavigationBar() {
-        self.navigationController?.title = "My profile"
+        self.navigationItem.title = "My profile"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
     }
