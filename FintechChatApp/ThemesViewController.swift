@@ -110,28 +110,37 @@ class ThemesViewController: UIViewController {
     func setupThemeButtons() {
         
         //Classic Theme
-        let tapOnClassicButton = UITapGestureRecognizer(target: self, action: #selector(self.setClassicTheme))
-        classicButton.addGestureRecognizer(tapOnClassicButton)
-        classicButton.layer.cornerRadius = classicButton.bounds.width/20
-        classicButton.layer.borderWidth = 2
-        classicButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        classicImageView.image = UIImage(named: "classicTheme")
+        let tapOnClassicLabel = UITapGestureRecognizer(target: self, action: #selector(self.setClassicTheme))
+        self.classicLabel.isUserInteractionEnabled = true
+        self.classicLabel.addGestureRecognizer(tapOnClassicLabel)
+        let tapOnClassicView = UITapGestureRecognizer(target: self, action: #selector(self.setClassicTheme))
+        self.classicButton.addGestureRecognizer(tapOnClassicView)
+        self.classicButton.layer.cornerRadius = classicButton.bounds.width/20
+        self.classicButton.layer.borderWidth = 2
+        self.classicButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        self.classicImageView.image = UIImage(named: "classicTheme")
         
         //Day Theme
-        let tapOnDayButton = UITapGestureRecognizer(target: self, action: #selector(self.setDayTheme))
-        dayButton.addGestureRecognizer(tapOnDayButton)
-        dayButton.layer.cornerRadius = dayButton.bounds.width/20
-        dayButton.layer.borderWidth = 2
-        dayButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        dayImageView.image = UIImage(named: "dayTheme")
+        let tapOnDayLabel = UITapGestureRecognizer(target: self, action: #selector(self.setDayTheme))
+        self.dayLabel.addGestureRecognizer(tapOnDayLabel)
+        self.dayLabel.isUserInteractionEnabled = true
+        let tapOnDayView = UITapGestureRecognizer(target: self, action: #selector(self.setDayTheme))
+        self.dayButton.addGestureRecognizer(tapOnDayView)
+        self.dayButton.layer.cornerRadius = dayButton.bounds.width/20
+        self.dayButton.layer.borderWidth = 2
+        self.dayButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        self.dayImageView.image = UIImage(named: "dayTheme")
         
         //Night Theme
-        let tapOnNightButton = UITapGestureRecognizer(target: self, action: #selector(self.setNightTheme))
-        nightButton.addGestureRecognizer(tapOnNightButton)
-        nightButton.layer.cornerRadius = nightButton.bounds.width/20
-        nightButton.layer.borderWidth = 2
-        nightButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        nightImageView.image = UIImage(named: "nightTheme")
+        let tapOnNightLabel = UITapGestureRecognizer(target: self, action: #selector(self.setNightTheme))
+        self.nightLabel.addGestureRecognizer(tapOnNightLabel)
+        self.nightLabel.isUserInteractionEnabled = true
+        let tapOnNightView = UITapGestureRecognizer(target: self, action: #selector(self.setNightTheme))
+        self.nightButton.addGestureRecognizer(tapOnNightView)
+        self.nightButton.layer.cornerRadius = nightButton.bounds.width/20
+        self.nightButton.layer.borderWidth = 2
+        self.nightButton.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        self.nightImageView.image = UIImage(named: "nightTheme")
         
     }
 
