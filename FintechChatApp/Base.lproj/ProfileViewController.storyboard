@@ -55,8 +55,8 @@
                                     <constraint firstAttribute="width" constant="240" id="klS-bM-TxD"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marina Dudarenko Marina Dudarenko Marina Dudarenko Marina Dudarenko" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiQ-0f-quT">
-                                <rect key="frame" x="20.5" y="424" width="373" height="55"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marina Dudarenko Dmitrievna Voronina" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiQ-0f-quT">
+                                <rect key="frame" x="101.5" y="424" width="211.5" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="fOX-1m-lg2"/>
                                 </constraints>
@@ -119,8 +119,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="Aa5-De-C9e" id="46K-1h-8AT"/>
+                        <outlet property="profileDescription" destination="ARw-mO-20N" id="UgV-jt-99q"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
                         <outlet property="profileImage" destination="G1z-Eq-0pj" id="xtw-BV-PZO"/>
+                        <outlet property="profileName" destination="kiQ-0f-quT" id="NMQ-6Q-9Us"/>
                         <outlet property="saveButton" destination="OQm-JK-bTA" id="2wa-AG-ziZ"/>
                     </connections>
                 </viewController>

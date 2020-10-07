@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FDAC0251403E400478792 /* ProfileViewController.swift */; };
+		5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD69252DDC0000846ECC /* ThemeManager.swift */; };
+		5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6B252E33F800846ECC /* ThemeableView.swift */; };
 		50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50505814252B9FB700FD73CA /* ThemesViewController.swift */; };
 		50505817252BA03A00FD73CA /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50505816252BA03A00FD73CA /* ThemesViewController.storyboard */; };
 		5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		502FDAC0251403E400478792 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		5035DD69252DDC0000846ECC /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		5035DD6B252E33F800846ECC /* ThemeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeableView.swift; sourceTree = "<group>"; };
 		50505814252B9FB700FD73CA /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		50505816252BA03A00FD73CA /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
 		5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 				50505811252515B200FD73CA /* ConversationListViewController */,
 				50505812252515CD00FD73CA /* ConversationViewController */,
 				50505810252515A000FD73CA /* ProfileViewController */,
+				50505813252B9F3500FD73CA /* ThemesViewController */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -115,6 +120,14 @@
 			name = ThemesViewController;
 			sourceTree = "<group>";
 		};
+		50505818252CAD2C00FD73CA /* ThemeManager */ = {
+			isa = PBXGroup;
+			children = (
+				5035DD69252DDC0000846ECC /* ThemeManager.swift */,
+			);
+			name = ThemeManager;
+			sourceTree = "<group>";
+		};
 		5058C7C925194C0E00DAD08C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				50B63E9D2523B25900B9E6CA /* ConfigurableView.swift */,
+				5035DD6B252E33F800846ECC /* ThemeableView.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -161,11 +175,11 @@
 			isa = PBXGroup;
 			children = (
 				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
+				50505818252CAD2C00FD73CA /* ThemeManager */,
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
 				5058C7CF251955C800DAD08C /* Debugging */,
 				5058C7C925194C0E00DAD08C /* Extensions */,
 				5050580F2525158800FD73CA /* ViewControllers */,
-				50505813252B9F3500FD73CA /* ThemesViewController */,
 				50CCDB2E250E5E2300348C98 /* Assets.xcassets */,
 				50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */,
 				50CCDB33250E5E2300348C98 /* Info.plist */,
@@ -249,12 +263,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */,
 				5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */,
 				50B63EA12523B57100B9E6CA /* ConversationCell.swift in Sources */,
 				502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */,
 				50B63E9825227D9400B9E6CA /* ConversationViewController.swift in Sources */,
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
 				50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */,
+				5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */,
 				50B63E9E2523B25900B9E6CA /* ConfigurableView.swift in Sources */,
 				50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */,
 				50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */,

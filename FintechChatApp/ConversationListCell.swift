@@ -70,9 +70,77 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
         if model.isOnline {
             self.backgroundColor = #colorLiteral(red: 1, green: 0.9722861648, blue: 0.9016311765, alpha: 1)
         } else {
-            self.backgroundColor = .clear
+            self.backgroundColor = .white
         }
         
+        configureTheme(with: ThemeManager.shared.getTheme(), with: model)
+        
+    }
+    
+}
+
+//MARK: - ThemeableCell
+
+extension ConversationListCell: ThemeableCell {
+    
+    func configureTheme(with theme: ThemeManager.Theme, with model: ConversationCellModel) {
+        switch theme {
+        case .classic:
+            
+            if model.isOnline {
+                self.backgroundColor = #colorLiteral(red: 1, green: 0.9722861648, blue: 0.9016311765, alpha: 1)
+            } else {
+                self.backgroundColor = .white
+            }
+            
+            self.userName.textColor = .black
+            
+            if (model.message == nil) || model.message == "" { //nil.
+                
+            } else if model.hasUnreadMessages {
+                self.textOfLastMessage.textColor = .black
+            }
+            
+            self.dateOfLastMessage.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            
+        case .day:
+            
+            if model.isOnline {
+                self.backgroundColor = #colorLiteral(red: 1, green: 0.9722861648, blue: 0.9016311765, alpha: 1)
+            } else {
+                self.backgroundColor = .white
+            }
+            
+            self.userName.textColor = .black
+            
+            
+            if (model.message == nil) || model.message == "" {
+            
+            } else if model.hasUnreadMessages {
+                self.textOfLastMessage.textColor = .black
+            }
+            
+            self.dateOfLastMessage.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            
+        case .night:
+            
+            if model.isOnline {
+                self.backgroundColor = #colorLiteral(red: 0.1824742258, green: 0.1982340217, blue: 0.2193621099, alpha: 1)
+            } else {
+                self.backgroundColor = .black
+            }
+            
+            self.userName.textColor = .white
+            
+            if (model.message == nil) || model.message == "" {
+                
+            } else if model.hasUnreadMessages {
+                self.textOfLastMessage.textColor = .white
+            }
+            
+            self.dateOfLastMessage.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            
+        }
     }
     
 }

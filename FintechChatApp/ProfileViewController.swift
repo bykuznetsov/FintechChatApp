@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController{
+class ProfileViewController: UIViewController {
     
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
@@ -16,41 +16,15 @@ class ProfileViewController: UIViewController{
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileFieldForImage: UIView!
     
-    convenience init() {
-        self.init()
-        print(saveButton.frame) //Не печатается
-//        //Из документации Apple: "When using a storyboard to define
-//        //your view controller and its associated views, you
-//        //never initialize your view controller class directly."
-//        //Значит, что используя .storyboard, мы не сможем пользоваться методом init()
-//        //напрямую и инициализация происходит средствами .storyboard
-//        //Но и в принципе на этом моменте мы не смогли бы получить значение .frame
-//        //т.к. эти значения будут известны после инициализации самой кнопки,
-//        //которая произойдет во время вызова метода awakeFromNib() у ViewController,
-//        //который возовется позже, чем init() (Рассматриваем случай с использованием
-//        //.storyboard).
-    }
+    @IBOutlet weak var profileName: UILabel!
+    @IBOutlet weak var profileDescription: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(saveButton.frame)
         
         setupProfileFieldForImage()
         setupSaveButton()
         setupNavigationBar()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(saveButton.frame) //Размеры .frame изменились, т.к. до этого выполнились методы
-        //viewWillLayoutSubviews() и viewDidLayoutSubviews(), в которых выполняется Autolayout
-        //(вычисления значений .frame в соответсвии с Constraints, которые мы установили
-        //на наши View's, в том числе и на кнопку Edit).
-        //Ведь мы используем .storyboard, в котором используем Constraints.
-        //Изначально в методе viewDidLoad() распечатались значения, которые мы указали "как бы"
-        //по стандарту в файле .storyboard, а Autolayout происходит позже, поэтому значения отличны.
-        //Те же самые значения будут выведены в консоль при вызове метода viewDidLayoutSubviews(),
-        //в котором как раз (Did) будут завершены все расчеты .frame'ов у различных View's.
     }
     
     @IBAction func savingProfile(_ sender: Any) {}
@@ -68,7 +42,7 @@ class ProfileViewController: UIViewController{
     func setupNavigationBar() {
         self.navigationItem.title = "My profile"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        
     }
     
     //UI Setups.
@@ -89,10 +63,10 @@ class ProfileViewController: UIViewController{
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-extension ProfileViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //Function which present to us ActionSheet (Alert) with a choice of getting image (From Camera or Photo Album).
-    func selectingImage(){
+    func selectingImage() {
         
         //Initialize UIImagePickerController which will be present in one of two types.
         let picker = UIImagePickerController()
@@ -158,3 +132,79 @@ extension ProfileViewController: UIImagePickerControllerDelegate,UINavigationCon
     }
     
 }
+
+//MARK: - ThemeableViewController
+
+extension ProfileViewController: ThemeableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
+    }
+    
+    func changeTheme(with theme: ThemeManager.Theme) {
+        switch theme {
+            
+        case .classic:
+            
+            //Labels
+            profileName.textColor = .black
+            profileDescription.textColor = .black
+            
+            //NavigationBar
+            self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+            
+            //Background
+            self.view.backgroundColor = .white
+            
+            //Save Button
+            saveButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            
+            //ProfileFieldForImage
+            self.profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            
+        case .day:
+            
+            //Labels
+            profileName.textColor = .black
+            profileDescription.textColor = .black
+            
+            //NavigationBar
+            self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+            
+            //Background
+            self.view.backgroundColor = .white
+            
+            //Save Button
+            saveButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            
+            //ProfileFieldForImage
+            self.profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            
+        case .night:
+            
+            //Labels
+            profileName.textColor = .white
+            profileDescription.textColor = .white
+            
+            //NavigationBar
+            self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+            
+            //Background
+            self.view.backgroundColor = .black
+            
+            //Save Button
+            saveButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            
+            //ProfileFieldForImage
+            self.profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            
+        }
+    }
+    
+}
+

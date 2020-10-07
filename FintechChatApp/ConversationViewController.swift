@@ -44,7 +44,7 @@ class ConversationViewController: UIViewController {
     
     //Get it from ConversationsListViewController.
     var lastMessage: MessageModel?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -112,4 +112,47 @@ extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+
+//MARK: - ThemeableViewController
+
+extension ConversationViewController: ThemeableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        changeTheme(with: ThemeManager.shared.getTheme())
+        self.tableView.reloadData()
+    }
+    
+    func changeTheme(with theme: ThemeManager.Theme) {
+        switch theme {
+            
+        case .classic:
+            
+            //Navigation Bar
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            
+            self.tableView.backgroundColor = .white
+            
+        case .day:
+            
+            //Navigation Bar
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            
+            self.tableView.backgroundColor = .white
+            
+        case .night:
+            
+            //Navigation Bar
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            
+            self.tableView.backgroundColor = .black
+            
+        }
+    }
+    
 }
