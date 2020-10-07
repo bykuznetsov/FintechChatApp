@@ -10,25 +10,7 @@ import UIKit
 
 class ConversationViewController: UIViewController {
     
-    //Test data.
-    var messages: [MessageModel] = [
-        MessageModel(text: "Hello. How are you, my friend?", outgoingMessage: true),
-        MessageModel(text: "Hello! I'm fine, what about you?", outgoingMessage: false),
-        MessageModel(text: "I got sick :(", outgoingMessage: true),
-        MessageModel(text: "Wow, what's happen?", outgoingMessage: false),
-        MessageModel(text: "I have headache and stomachache. Tommorow I will need get a package from post office, but I couldn't make it. Can you help me, please?", outgoingMessage: true),
-        MessageModel(text: "Ofcourse I will help you. When and where it will be?", outgoingMessage: false),
-        MessageModel(text: "2:00 PM on the Red street", outgoingMessage: true),
-        MessageModel(text: "Thank you very much", outgoingMessage: true),
-        MessageModel(text: "No problem! I hope we will meet in the end of this moth, because 28 of September is the date of my birthday. I want to invite you and your parents!", outgoingMessage: false),
-        MessageModel(text: "Oh, ofcourse I accept your invitation. See you soon!", outgoingMessage: true),
-    ]
-    
-    //Model of test data.
-    struct MessageModel {
-        let text: String
-        let outgoingMessage: Bool
-    }
+    var messages: [ConversationData.MessageModel] = ConversationData.messages
     
     //Cell Identifier (ConversationCell).
     private let cellIdentifier = String(describing: ConversationCell.self)
@@ -43,8 +25,8 @@ class ConversationViewController: UIViewController {
     }()
     
     //Get it from ConversationsListViewController.
-    var lastMessage: MessageModel?
-
+    var lastMessage: ConversationData.MessageModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -53,7 +35,7 @@ class ConversationViewController: UIViewController {
     }
     
     //Consider 2 cases (if lastMessage is Empty or == nil)
-    func setupMessageHistory(lastMessage: MessageModel?) {
+    func setupMessageHistory(lastMessage: ConversationData.MessageModel?) {
         
         guard let message = lastMessage else {
             //If we not have last message -> we not have message history.
@@ -100,7 +82,7 @@ extension ConversationViewController: UITableViewDataSource {
         let message = messages[indexPath.row]
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else {return UITableViewCell()}
-        cell.configure(with: .init(text: message.text, outgoingMessage: message.outgoingMessage))
+        cell.configure(with: .init(text: message.text, isOutgoingMessage: message.isOutgoingMessage))
         return cell
     }
     
@@ -112,4 +94,47 @@ extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+
+//MARK: - ThemeableViewController
+
+extension ConversationViewController: ThemeableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        changeTheme(with: ThemeManager.shared.getTheme())
+        self.tableView.reloadData()
+    }
+    
+    func changeTheme(with theme: ThemeManager.Theme) {
+        switch theme {
+            
+        case .classic:
+            
+            //Navigation Bar
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            
+            self.tableView.backgroundColor = .white
+            
+        case .day:
+            
+            //Navigation Bar
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            
+            self.tableView.backgroundColor = .white
+            
+        case .night:
+            
+            //Navigation Bar
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            
+            self.tableView.backgroundColor = .black
+            
+        }
+    }
+    
 }

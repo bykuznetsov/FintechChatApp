@@ -34,7 +34,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="leadingConstaraint" destination="YGv-sH-DEh" id="t6z-Zg-rLa"/>
-                <outlet property="messageText" destination="qll-Yu-fWH" id="Xx1-dM-p30"/>
+                <outlet property="messageTextLabel" destination="qll-Yu-fWH" id="IIK-vn-r2m"/>
                 <outlet property="trailingConstraint" destination="tc1-Ob-6Ck" id="Tzj-rY-Koe"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="92.410714285714278"/>

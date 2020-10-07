@@ -55,9 +55,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dateOfLastMessage" destination="nn2-jG-Tzz" id="Ixu-wP-dOR"/>
-                <outlet property="textOfLastMessage" destination="cOR-88-RMo" id="9zT-Yq-DQY"/>
-                <outlet property="userName" destination="Ooh-mM-cVU" id="34P-kQ-5Jh"/>
+                <outlet property="dateOfLastMessageLabel" destination="nn2-jG-Tzz" id="lsu-cc-InG"/>
+                <outlet property="textOfLastMessageLabel" destination="cOR-88-RMo" id="shw-kC-xrK"/>
+                <outlet property="userNameLabel" destination="Ooh-mM-cVU" id="Uhw-vr-Xsc"/>
             </connections>
             <point key="canvasLocation" x="123.18840579710145" y="108.48214285714285"/>
         </tableViewCell>

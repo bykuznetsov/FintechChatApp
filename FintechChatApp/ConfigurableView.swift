@@ -8,8 +8,7 @@
 
 import Foundation
 
-//This protocol uses in ConversationListTableViewCell.swfit
-//                      ConversationViewCell
+//This protocol uses in ConversationListTableViewCell.swfit, ConversationViewCell.swift
 protocol ConfigurableView {
     
     associatedtype ConfigurationModel
