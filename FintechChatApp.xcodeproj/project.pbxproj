@@ -10,6 +10,8 @@
 		502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FDAC0251403E400478792 /* ProfileViewController.swift */; };
 		5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD69252DDC0000846ECC /* ThemeManager.swift */; };
 		5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6B252E33F800846ECC /* ThemeableView.swift */; };
+		5035DD6E252E7D8C00846ECC /* ConversationListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6D252E7D8C00846ECC /* ConversationListData.swift */; };
+		5035DD70252E7E6D00846ECC /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6F252E7E6D00846ECC /* ConversationData.swift */; };
 		50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50505814252B9FB700FD73CA /* ThemesViewController.swift */; };
 		50505817252BA03A00FD73CA /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50505816252BA03A00FD73CA /* ThemesViewController.storyboard */; };
 		5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */; };
@@ -35,6 +37,8 @@
 		502FDAC0251403E400478792 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5035DD69252DDC0000846ECC /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		5035DD6B252E33F800846ECC /* ThemeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeableView.swift; sourceTree = "<group>"; };
+		5035DD6D252E7D8C00846ECC /* ConversationListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListData.swift; sourceTree = "<group>"; };
+		5035DD6F252E7E6D00846ECC /* ConversationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
 		50505814252B9FB700FD73CA /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		50505816252BA03A00FD73CA /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
 		5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 				50700C32251F851C003A060B /* ConversationsListViewController.storyboard */,
 				50700C34251F87A2003A060B /* ConversationListCell.swift */,
 				50700C35251F87A2003A060B /* ConversationListCell.xib */,
+				5035DD6D252E7D8C00846ECC /* ConversationListData.swift */,
 			);
 			name = ConversationListViewController;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 				50B63E9925227F8900B9E6CA /* ConversationViewController.storyboard */,
 				50B63E9F2523B57100B9E6CA /* ConversationCell.swift */,
 				50B63EA02523B57100B9E6CA /* ConversationCell.xib */,
+				5035DD6F252E7E6D00846ECC /* ConversationData.swift */,
 			);
 			name = ConversationViewController;
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 				502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */,
 				50B63E9825227D9400B9E6CA /* ConversationViewController.swift in Sources */,
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
+				5035DD70252E7E6D00846ECC /* ConversationData.swift in Sources */,
 				50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */,
 				5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */,
 				50B63E9E2523B25900B9E6CA /* ConfigurableView.swift in Sources */,
@@ -276,6 +283,7 @@
 				50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */,
 				50700C36251F87A2003A060B /* ConversationListCell.swift in Sources */,
 				50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */,
+				5035DD6E252E7D8C00846ECC /* ConversationListData.swift in Sources */,
 				50700C31251F84C0003A060B /* ConversationsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

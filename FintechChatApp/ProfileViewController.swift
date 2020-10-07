@@ -13,11 +13,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileFieldForImage: UIView!
     
-    @IBOutlet weak var profileName: UILabel!
-    @IBOutlet weak var profileDescription: UILabel!
+    @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var profileDescriptionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,9 +103,9 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         //Selecting from Photo Album
         
         //Removing photo if it exist
-        if profileImage.image != nil {
+        if profileImageView.image != nil {
             actionSheet.addAction(UIAlertAction(title: "Delete Photo", style: .destructive , handler:{ (UIAlertAction) in
-                self.profileImage.image = nil
+                self.profileImageView.image = nil
             }))
         }
         //Removing photo if it exist
@@ -127,7 +127,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         }
         
         //Sending image to our UIImageView.
-        self.profileImage.image = image
+        self.profileImageView.image = image
         picker.dismiss(animated: true)
     }
     
@@ -149,8 +149,8 @@ extension ProfileViewController: ThemeableViewController {
         case .classic:
             
             //Labels
-            profileName.textColor = .black
-            profileDescription.textColor = .black
+            profileNameLabel.textColor = .black
+            profileDescriptionLabel.textColor = .black
             
             //NavigationBar
             self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
@@ -168,8 +168,8 @@ extension ProfileViewController: ThemeableViewController {
         case .day:
             
             //Labels
-            profileName.textColor = .black
-            profileDescription.textColor = .black
+            profileNameLabel.textColor = .black
+            profileDescriptionLabel.textColor = .black
             
             //NavigationBar
             self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
@@ -187,8 +187,8 @@ extension ProfileViewController: ThemeableViewController {
         case .night:
             
             //Labels
-            profileName.textColor = .white
-            profileDescription.textColor = .white
+            profileNameLabel.textColor = .white
+            profileDescriptionLabel.textColor = .white
             
             //NavigationBar
             self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)

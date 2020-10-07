@@ -119,10 +119,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="Aa5-De-C9e" id="46K-1h-8AT"/>
-                        <outlet property="profileDescription" destination="ARw-mO-20N" id="UgV-jt-99q"/>
+                        <outlet property="profileDescriptionLabel" destination="ARw-mO-20N" id="CZL-o0-n0X"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
-                        <outlet property="profileImage" destination="G1z-Eq-0pj" id="xtw-BV-PZO"/>
-                        <outlet property="profileName" destination="kiQ-0f-quT" id="NMQ-6Q-9Us"/>
+                        <outlet property="profileImageView" destination="G1z-Eq-0pj" id="mc1-ZP-MO1"/>
+                        <outlet property="profileNameLabel" destination="kiQ-0f-quT" id="fcv-nD-YTr"/>
                         <outlet property="saveButton" destination="OQm-JK-bTA" id="2wa-AG-ziZ"/>
                     </connections>
                 </viewController>
