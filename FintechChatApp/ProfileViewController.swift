@@ -10,32 +10,89 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
+    @IBOutlet weak var saveWithOperationsButton: UIButton!
+    
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileFieldForImage: UIView!
     
     @IBOutlet weak var profileNameLabel: UILabel!
-    @IBOutlet weak var profileDescriptionLabel: UILabel!
+    @IBOutlet weak var profileNameTextField: UITextField!
+    
+    @IBOutlet weak var profileDescriptionTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupProfileFieldForImage()
-        setupSaveButton()
         setupNavigationBar()
+        setupSaveButtons()
+        setupTextFields()
     }
     
-    @IBAction func savingProfile(_ sender: Any) {}
-    
-    @IBAction func editingProfile(_ sender: Any) {
-        selectingImage()
+    //Left navigationBarItem.
+    @IBAction func editProfile(_ sender: Any) {
+        
+        if self.editButton.title == "Edit" { //Switch to Edit mode.
+            
+            //Name Label
+            self.profileNameLabel.isHidden = true
+            
+            //Name Text Field
+            self.profileNameTextField.isEnabled = true
+            self.profileNameTextField.isHidden = false
+            self.profileNameTextField.text = self.profileNameLabel.text
+            self.profileNameTextField.layer.borderWidth = 0.8
+            self.profileNameTextField.layer.borderColor = UIColor.gray.cgColor
+            
+            //Description Text View
+            self.profileDescriptionTextView.isEditable = true
+            self.profileDescriptionTextView.layer.borderWidth = 0.8
+            self.profileDescriptionTextView.layer.borderColor = UIColor.gray.cgColor
+            
+            //Edit Button
+            self.editButton.title = "Done"
+            self.editButton.style = .done
+            
+        } else if self.editButton.title == "Done" { //Switch to Done mode.
+            
+            //Name Label
+            self.profileNameLabel.isHidden = false
+            self.profileNameLabel.text = self.profileNameTextField.text
+
+            //Name Text Field
+            self.profileNameTextField.isEnabled = false
+            self.profileNameTextField.isHidden = true
+            
+            //Description Text View
+            self.profileDescriptionTextView.isEditable = false
+            self.profileDescriptionTextView.layer.borderWidth = 0
+            
+            //Edit Button
+            self.editButton.title = "Edit"
+            self.editButton.style = .plain
+            
+        }
+
     }
     
     //Right navigationBarItem.
     @IBAction func closeProfile(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any) {
+        
+    }
+    
+    @IBAction func saveProfileWithOperations(_ sender: Any) {
+        
+    }
+    
+    @IBAction func editProfileImage(_ sender: Any) {
+        selectingImage()
     }
     
     //NavigationBar Setup.
@@ -53,9 +110,28 @@ class ProfileViewController: UIViewController {
         profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
     }
     
-    func setupSaveButton() {
-        saveButton.layer.cornerRadius = 14
-        saveButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+    func setupSaveButtons() {
+        saveWithGrandCentralDispatchButton.layer.cornerRadius = 14
+        saveWithGrandCentralDispatchButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        
+        saveWithOperationsButton.layer.cornerRadius = 14
+        saveWithOperationsButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+    }
+    
+    func setupTextFields() {
+        
+        //Profile Name
+        self.profileNameTextField.isEnabled = false
+        self.profileNameTextField.layer.cornerRadius = 5.0
+        self.profileNameTextField.alpha = 1
+        self.profileNameTextField.placeholder = "Name"
+        self.profileNameTextField.isHidden = true
+        
+        //Profile Description
+        self.profileDescriptionTextView.isEditable = false
+        self.profileDescriptionTextView.layer.cornerRadius = 5.0
+        self.profileDescriptionTextView.alpha = 1
+        
     }
     
 }
@@ -150,7 +226,11 @@ extension ProfileViewController: ThemeableViewController {
             
             //Labels
             profileNameLabel.textColor = .black
-            profileDescriptionLabel.textColor = .black
+            profileNameTextField.textColor = .black
+            profileDescriptionTextView.textColor = .black
+            
+            profileNameTextField.backgroundColor = .white
+            profileDescriptionTextView.backgroundColor = .white
             
             //NavigationBar
             self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
@@ -159,8 +239,9 @@ extension ProfileViewController: ThemeableViewController {
             //Background
             self.view.backgroundColor = .white
             
-            //Save Button
-            saveButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            //Save Button's
+            saveWithGrandCentralDispatchButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            saveWithOperationsButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
             
             //ProfileFieldForImage
             self.profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
@@ -169,7 +250,11 @@ extension ProfileViewController: ThemeableViewController {
             
             //Labels
             profileNameLabel.textColor = .black
-            profileDescriptionLabel.textColor = .black
+            profileNameTextField.textColor = .black
+            profileDescriptionTextView.textColor = .black
+            
+            profileNameTextField.backgroundColor = .white
+            profileDescriptionTextView.backgroundColor = .white
             
             //NavigationBar
             self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
@@ -178,8 +263,9 @@ extension ProfileViewController: ThemeableViewController {
             //Background
             self.view.backgroundColor = .white
             
-            //Save Button
-            saveButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            //Save Button's
+            saveWithGrandCentralDispatchButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+            saveWithOperationsButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
             
             //ProfileFieldForImage
             self.profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
@@ -188,7 +274,11 @@ extension ProfileViewController: ThemeableViewController {
             
             //Labels
             profileNameLabel.textColor = .white
-            profileDescriptionLabel.textColor = .white
+            profileNameTextField.textColor = .white
+            profileDescriptionTextView.textColor = .white
+            
+            profileNameTextField.backgroundColor = .black
+            profileDescriptionTextView.backgroundColor = .black
             
             //NavigationBar
             self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -198,7 +288,8 @@ extension ProfileViewController: ThemeableViewController {
             self.view.backgroundColor = .black
             
             //Save Button
-            saveButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            saveWithGrandCentralDispatchButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            saveWithOperationsButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             
             //ProfileFieldForImage
             self.profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
