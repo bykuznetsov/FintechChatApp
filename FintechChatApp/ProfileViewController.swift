@@ -65,6 +65,17 @@ class ProfileViewController: UIViewController {
             
         } else if self.editButton.title == "Done" { //Switch to Done mode.
             
+            //Hide keyboard
+            self.view.endEditing(true)
+            
+            //Case if information changed, but not saved (like "Cancel")
+            if isNothingChanged() {
+                print("Нет изменений")
+            } else {
+                alertWithMessageAboutSaving()
+                return
+            }
+            
             //Name Label
             self.profileNameLabel.isHidden = false
             self.profileNameLabel.text = self.profileNameTextField.text
@@ -81,7 +92,6 @@ class ProfileViewController: UIViewController {
             self.editButton.title = "Edit"
             self.editButton.style = .plain
             
-            //Case if information changed, but not saved (like "Cancel")
             
         }
 
@@ -92,7 +102,7 @@ class ProfileViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any) {
+    @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any?) {
         
         if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
             //Update name
@@ -116,6 +126,36 @@ class ProfileViewController: UIViewController {
     
     @IBAction func saveProfileWithOperations(_ sender: Any) {
         
+    }
+    
+    //Use it if user change something and doesn't save, but press Done Button on NavigationBar
+    func alertWithMessageAboutSaving() {
+        
+        let alert = UIAlertController(title: "Save changes", message: "After making edits", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "GCD", style: .default , handler:{ (UIAlertAction) in
+            self.saveProfileWithGrandCentralDispatch(nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Operations", style: .default , handler:{ (UIAlertAction) in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Don't save", style: .default , handler:{ (UIAlertAction) in
+            self.profileNameTextField.text = self.profileDataManager.profileName?.name
+            self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+            
+            self.saveWithGrandCentralDispatchButton.isEnabled = false
+            self.saveWithOperationsButton.isEnabled = false
+            
+            self.editProfile(nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler:{ (UIAlertAction) in
+            
+        }))
+        
+        self.present(alert, animated: true)
     }
     
     @IBAction func editProfileImage(_ sender: Any) {
@@ -235,7 +275,7 @@ extension ProfileViewController: UITextFieldDelegate, UITextViewDelegate {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height * 0.6
+                self.view.frame.origin.y -= keyboardSize.height * 0.7
             }
         }
     }
