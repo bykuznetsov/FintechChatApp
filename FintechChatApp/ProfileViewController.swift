@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
+class ProfileViewController: UIViewController {
     
     @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
     @IBOutlet weak var saveWithOperationsButton: UIButton!
@@ -35,9 +35,7 @@ class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         setupNavigationBar()
         setupSaveButtons()
         setupTextFields()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        addKeyboardNotifications()
         
     }
     
@@ -120,36 +118,8 @@ class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
-    //Typing something in TextField (after every character)
-    @IBAction func inputName(_ sender: UITextField) {
-        if isNothingChanged() {
-            saveWithGrandCentralDispatchButton.isEnabled = false
-            saveWithOperationsButton.isEnabled = false
-        } else {
-            saveWithGrandCentralDispatchButton.isEnabled = true
-            saveWithOperationsButton.isEnabled = true
-        }
-    }
-    
-    //Typing something in TextView (after every character)
-    func textViewDidChange(_ textView: UITextView) {
-        if isNothingChanged() {
-            saveWithGrandCentralDispatchButton.isEnabled = false
-            saveWithOperationsButton.isEnabled = false
-        } else {
-            saveWithGrandCentralDispatchButton.isEnabled = true
-            saveWithOperationsButton.isEnabled = true
-        }
-    }
-    
     @IBAction func editProfileImage(_ sender: Any) {
         selectingImage()
-    }
-    
-    //Use it in ViewDidLoad()
-    func initProfileInformation() {
-        self.profileNameLabel.text = self.profileDataManager.profileName?.name
-        self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
     }
     
     //Use it when typing something in TextField, TextView or when tap on Done button
@@ -161,18 +131,10 @@ class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         }
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height * 0.6
-            }
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+    //Use it in ViewDidLoad()
+    func initProfileInformation() {
+        self.profileNameLabel.text = self.profileDataManager.profileName?.name
+        self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
     }
     
     //NavigationBar Setup.
@@ -191,7 +153,6 @@ class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         
     }
     
-    
     func setupSaveButtons() {
         
         //With GCD
@@ -204,6 +165,12 @@ class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         saveWithOperationsButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
         saveWithOperationsButton.isEnabled = false
     }
+    
+}
+
+// MARK: -  UITextFieldDelegate, UITextViewDelegate
+
+extension ProfileViewController: UITextFieldDelegate, UITextViewDelegate {
     
     func setupTextFields() {
         
@@ -223,7 +190,66 @@ class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         self.profileDescriptionTextView.returnKeyType = .done
         self.profileDescriptionTextView.delegate = self
         
-        
+    }
+    
+    //Typing something in TextField (after every character)
+    @IBAction func inputName(_ sender: UITextField) {
+        if isNothingChanged() {
+            saveWithGrandCentralDispatchButton.isEnabled = false
+            saveWithOperationsButton.isEnabled = false
+        } else {
+            saveWithGrandCentralDispatchButton.isEnabled = true
+            saveWithOperationsButton.isEnabled = true
+        }
+    }
+    
+    //Press Done Button in TextField -> dismiss keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    //Typing something in TextView (after every character)
+    func textViewDidChange(_ textView: UITextView) {
+        if isNothingChanged() {
+            saveWithGrandCentralDispatchButton.isEnabled = false
+            saveWithOperationsButton.isEnabled = false
+        } else {
+            saveWithGrandCentralDispatchButton.isEnabled = true
+            saveWithOperationsButton.isEnabled = true
+        }
+    }
+    
+    //Press Done Button in TextView -> dismiss keyboard
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            self.view.endEditing(true)
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    //Moving view.frame if keyboard Show.
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height * 0.6
+            }
+        }
+    }
+
+    //Moving view.frame if keyboard Hide.
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    func addKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
 }
