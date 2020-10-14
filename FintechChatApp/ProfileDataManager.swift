@@ -7,26 +7,43 @@
 //
 
 import Foundation
+import UIKit
 
 class ProfileDataManager {
     
+    //From this properties we well get profile information
     var profileName: ProfileName?
     var profileDescription: ProfileDescription?
+    var profileImage: UIImage?
     
-    //When init() -> check existing data
+    
+    //Path's and file name's
+    private let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
+    private let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
+    private let profileImageName: String = "profileImage"
+    
+    
+    //When init() -> check existing data and init properties
     init() {
         
-        print("Init ProfileDataManager")
-        
-        if ( initProfileName() && initProfileDescription() ) {
+        if initProfileName() {
             
         } else {
-            initProfileWithPrimaryData()
+            initProfileNameWithPrimaryData()
         }
-    }
-    
-    deinit {
-        print("Deinit ProfileDataManager")
+        
+        if initProfileDescription() {
+            
+        } else {
+            initProfileDescriptionWithPrimaryData()
+        }
+        
+        if initProfileImage() {
+            
+        } else {
+            initProfileImageWithPrimaryData()
+        }
+        
     }
     
     func updateProfileName(with name: String) {
@@ -36,16 +53,14 @@ class ProfileDataManager {
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
 
-        let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
-
-        //Вписываем в файл
+        //Write to file
         do {
             let data = try encoder.encode(self.profileName)
-            try data.write(to: pathToProfileName)
+            try data.write(to: self.pathToProfileName)
         } catch {
             print(error)
         }
-        //Вписываем в файл
+        //Write to file
     }
     
     func updateProfileDescription(with description: String) {
@@ -55,29 +70,44 @@ class ProfileDataManager {
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
 
-        let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
-
-        //Вписываем в файл
+        //Write to file
         do {
             let data = try encoder.encode(self.profileDescription)
-            try data.write(to: pathToProfileDescription)
+            try data.write(to: self.pathToProfileDescription)
         } catch {
             print(error)
         }
-        //Вписываем в файл
+        //Write to file
+    }
+    
+    @discardableResult func updateProfileImage(with image: UIImage?) -> Bool {
+        guard let data = image?.jpegData(compressionQuality: 1) ?? image?.pngData() else {
+            return false
+        }
+        
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return false
+        }
+        
+        do {
+            try data.write(to: directory.appendingPathComponent(self.profileImageName)!)
+            self.profileImage = UIImage(contentsOfFile: URL(fileURLWithPath: directory.absoluteString!).appendingPathComponent(self.profileImageName).path)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
     }
     
     func initProfileName() -> Bool {
-        let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
         
         do {
             
-            let data = try Data(contentsOf: pathToProfileName)
+            let data = try Data(contentsOf: self.pathToProfileName)
             let decoder = PropertyListDecoder()
             
             do {
                 self.profileName = try decoder.decode(ProfileName.self, from: data)
-                //print(self.profileName?.name)
                 return true
                 
             } catch {
@@ -92,11 +122,10 @@ class ProfileDataManager {
     }
     
     func initProfileDescription() -> Bool {
-        let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
         
         do {
             
-            let data = try Data(contentsOf: pathToProfileDescription)
+            let data = try Data(contentsOf: self.pathToProfileDescription)
             let decoder = PropertyListDecoder()
             
             do {
@@ -115,59 +144,58 @@ class ProfileDataManager {
         }
     }
     
-    func initProfileWithPrimaryData() {
-        
+    func initProfileImage() -> Bool {
+        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            self.profileImage = UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(self.profileImageName).path)
+            return true
+        }
+        return false
+    }
+    
+
+}
+
+//MARK: - Primary data for our Profile properties (use it when open App first time)
+
+extension ProfileDataManager {
+    
+    func initProfileNameWithPrimaryData() {
+        //Init Profile Name.
         self.profileName = ProfileName(name: "Marina Dudarenko")
 
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
 
-        let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
-
-        //Вписываем в файл
+        //Write to file
         do {
             let data = try encoder.encode(self.profileName)
-            try data.write(to: pathToProfileName)
+            try data.write(to: self.pathToProfileName)
         } catch {
             print(error)
         }
-        //Вписываем в файл
-        
-        self.profileDescription = ProfileDescription(description: "UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development,UX/UI Design, IOS Development, UX/UI Design, IOS Development,")
-        let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
-        
-        
-        //Вписываем в файл
-        do {
-            let data = try encoder.encode(self.profileDescription)
-            try data.write(to: pathToProfileDescription)
-        } catch {
-            print(error)
-        }
-        //Вписываем в файл
-        
+        //Write to file
     }
     
+    func initProfileDescriptionWithPrimaryData() {
+        //Init Profile Description.
+        self.profileDescription = ProfileDescription(description: "UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development,UX/UI Design, IOS Development, UX/UI Design, IOS Development,")
+        
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        
+        //Write to file
+        do {
+            let data = try encoder.encode(self.profileDescription)
+            try data.write(to: self.pathToProfileDescription)
+        } catch {
+            print(error)
+        }
+        //Write to file
+    }
     
-    
-    
-    
-    
+    func initProfileImageWithPrimaryData() {
+        //Init Profile Image.
+        self.profileImage = nil
+    }
     
 }
-
-
-
-
-
-
-
-
-
-
-//if  let path = Bundle.main.path(forResource: "ProfileName", ofType: "plist"),
-//    let xml = FileManager.default.contents(atPath: path),
-//    let preferences = try? PropertyListDecoder().decode(ProfileName.self, from: xml)
-//{
-//    print(preferences.name)
-//}

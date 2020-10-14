@@ -68,9 +68,9 @@ class ProfileViewController: UIViewController {
             //Hide keyboard
             self.view.endEditing(true)
             
-            //Case if information changed, but not saved (like "Cancel")
+            //Case if text (name or description) information changed, but not saved (like "Cancel")
             if isNothingChanged() {
-                print("Нет изменений")
+                
             } else {
                 alertWithMessageAboutSaving()
                 return
@@ -106,6 +106,7 @@ class ProfileViewController: UIViewController {
         
         if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
             //Update name
+            print("Update name")
             if let name = self.profileNameTextField.text {
                 self.profileDataManager.updateProfileName(with: name)
             }
@@ -113,14 +114,28 @@ class ProfileViewController: UIViewController {
         
         if self.profileDescriptionTextView.text != self.profileDataManager.profileDescription?.description {
             //Update description
+            print("Update description")
             if let description = self.profileDescriptionTextView.text {
                 self.profileDataManager.updateProfileDescription(with: description)
             }
         }
         
+        if self.profileImageView.image != self.profileDataManager.profileImage {
+            //Update image
+            print("Update image")
+            self.profileDataManager.updateProfileImage(with: self.profileImageView.image )
+
+        }
+        
         self.saveWithGrandCentralDispatchButton.isEnabled = false
         self.saveWithOperationsButton.isEnabled = false
-        self.editProfile(nil)
+        
+        //Out of editing mode if we saving data (case when we change image)
+        if self.editButton.title != "Edit" {
+            
+            //func of our EditButton
+            self.editProfile(nil)
+        }
         
     }
     
@@ -134,6 +149,8 @@ class ProfileViewController: UIViewController {
         let alert = UIAlertController(title: "Save changes", message: "After making edits", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "GCD", style: .default , handler:{ (UIAlertAction) in
+            
+            //func of our SaveButton
             self.saveProfileWithGrandCentralDispatch(nil)
         }))
         
@@ -142,8 +159,8 @@ class ProfileViewController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Don't save", style: .default , handler:{ (UIAlertAction) in
-            self.profileNameTextField.text = self.profileDataManager.profileName?.name
-            self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+            
+            self.initProfileInformation()
             
             self.saveWithGrandCentralDispatchButton.isEnabled = false
             self.saveWithOperationsButton.isEnabled = false
@@ -152,7 +169,6 @@ class ProfileViewController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler:{ (UIAlertAction) in
-            
         }))
         
         self.present(alert, animated: true)
@@ -162,7 +178,8 @@ class ProfileViewController: UIViewController {
         selectingImage()
     }
     
-    //Use it when typing something in TextField, TextView or when tap on Done button
+    //Use it when typing something in TextField, TextView or when tap on Done button in NavigationBar
+    //Check only TextField and TextView
     func isNothingChanged() -> Bool {
         if self.profileNameTextField.text == self.profileDataManager.profileName?.name && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription?.description {
             return true
@@ -173,8 +190,17 @@ class ProfileViewController: UIViewController {
     
     //Use it in ViewDidLoad()
     func initProfileInformation() {
+        
+        //TextField and TextView
+        self.profileNameTextField.text = self.profileDataManager.profileName?.name
+        self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+        
+        //Label's
         self.profileNameLabel.text = self.profileDataManager.profileName?.name
         self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+        
+        //Image
+        self.profileImageView.image = self.profileDataManager.profileImage
     }
     
     //NavigationBar Setup.
@@ -336,13 +362,15 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         }))
         //Selecting from Photo Album
         
-        //Removing photo if it exist
-        if profileImageView.image != nil {
-            actionSheet.addAction(UIAlertAction(title: "Delete Photo", style: .destructive , handler:{ (UIAlertAction) in
-                self.profileImageView.image = nil
-            }))
-        }
-        //Removing photo if it exist
+// TODO: Add remove image and save empty image
+        
+//        //Removing photo if it exist
+//        if profileImageView.image != nil {
+//            actionSheet.addAction(UIAlertAction(title: "Delete Photo", style: .destructive , handler:{ (UIAlertAction) in
+//                self.profileImageView.image = nil
+//            }))
+//        }
+//        //Removing photo if it exist
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction) in
         }))
@@ -360,9 +388,14 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             return
         }
         
+        
         //Sending image to our UIImageView.
         self.profileImageView.image = image
         picker.dismiss(animated: true)
+        
+        self.saveWithGrandCentralDispatchButton.isEnabled = true
+        self.saveWithOperationsButton.isEnabled = true
+        
     }
     
 }

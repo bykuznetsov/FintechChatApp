@@ -16,6 +16,3 @@ struct ProfileDescription: Codable {
     var description: String
 }
 
-struct ProfileImage: Codable {
-    var image: Data
-}
