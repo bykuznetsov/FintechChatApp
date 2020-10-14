@@ -125,6 +125,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7wz-ea-KMI">
+                                <rect key="frame" x="177.5" y="322" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -158,7 +161,9 @@
                             <constraint firstItem="tHh-x1-HHu" firstAttribute="trailing" secondItem="IK5-jh-19U" secondAttribute="trailing" constant="50" id="uTN-Pu-PJy"/>
                             <constraint firstItem="KDD-XN-PC8" firstAttribute="height" secondItem="kiQ-0f-quT" secondAttribute="height" id="vGY-9X-CgX"/>
                             <constraint firstItem="KDD-XN-PC8" firstAttribute="leading" secondItem="b3x-Xa-HBo" secondAttribute="leading" id="vb1-77-RuN"/>
+                            <constraint firstItem="7wz-ea-KMI" firstAttribute="centerX" secondItem="kiQ-0f-quT" secondAttribute="centerX" id="wFR-1V-NNJ"/>
                             <constraint firstItem="tHh-x1-HHu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KDD-XN-PC8" secondAttribute="trailing" id="whD-pU-EJu"/>
+                            <constraint firstItem="kiQ-0f-quT" firstAttribute="top" secondItem="7wz-ea-KMI" secondAttribute="bottom" constant="7" id="z0e-C4-8Q2"/>
                             <constraint firstItem="tHh-x1-HHu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b3x-Xa-HBo" secondAttribute="trailing" id="zFP-io-G0q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tHh-x1-HHu"/>
@@ -177,8 +182,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="7wz-ea-KMI" id="qex-Wo-vMH"/>
                         <outlet property="editButton" destination="X7r-i9-9UB" id="meI-fs-JCj"/>
-                        <outlet property="firstLetterOfNameLabel" destination="3Jn-SX-9vf" id="Bol-mF-rC3"/>
                         <outlet property="profileDescriptionTextView" destination="b3x-Xa-HBo" id="kcJ-TK-iB8"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
                         <outlet property="profileImageView" destination="G1z-Eq-0pj" id="mc1-ZP-MO1"/>

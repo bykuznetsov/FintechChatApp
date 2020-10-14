@@ -23,19 +23,20 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profileDescriptionTextView: UITextView!
     
-    @IBOutlet weak var firstLetterOfNameLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    let profileDataManager = ProfileDataManager()
+    let profileDataManager = GCDDataManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         initProfileInformation()
         setupProfileFieldForImage()
         setupNavigationBar()
         setupSaveButtons()
         setupTextFields()
         addKeyboardNotifications()
+        setupActivityIndicator()
         
     }
     
@@ -69,7 +70,7 @@ class ProfileViewController: UIViewController {
             self.view.endEditing(true)
             
             //Case if text (name or description) information changed, but not saved (like "Cancel")
-            if isNothingChanged() {
+            if isNothingInTextsChanged() {
                 
             } else {
                 alertWithMessageAboutSaving()
@@ -79,7 +80,7 @@ class ProfileViewController: UIViewController {
             //Name Label
             self.profileNameLabel.isHidden = false
             self.profileNameLabel.text = self.profileNameTextField.text
-
+            
             //Name Text Field
             self.profileNameTextField.isEnabled = false
             self.profileNameTextField.isHidden = true
@@ -92,9 +93,8 @@ class ProfileViewController: UIViewController {
             self.editButton.title = "Edit"
             self.editButton.style = .plain
             
-            
         }
-
+        
     }
     
     //Right navigationBarItem.
@@ -103,6 +103,10 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any?) {
+        self.activityIndicator.startAnimating()
+        
+        self.saveWithGrandCentralDispatchButton.isEnabled = false
+        self.saveWithOperationsButton.isEnabled = false
         
         if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
             //Update name
@@ -123,25 +127,104 @@ class ProfileViewController: UIViewController {
         if self.profileImageView.image != self.profileDataManager.profileImage {
             //Update image
             print("Update image")
-            self.profileDataManager.updateProfileImage(with: self.profileImageView.image )
-
+            if let image = self.profileImageView.image {
+                self.profileDataManager.updateProfileImage(with: image)
+            }
         }
         
-        self.saveWithGrandCentralDispatchButton.isEnabled = false
-        self.saveWithOperationsButton.isEnabled = false
-        
-        //Out of editing mode if we saving data (case when we change image)
-        if self.editButton.title != "Edit" {
+        self.profileDataManager.returnToMainQueue {
+            self.activityIndicator.stopAnimating()
             
-            //func of our EditButton
-            self.editProfile(nil)
+            //Out of editing mode if we saving data (case when we change image)
+            if self.editButton.title != "Edit" {
+                
+                //func of our EditButton
+                self.editProfile(nil)
+                
+            }
+            
+            if self.isAllDataSaved() {
+                self.alertWithMessageAboutSuccessSaving()
+            } else {
+                self.alertWithMessageAboutFailureSaving {
+                    self.saveProfileWithOperations(nil)
+                }
+            }
         }
         
     }
     
-    @IBAction func saveProfileWithOperations(_ sender: Any) {
+    @IBAction func saveProfileWithOperations(_ sender: Any?) {
+        activityIndicator.startAnimating()
         
+        self.saveWithGrandCentralDispatchButton.isEnabled = false
+        self.saveWithOperationsButton.isEnabled = false
+        
+        if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
+            //Update name
+            print("Update name")
+            if let name = self.profileNameTextField.text {
+                self.profileDataManager.updateProfileName(with: name)
+            }
+        }
+        
+        if self.profileDescriptionTextView.text != self.profileDataManager.profileDescription?.description {
+            //Update description
+            print("Update description")
+            if let description = self.profileDescriptionTextView.text {
+                self.profileDataManager.updateProfileDescription(with: description)
+            }
+        }
+        
+        if self.profileImageView.image != self.profileDataManager.profileImage {
+            //Update image
+            print("Update image")
+            if let image = self.profileImageView.image {
+                self.profileDataManager.updateProfileImage(with: image)
+            }
+        }
+        
+        self.profileDataManager.returnToMainQueue {
+            self.activityIndicator.stopAnimating()
+            
+            //Out of editing mode if we saving data (case when we change image)
+            if self.editButton.title != "Edit" {
+                
+                //func of our EditButton
+                self.editProfile(nil)
+                
+            }
+            
+            if self.isAllDataSaved() {
+                self.alertWithMessageAboutSuccessSaving()
+            } else {
+                self.alertWithMessageAboutFailureSaving {
+                    self.saveProfileWithOperations(nil)
+                }
+            }
+            
+        }
     }
+    
+    //Use it after saving Data
+    func alertWithMessageAboutSuccessSaving() {
+        let alert = UIAlertController(title: "Canges saved", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Got it", style: .default , handler:{ (UIAlertAction) in
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    //Use it after saving Data
+    func alertWithMessageAboutFailureSaving( _ repeatSaving: @escaping () -> () ) {
+        let alert = UIAlertController(title: "Not all data saved", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default , handler:{ (UIAlertAction) in
+        }))
+        alert.addAction(UIAlertAction(title: "Repeat", style: .default , handler:{ (UIAlertAction) in
+            repeatSaving()
+        }))
+        self.present(alert, animated: true)
+    }
+    
     
     //Use it if user change something and doesn't save, but press Done Button on NavigationBar
     func alertWithMessageAboutSaving() {
@@ -156,6 +239,8 @@ class ProfileViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Operations", style: .default , handler:{ (UIAlertAction) in
             
+            //func of our SaveButton
+            self.saveProfileWithOperations(nil)
         }))
         
         alert.addAction(UIAlertAction(title: "Don't save", style: .default , handler:{ (UIAlertAction) in
@@ -178,10 +263,19 @@ class ProfileViewController: UIViewController {
         selectingImage()
     }
     
-    //Use it when typing something in TextField, TextView or when tap on Done button in NavigationBar
-    //Check only TextField and TextView
-    func isNothingChanged() -> Bool {
+    //Use it when typing something in TextField, TextView or when tap on Done button in NavigationBar.
+    //Check only TextField and TextView.
+    func isNothingInTextsChanged() -> Bool {
         if self.profileNameTextField.text == self.profileDataManager.profileName?.name && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription?.description {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    //Use it when save data.
+    func isAllDataSaved() -> Bool {
+        if self.profileNameTextField.text == self.profileDataManager.profileName?.name && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription?.description && self.profileImageView.image == self.profileDataManager.profileImage {
             return true
         } else {
             return false
@@ -232,6 +326,10 @@ class ProfileViewController: UIViewController {
         saveWithOperationsButton.isEnabled = false
     }
     
+    func setupActivityIndicator() {
+        activityIndicator.hidesWhenStopped = true
+    }
+    
 }
 
 // MARK: -  UITextFieldDelegate, UITextViewDelegate
@@ -260,7 +358,7 @@ extension ProfileViewController: UITextFieldDelegate, UITextViewDelegate {
     
     //Typing something in TextField (after every character)
     @IBAction func inputName(_ sender: UITextField) {
-        if isNothingChanged() {
+        if isNothingInTextsChanged() {
             saveWithGrandCentralDispatchButton.isEnabled = false
             saveWithOperationsButton.isEnabled = false
         } else {
@@ -277,7 +375,7 @@ extension ProfileViewController: UITextFieldDelegate, UITextViewDelegate {
     
     //Typing something in TextView (after every character)
     func textViewDidChange(_ textView: UITextView) {
-        if isNothingChanged() {
+        if isNothingInTextsChanged() {
             saveWithGrandCentralDispatchButton.isEnabled = false
             saveWithOperationsButton.isEnabled = false
         } else {
@@ -305,7 +403,7 @@ extension ProfileViewController: UITextFieldDelegate, UITextViewDelegate {
             }
         }
     }
-
+    
     //Moving view.frame if keyboard Hide.
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
@@ -362,15 +460,15 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         }))
         //Selecting from Photo Album
         
-// TODO: Add remove image and save empty image
+        // TODO: Add remove image and save empty image
         
-//        //Removing photo if it exist
-//        if profileImageView.image != nil {
-//            actionSheet.addAction(UIAlertAction(title: "Delete Photo", style: .destructive , handler:{ (UIAlertAction) in
-//                self.profileImageView.image = nil
-//            }))
-//        }
-//        //Removing photo if it exist
+        //        //Removing photo if it exist
+        //        if profileImageView.image != nil {
+        //            actionSheet.addAction(UIAlertAction(title: "Delete Photo", style: .destructive , handler:{ (UIAlertAction) in
+        //                self.profileImageView.image = nil
+        //            }))
+        //        }
+        //        //Removing photo if it exist
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction) in
         }))
@@ -430,6 +528,9 @@ extension ProfileViewController: ThemeableViewController {
             //Background
             self.view.backgroundColor = .white
             
+            //Activity Indicator
+            self.activityIndicator.color = .gray
+            
             //Save Button's
             saveWithGrandCentralDispatchButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
             saveWithOperationsButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
@@ -454,6 +555,9 @@ extension ProfileViewController: ThemeableViewController {
             //Background
             self.view.backgroundColor = .white
             
+            //Activity Indicator
+            self.activityIndicator.color = .gray
+            
             //Save Button's
             saveWithGrandCentralDispatchButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
             saveWithOperationsButton.backgroundColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
@@ -477,6 +581,9 @@ extension ProfileViewController: ThemeableViewController {
             
             //Background
             self.view.backgroundColor = .black
+            
+            //Activity Indicator
+            self.activityIndicator.color = .white
             
             //Save Button
             saveWithGrandCentralDispatchButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)

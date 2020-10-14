@@ -16,49 +16,26 @@ class ProfileDataManager {
     var profileDescription: ProfileDescription?
     var profileImage: UIImage?
     
-    
     //Path's and file name's
     private let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
     private let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
     private let profileImageName: String = "profileImage"
     
-    
-    //When init() -> check existing data and init properties
-    init() {
-        
-        if initProfileName() {
-            
-        } else {
-            initProfileNameWithPrimaryData()
-        }
-        
-        if initProfileDescription() {
-            
-        } else {
-            initProfileDescriptionWithPrimaryData()
-        }
-        
-        if initProfileImage() {
-            
-        } else {
-            initProfileImageWithPrimaryData()
-        }
-        
-    }
-    
     func updateProfileName(with name: String) {
         
         self.profileName = ProfileName(name: name)
-
+        
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
-
+        
         //Write to file
         do {
             let data = try encoder.encode(self.profileName)
             try data.write(to: self.pathToProfileName)
+            return
         } catch {
-            print(error)
+            //print(error)
+            return
         }
         //Write to file
     }
@@ -66,37 +43,46 @@ class ProfileDataManager {
     func updateProfileDescription(with description: String) {
         
         self.profileDescription = ProfileDescription(description: description)
-
+        
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
-
+        
         //Write to file
         do {
             let data = try encoder.encode(self.profileDescription)
             try data.write(to: self.pathToProfileDescription)
+            return
         } catch {
-            print(error)
+            //print(error)
+            return
         }
         //Write to file
     }
     
-    @discardableResult func updateProfileImage(with image: UIImage?) -> Bool {
+    func updateProfileImage(with image: UIImage?) {
+        
+        self.profileImage = image
+        
         guard let data = image?.jpegData(compressionQuality: 1) ?? image?.pngData() else {
-            return false
+            return
         }
         
         guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-            return false
+            return
         }
         
+        //Write to file
         do {
-            try data.write(to: directory.appendingPathComponent(self.profileImageName)!)
-            self.profileImage = UIImage(contentsOfFile: URL(fileURLWithPath: directory.absoluteString!).appendingPathComponent(self.profileImageName).path)
-            return true
+            if let urlOfImage = directory.appendingPathComponent(self.profileImageName) {
+                try data.write(to: urlOfImage)
+            }
+            return
         } catch {
-            print(error.localizedDescription)
-            return false
+            //print(error.localizedDescription)
+            return
         }
+        //Write to file
+        
     }
     
     func initProfileName() -> Bool {
@@ -111,12 +97,12 @@ class ProfileDataManager {
                 return true
                 
             } catch {
-                print(error)
+                //print(error)
                 return false
             }
             
         } catch {
-            print(error)
+            //print(error)
             return false
         }
     }
@@ -134,12 +120,12 @@ class ProfileDataManager {
                 return true
                 
             } catch {
-                print(error)
+                //print(error)
                 return false
             }
             
         } catch {
-            print(error)
+            //print(error)
             return false
         }
     }
@@ -152,7 +138,27 @@ class ProfileDataManager {
         return false
     }
     
-
+    func initAllProperties() {
+        if self.initProfileName() {
+            
+        } else {
+            self.initProfileNameWithPrimaryData()
+        }
+        
+        if self.initProfileDescription() {
+            
+        } else {
+            self.initProfileDescriptionWithPrimaryData()
+        }
+        
+        if self.initProfileImage() {
+            
+        } else {
+            self.initProfileImageWithPrimaryData()
+        }
+    }
+    
+    
 }
 
 //MARK: - Primary data for our Profile properties (use it when open App first time)
@@ -162,16 +168,16 @@ extension ProfileDataManager {
     func initProfileNameWithPrimaryData() {
         //Init Profile Name.
         self.profileName = ProfileName(name: "Marina Dudarenko")
-
+        
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
-
+        
         //Write to file
         do {
             let data = try encoder.encode(self.profileName)
             try data.write(to: self.pathToProfileName)
         } catch {
-            print(error)
+            //print(error)
         }
         //Write to file
     }
@@ -188,7 +194,7 @@ extension ProfileDataManager {
             let data = try encoder.encode(self.profileDescription)
             try data.write(to: self.pathToProfileDescription)
         } catch {
-            print(error)
+            //print(error)
         }
         //Write to file
     }

@@ -24,6 +24,8 @@
 		507DE6DF2535D53700D797C6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507DE6DE2535D53700D797C6 /* ProfileModel.swift */; };
 		507DE6E125360EA700D797C6 /* ProfileDescription.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507DE6E025360EA700D797C6 /* ProfileDescription.plist */; };
 		507DE6E32536100800D797C6 /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507DE6E22536100800D797C6 /* ProfileDataManager.swift */; };
+		507DE6E72537792500D797C6 /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507DE6E62537792400D797C6 /* GCDDataManager.swift */; };
+		507DE6E92537956900D797C6 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507DE6E82537956900D797C6 /* OperationDataManager.swift */; };
 		50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */; };
 		50B63E9825227D9400B9E6CA /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E9725227D9400B9E6CA /* ConversationViewController.swift */; };
 		50B63E9A25227F8900B9E6CA /* ConversationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50B63E9925227F8900B9E6CA /* ConversationViewController.storyboard */; };
@@ -55,6 +57,8 @@
 		507DE6DE2535D53700D797C6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		507DE6E025360EA700D797C6 /* ProfileDescription.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProfileDescription.plist; sourceTree = "<group>"; };
 		507DE6E22536100800D797C6 /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
+		507DE6E62537792400D797C6 /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		507DE6E82537956900D797C6 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		50B63E9725227D9400B9E6CA /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		50B63E9925227F8900B9E6CA /* ConversationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationViewController.storyboard; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 		5034A8122534C83500198486 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				507DE6E62537792400D797C6 /* GCDDataManager.swift */,
+				507DE6E82537956900D797C6 /* OperationDataManager.swift */,
 				507DE6E22536100800D797C6 /* ProfileDataManager.swift */,
 				507DE6DD2535D52000D797C6 /* Models */,
 				5034A8132534C84200198486 /* Data */,
@@ -315,8 +321,10 @@
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
 				5035DD70252E7E6D00846ECC /* ConversationData.swift in Sources */,
 				50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */,
+				507DE6E72537792500D797C6 /* GCDDataManager.swift in Sources */,
 				5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */,
 				507DE6DF2535D53700D797C6 /* ProfileModel.swift in Sources */,
+				507DE6E92537956900D797C6 /* OperationDataManager.swift in Sources */,
 				50B63E9E2523B25900B9E6CA /* ConfigurableView.swift in Sources */,
 				507DE6E32536100800D797C6 /* ProfileDataManager.swift in Sources */,
 				50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */,
