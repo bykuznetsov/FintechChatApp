@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
     @IBOutlet weak var saveWithOperationsButton: UIButton!
@@ -23,17 +23,26 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profileDescriptionTextView: UITextView!
     
+    @IBOutlet weak var firstLetterOfNameLabel: UILabel!
+    
+    let profileDataManager = ProfileDataManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+        initProfileInformation()
         setupProfileFieldForImage()
         setupNavigationBar()
         setupSaveButtons()
         setupTextFields()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     //Left navigationBarItem.
-    @IBAction func editProfile(_ sender: Any) {
+    @IBAction func editProfile(_ sender: Any?) {
         
         if self.editButton.title == "Edit" { //Switch to Edit mode.
             
@@ -74,6 +83,8 @@ class ProfileViewController: UIViewController {
             self.editButton.title = "Edit"
             self.editButton.style = .plain
             
+            //Case if information changed, but not saved (like "Cancel")
+            
         }
 
     }
@@ -85,37 +96,113 @@ class ProfileViewController: UIViewController {
     
     @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any) {
         
+        if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
+            //Update name
+            if let name = self.profileNameTextField.text {
+                self.profileDataManager.updateProfileName(with: name)
+            }
+        }
+        
+        if self.profileDescriptionTextView.text != self.profileDataManager.profileDescription?.description {
+            //Update description
+            if let description = self.profileDescriptionTextView.text {
+                self.profileDataManager.updateProfileDescription(with: description)
+            }
+        }
+        
+        self.saveWithGrandCentralDispatchButton.isEnabled = false
+        self.saveWithOperationsButton.isEnabled = false
+        self.editProfile(nil)
+        
     }
     
     @IBAction func saveProfileWithOperations(_ sender: Any) {
         
     }
     
+    //Typing something in TextField (after every character)
+    @IBAction func inputName(_ sender: UITextField) {
+        if isNothingChanged() {
+            saveWithGrandCentralDispatchButton.isEnabled = false
+            saveWithOperationsButton.isEnabled = false
+        } else {
+            saveWithGrandCentralDispatchButton.isEnabled = true
+            saveWithOperationsButton.isEnabled = true
+        }
+    }
+    
+    //Typing something in TextView (after every character)
+    func textViewDidChange(_ textView: UITextView) {
+        if isNothingChanged() {
+            saveWithGrandCentralDispatchButton.isEnabled = false
+            saveWithOperationsButton.isEnabled = false
+        } else {
+            saveWithGrandCentralDispatchButton.isEnabled = true
+            saveWithOperationsButton.isEnabled = true
+        }
+    }
+    
     @IBAction func editProfileImage(_ sender: Any) {
         selectingImage()
+    }
+    
+    //Use it in ViewDidLoad()
+    func initProfileInformation() {
+        self.profileNameLabel.text = self.profileDataManager.profileName?.name
+        self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+    }
+    
+    //Use it when typing something in TextField, TextView or when tap on Done button
+    func isNothingChanged() -> Bool {
+        if self.profileNameTextField.text == self.profileDataManager.profileName?.name && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription?.description {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height * 0.6
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
     
     //NavigationBar Setup.
     func setupNavigationBar() {
         self.navigationItem.title = "My profile"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
     }
     
     //UI Setups.
     func setupProfileFieldForImage() {
+        
         profileFieldForImage.layer.cornerRadius = profileFieldForImage.bounds.height/2
         profileFieldForImage.layer.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
         profileFieldForImage.layer.borderWidth = 7
         profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
+        
     }
     
+    
     func setupSaveButtons() {
+        
+        //With GCD
         saveWithGrandCentralDispatchButton.layer.cornerRadius = 14
         saveWithGrandCentralDispatchButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        saveWithGrandCentralDispatchButton.isEnabled = false
         
+        //With Operations
         saveWithOperationsButton.layer.cornerRadius = 14
         saveWithOperationsButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        saveWithOperationsButton.isEnabled = false
     }
     
     func setupTextFields() {
@@ -126,11 +213,16 @@ class ProfileViewController: UIViewController {
         self.profileNameTextField.alpha = 1
         self.profileNameTextField.placeholder = "Name"
         self.profileNameTextField.isHidden = true
+        self.profileNameTextField.returnKeyType = .done
+        self.profileNameTextField.delegate = self
         
         //Profile Description
         self.profileDescriptionTextView.isEditable = false
         self.profileDescriptionTextView.layer.cornerRadius = 5.0
         self.profileDescriptionTextView.alpha = 1
+        self.profileDescriptionTextView.returnKeyType = .done
+        self.profileDescriptionTextView.delegate = self
+        
         
     }
     
