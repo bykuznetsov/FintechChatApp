@@ -11,28 +11,27 @@ import UIKit
 
 class OperationDataManager: ProfileDataManager {
     
-    let savingQueue = OperationQueue()
-    let initingQueue = OperationQueue()
+    let savingSerialQueue = OperationQueue()
     
     override init() {
         super.init()
         
-        self.savingQueue.maxConcurrentOperationCount = 1 //Make queue serial
-        self.initingQueue.maxConcurrentOperationCount = 3 //Make queue concurrent
+        self.savingSerialQueue.maxConcurrentOperationCount = 1 //Make queue serial
         
         self.initAllProperties()
     }
     
     override func initAllProperties() {
-        let initOperation = BlockOperation {
+        
+        self.savingSerialQueue.addOperation {
             super.initAllProperties()
         }
-        initingQueue.addOperation(initOperation)
+        
     }
     
     override func updateProfileName(with name: String) {
         
-        self.savingQueue.addOperation {
+        self.savingSerialQueue.addOperation {
             super.updateProfileName(with: name)
         }
         
@@ -40,21 +39,23 @@ class OperationDataManager: ProfileDataManager {
     
     override func updateProfileDescription(with description: String) {
         
-        self.savingQueue.addOperation {
+        self.savingSerialQueue.addOperation {
             super.updateProfileDescription(with: description)
         }
     }
     
     override func updateProfileImage(with image: UIImage?) {
-        self.savingQueue.addOperation {
+        
+        self.savingSerialQueue.addOperation {
             super.updateProfileImage(with: image)
         }
+        
     }
     
     //Make some UI changes (activity indicator, alert's and etc.)
     //Because savingQueue is SERIAL Queue
     func returnToMainQueue ( _ someMethod: @escaping () -> () ) {
-        self.savingQueue.addOperation {
+        self.savingSerialQueue.addOperation {
             OperationQueue.main.addOperation {
                 someMethod()
             }

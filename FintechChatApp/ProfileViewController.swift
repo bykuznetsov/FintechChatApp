@@ -105,34 +105,37 @@ class ProfileViewController: UIViewController {
     @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any?) {
         self.activityIndicator.startAnimating()
         
+        let grandCentralDispatchDataManager = GCDDataManager()
+    
         self.saveWithGrandCentralDispatchButton.isEnabled = false
         self.saveWithOperationsButton.isEnabled = false
         
-        if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
+        if self.profileNameTextField.text != grandCentralDispatchDataManager.profileName {
             //Update name
             print("Update name")
             if let name = self.profileNameTextField.text {
-                self.profileDataManager.updateProfileName(with: name)
+                grandCentralDispatchDataManager.updateProfileName(with: name)
             }
         }
         
-        if self.profileDescriptionTextView.text != self.profileDataManager.profileDescription?.description {
+        if self.profileDescriptionTextView.text != grandCentralDispatchDataManager.profileDescription?.description {
             //Update description
             print("Update description")
             if let description = self.profileDescriptionTextView.text {
-                self.profileDataManager.updateProfileDescription(with: description)
+                grandCentralDispatchDataManager.updateProfileDescription(with: description)
             }
         }
         
-        if self.profileImageView.image != self.profileDataManager.profileImage {
+        if self.profileImageView.image?.pngData() != grandCentralDispatchDataManager.profileImage?.pngData() {
+            
             //Update image
             print("Update image")
             if let image = self.profileImageView.image {
-                self.profileDataManager.updateProfileImage(with: image)
+                grandCentralDispatchDataManager.updateProfileImage(with: image)
             }
         }
         
-        self.profileDataManager.returnToMainQueue {
+        grandCentralDispatchDataManager.returnToMainQueue {
             self.activityIndicator.stopAnimating()
             
             //Out of editing mode if we saving data (case when we change image)
@@ -143,11 +146,11 @@ class ProfileViewController: UIViewController {
                 
             }
             
-            if self.isAllDataSaved() {
+            if self.isNothingInTextsChanged() {
                 self.alertWithMessageAboutSuccessSaving()
             } else {
                 self.alertWithMessageAboutFailureSaving {
-                    self.saveProfileWithOperations(nil)
+                    self.saveProfileWithGrandCentralDispatch(nil)
                 }
             }
         }
@@ -157,34 +160,39 @@ class ProfileViewController: UIViewController {
     @IBAction func saveProfileWithOperations(_ sender: Any?) {
         activityIndicator.startAnimating()
         
+        let operationDataManager = OperationDataManager()
+        
         self.saveWithGrandCentralDispatchButton.isEnabled = false
         self.saveWithOperationsButton.isEnabled = false
         
-        if self.profileNameTextField.text != self.profileDataManager.profileName?.name {
+        if self.profileNameTextField.text != operationDataManager.profileName {
             //Update name
             print("Update name")
             if let name = self.profileNameTextField.text {
-                self.profileDataManager.updateProfileName(with: name)
+                operationDataManager.updateProfileName(with: name)
             }
         }
         
-        if self.profileDescriptionTextView.text != self.profileDataManager.profileDescription?.description {
+        if self.profileDescriptionTextView.text != operationDataManager.profileDescription?.description {
             //Update description
             print("Update description")
             if let description = self.profileDescriptionTextView.text {
-                self.profileDataManager.updateProfileDescription(with: description)
+                operationDataManager.updateProfileDescription(with: description)
             }
         }
         
-        if self.profileImageView.image != self.profileDataManager.profileImage {
+        if self.profileImageView.image?.pngData() != operationDataManager.profileImage?.pngData() {
+            
+//            print(operationDataManager.profileImage?.pngData())
+//            print(self.profileImageView.image?.pngData())
             //Update image
             print("Update image")
             if let image = self.profileImageView.image {
-                self.profileDataManager.updateProfileImage(with: image)
+                operationDataManager.updateProfileImage(with: image)
             }
         }
         
-        self.profileDataManager.returnToMainQueue {
+        operationDataManager.returnToMainQueue {
             self.activityIndicator.stopAnimating()
             
             //Out of editing mode if we saving data (case when we change image)
@@ -266,7 +274,7 @@ class ProfileViewController: UIViewController {
     //Use it when typing something in TextField, TextView or when tap on Done button in NavigationBar.
     //Check only TextField and TextView.
     func isNothingInTextsChanged() -> Bool {
-        if self.profileNameTextField.text == self.profileDataManager.profileName?.name && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription?.description {
+        if self.profileNameTextField.text == self.profileDataManager.profileName && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription {
             return true
         } else {
             return false
@@ -275,7 +283,7 @@ class ProfileViewController: UIViewController {
     
     //Use it when save data.
     func isAllDataSaved() -> Bool {
-        if self.profileNameTextField.text == self.profileDataManager.profileName?.name && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription?.description && self.profileImageView.image == self.profileDataManager.profileImage {
+        if self.profileNameTextField.text == self.profileDataManager.profileName && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription && self.profileImageView.image?.pngData() == self.profileDataManager.profileImage?.pngData() {
             return true
         } else {
             return false
@@ -286,11 +294,11 @@ class ProfileViewController: UIViewController {
     func initProfileInformation() {
         
         //TextField and TextView
-        self.profileNameTextField.text = self.profileDataManager.profileName?.name
+        self.profileNameTextField.text = self.profileDataManager.profileName
         self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
         
         //Label's
-        self.profileNameLabel.text = self.profileDataManager.profileName?.name
+        self.profileNameLabel.text = self.profileDataManager.profileName
         self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
         
         //Image

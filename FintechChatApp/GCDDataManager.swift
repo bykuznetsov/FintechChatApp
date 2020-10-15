@@ -12,7 +12,6 @@ import UIKit
 class GCDDataManager: ProfileDataManager {
     
     let savingSerialQueue = DispatchQueue(label: "com.bykuznetsov.savingSerialQueue", qos: .background)
-    let initingConcurrentQueue = DispatchQueue(label: "com.bykuznetsov.initingConcurrentQueue", qos: .background, attributes: .concurrent)
     
     //When init() -> check existing data and init properties
     override init() {
@@ -22,9 +21,11 @@ class GCDDataManager: ProfileDataManager {
     }
     
     override func initAllProperties() {
-        self.initingConcurrentQueue.async {
+        
+        self.savingSerialQueue.async {
             super.initAllProperties()
         }
+        
     }
     
     override func updateProfileName(with name: String) {
