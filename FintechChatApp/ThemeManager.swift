@@ -28,11 +28,13 @@ class ThemeManager {
     }
     
     func updateTheme(new theme: Theme) {
-        //Update currentTheme
-        self.currentTheme = theme
-        
-        //Update in UserDefaults
-        defaults.set( String(describing: theme) , forKey: "Theme")
+        DispatchQueue.global().async {
+            //Update currentTheme
+            self.currentTheme = theme
+            
+            //Update in UserDefaults
+            self.defaults.set( String(describing: theme) , forKey: "Theme")
+        }
     }
     
     private init() {
