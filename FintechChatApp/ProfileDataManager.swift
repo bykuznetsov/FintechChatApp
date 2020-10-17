@@ -11,7 +11,6 @@ import UIKit
 
 class ProfileDataManager {
     
-    //From this properties we well get profile information
     var profileName: String? {
         get {
             self.initProfileName()
@@ -48,7 +47,6 @@ class ProfileDataManager {
             try data.write(to: self.pathToProfileName)
             return
         } catch {
-            //print(error)
             return
         }
         //Write to file
@@ -67,7 +65,6 @@ class ProfileDataManager {
             try data.write(to: self.pathToProfileDescription)
             return
         } catch {
-            //print(error)
             return
         }
         //Write to file
@@ -75,9 +72,7 @@ class ProfileDataManager {
     
     func updateProfileImage(with image: UIImage?) {
         
-        //self.profileImage = image
-        
-        guard let data = image?.jpegData(compressionQuality: 1) ?? image?.pngData() else {
+        guard let data = image?.pngData() else {
             return
         }
         
@@ -92,7 +87,6 @@ class ProfileDataManager {
             }
             return
         } catch {
-            //print(error.localizedDescription)
             return
         }
         //Write to file
@@ -110,15 +104,14 @@ class ProfileDataManager {
                 
                 let profileName: ProfileName?
                 profileName = try decoder.decode(ProfileName.self, from: data)
+
                 return profileName?.name ?? "Marina Dudarenko"
                 
             } catch {
-                //print(error)
                 return "Marina Dudarenko"
             }
             
         } catch {
-            //print(error)
             return "Marina Dudarenko"
         }
     }
@@ -134,92 +127,30 @@ class ProfileDataManager {
                 
                 let profileDescription: ProfileDescription?
                 profileDescription = try decoder.decode(ProfileDescription.self, from: data)
-                //print(self.profileDescription?.description)
+
                 return profileDescription?.description ?? "Hello"
                 
             } catch {
-                //print(error)
                 return "Hello"
             }
             
         } catch {
-            //print(error)
             return "Hello"
         }
     }
     
     func initProfileImage() -> UIImage? {
-        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
-            //self.profileImage = UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(self.profileImageName).path)
+        
+        do {
+            let dir = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+
             return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(self.profileImageName).path) ?? nil
+            
+        } catch {
+            return nil
         }
-        return nil
+        
     }
-    
-    func initAllProperties() {
-//        if self.initProfileName() {
-//
-//        } else {
-//            self.initProfileNameWithPrimaryData()
-//        }
-//
-//        if self.initProfileDescription() {
-//
-//        } else {
-//            self.initProfileDescriptionWithPrimaryData()
-//        }
-//
-//        if self.initProfileImage() {
-//
-//        } else {
-//            self.initProfileImageWithPrimaryData()
-//        }
-    }
-    
     
 }
 
-//MARK: - Primary data for our Profile properties (use it when open App first time)
-
-extension ProfileDataManager {
-    
-//    func initProfileNameWithPrimaryData() {
-//        //Init Profile Name.
-//        self.profileName = ProfileName(name: "Marina Dudarenko")
-//
-//        let encoder = PropertyListEncoder()
-//        encoder.outputFormat = .xml
-//
-//        //Write to file
-//        do {
-//            let data = try encoder.encode(self.profileName)
-//            try data.write(to: self.pathToProfileName)
-//        } catch {
-//            //print(error)
-//        }
-//        //Write to file
-//    }
-//
-//    func initProfileDescriptionWithPrimaryData() {
-//        //Init Profile Description.
-//        self.profileDescription = ProfileDescription(description: "UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development, UX/UI Design, IOS Development,UX/UI Design, IOS Development, UX/UI Design, IOS Development,")
-//
-//        let encoder = PropertyListEncoder()
-//        encoder.outputFormat = .xml
-//
-//        //Write to file
-//        do {
-//            let data = try encoder.encode(self.profileDescription)
-//            try data.write(to: self.pathToProfileDescription)
-//        } catch {
-//            //print(error)
-//        }
-//        //Write to file
-//    }
-//
-//    func initProfileImageWithPrimaryData() {
-//        //Init Profile Image.
-//        self.profileImage = nil
-//    }
-    
-}

@@ -127,7 +127,6 @@ class ProfileViewController: UIViewController {
         }
         
         if self.profileImageView.image?.pngData() != grandCentralDispatchDataManager.profileImage?.pngData() {
-            
             //Update image
             print("Update image")
             if let image = self.profileImageView.image {
@@ -146,7 +145,7 @@ class ProfileViewController: UIViewController {
                 
             }
             
-            if self.isNothingInTextsChanged() {
+            if self.isAllDataSaved() {
                 self.alertWithMessageAboutSuccessSaving()
             } else {
                 self.alertWithMessageAboutFailureSaving {
@@ -183,8 +182,6 @@ class ProfileViewController: UIViewController {
         
         if self.profileImageView.image?.pngData() != operationDataManager.profileImage?.pngData() {
             
-//            print(operationDataManager.profileImage?.pngData())
-//            print(self.profileImageView.image?.pngData())
             //Update image
             print("Update image")
             if let image = self.profileImageView.image {

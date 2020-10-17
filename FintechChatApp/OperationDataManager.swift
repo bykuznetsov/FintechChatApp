@@ -17,15 +17,8 @@ class OperationDataManager: ProfileDataManager {
         super.init()
         
         self.savingSerialQueue.maxConcurrentOperationCount = 1 //Make queue serial
-        
-        self.initAllProperties()
-    }
-    
-    override func initAllProperties() {
-        
-        self.savingSerialQueue.addOperation {
-            super.initAllProperties()
-        }
+        self.savingSerialQueue.qualityOfService = .background
+        self.savingSerialQueue.waitUntilAllOperationsAreFinished()
         
     }
     
