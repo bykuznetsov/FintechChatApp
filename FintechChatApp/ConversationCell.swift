@@ -22,6 +22,14 @@ class ConversationCell: UITableViewCell, ConfigurableView {
         let isOutgoingMessage: Bool
     }
     
+    //New Model
+    struct Message {
+        let content: String
+        let created: Date
+        let senderId: String
+        let senderName: String
+    }
+    
     func configure(with model: MessageCell) {
         messageTextLabel.text = model.text
         

@@ -11,10 +11,11 @@ import UIKit
 class ConversationsListViewController: UIViewController {
 
     var dialogs: [ConversationListData.Dialog] = ConversationListData.dialogs
-    
+
     //NavigationBar buttons
-    let leftBarButton = UIButton(type: .custom)
-    let rightBarButton = UIButton(type: .custom)
+    let settingsButton = UIButton(type: .custom)
+    let profileButton = UIButton(type: .custom)
+    let addNewChannelButton = UIButton(type: .custom)
     
     //Cell Identifier (ConversationListCell).
     private let cellIdentifier = String(describing: ConversationListCell.self)
@@ -31,11 +32,10 @@ class ConversationsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController()
-        filterDialogs(dialogs: &self.dialogs)
         view.addSubview(tableView)
     }
     
-    //Func of left navigationBarItem.
+    //Func of settingsBarButton.
     @objc func openSettings() {
         guard let themesViewController = ThemesViewController.storyboardInstance() as? ThemesViewController else { return }
         
@@ -53,45 +53,80 @@ class ConversationsListViewController: UIViewController {
         self.navigationController?.pushViewController(themesViewController, animated: true)
     }
     
-    //Func of right navigationBarItem.
+    //Func of addNewChannelButton.
+    @objc func showAlertWithAddingChannel() {
+        
+        let alert = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Channel name"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
+            
+            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            if let text = textField.text {
+                //Function of adding new chanel (text - name of chanel)
+                print(text)
+                //Function of adding new chanel (text - name of chanel)
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    //Func of profileBarButton.
     @objc func openProfile() {
         guard let profileViewController = ProfileViewController.storyboardInstance() else { return }
         self.present(profileViewController, animated: true)
     }
     
     //Filtering data (delete elements isOnline == false and Empty or nil message.
-    func filterDialogs(dialogs: inout [ConversationListData.Dialog]) {
-      for (index, dialog) in dialogs.enumerated() {
-        dialogs[index].dialogInfo = dialog.dialogInfo.filter({ dialog.isOnline || !($0.message?.isEmpty ?? true) })
-      }
-    }
+//    func filterDialogs(dialogs: inout [ConversationListData.Dialog]) {
+//      for (index, dialog) in dialogs.enumerated() {
+//        dialogs[index].dialogInfo = dialog.dialogInfo.filter({ dialog.isOnline || !($0.message?.isEmpty ?? true) })
+//      }
+//    }
     
     //NavigationBar Setup.
     func setupNavigationController() {
         
-        //Left navigationBarItem.
-        leftBarButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        leftBarButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        leftBarButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        leftBarButton.setImage(UIImage(named: "settingsDay"), for: .normal)
-        leftBarButton.addTarget(self, action:#selector(openSettings), for: .touchUpInside)
-        let barLeftButton = UIBarButtonItem(customView: leftBarButton)
-        self.navigationItem.leftBarButtonItems = [barLeftButton]
+        //Configure settingsBarButton navigationBarItem.
+        settingsButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        settingsButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        settingsButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+        settingsButton.addTarget(self, action:#selector(openSettings), for: .touchUpInside)
+        let settingsBarButton = UIBarButtonItem(customView: settingsButton)
         
-        //Right navigationBarItem.
-        rightBarButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        rightBarButton.layer.cornerRadius = rightBarButton.bounds.height/2
-        rightBarButton.clipsToBounds = true
-        rightBarButton.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
-        rightBarButton.layer.borderWidth = 1
-        rightBarButton.layer.borderColor = #colorLiteral(red: 0.9175510406, green: 0.91209656, blue: 0.9217438698, alpha: 1)
-        rightBarButton.setTitle("MD", for: .normal)
-        rightBarButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-        rightBarButton.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
-        let barRightButton = UIBarButtonItem(customView: rightBarButton)
-        self.navigationItem.rightBarButtonItems = [barRightButton]
+        //Adding to Navigation Bar - settingsBarButton (Leftside)
+        self.navigationItem.leftBarButtonItems = [settingsBarButton]
         
-        self.navigationController?.title = "Tinkoff Chat"
+        //Configure profileBarButton navigationBarItem.
+        profileButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+        profileButton.layer.cornerRadius = profileButton.bounds.height/2
+        profileButton.clipsToBounds = true
+        profileButton.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
+        profileButton.layer.borderWidth = 1
+        profileButton.layer.borderColor = #colorLiteral(red: 0.9175510406, green: 0.91209656, blue: 0.9217438698, alpha: 1)
+        profileButton.setTitle("MD", for: .normal)
+        profileButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        profileButton.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
+        let profileBarButton = UIBarButtonItem(customView: profileButton)
+        
+        //Configure addNewChannelButton navigationBarItem.
+        addNewChannelButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+        addNewChannelButton.setTitle("+", for: .normal)
+        addNewChannelButton.titleLabel?.font = UIFont.systemFont(ofSize: 32)
+        addNewChannelButton.addTarget(self, action: #selector(showAlertWithAddingChannel), for: .touchUpInside)
+        let addNewChannelBarButton = UIBarButtonItem(customView: addNewChannelButton)
+        
+        //Adding to Navigation Bar - profileBarButton, addNewChannelBarButton (Rightside)
+        self.navigationItem.rightBarButtonItems = [profileBarButton, addNewChannelBarButton]
+        
+        self.navigationController?.title = "Channels"
         self.navigationItem.largeTitleDisplayMode = .always
     }
     
@@ -102,30 +137,19 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dialogs.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dialogs[section].dialogInfo.count
+        return dialogs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dialog = dialogs[indexPath.section]
-        let dialogInfo = dialog.dialogInfo[indexPath.row]
+        let dialog = dialogs[indexPath.row]
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else { return UITableViewCell() }
-        cell.configure(with: .init(name: dialogInfo.name, date: dialogInfo.date, message: dialogInfo.message, isOnline: dialog.isOnline, hasUnreadMessages: dialogInfo.hasUnreadMessages))
+        cell.configure(with: .init(name: dialog.name, date: dialog.date, message: dialog.message))
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if dialogs[section].isOnline {
-            return "Online"
-        } else if dialogs[section].isOnline == false {
-            return "History"
-        } else {
-            return ""
-        }
     }
     
 }
@@ -141,11 +165,11 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
         
         //Change Navigation Bar title to the name of companion.
-        conversationViewController.navigationItem.title = dialogs[indexPath.section].dialogInfo[indexPath.row].name
+        conversationViewController.navigationItem.title = dialogs[indexPath.row].name
         
         //Checking last message.
         //Checking for nil.
-        guard let lastMessage = dialogs[indexPath.section].dialogInfo[indexPath.row].message else {
+        guard let lastMessage = dialogs[indexPath.row].message else {
             self.navigationController?.pushViewController(conversationViewController, animated: true)
             return
         }
@@ -204,7 +228,11 @@ extension ConversationsListViewController: ThemeableViewController {
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black] //large title color
             
             //Settings Button Image
-            leftBarButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+            settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+            
+            //Adding channel Button
+            addNewChannelButton.setTitleColor(.black, for: .normal)
+            addNewChannelButton.setTitleColor(.gray, for: .highlighted)
             
         case .day:
             
@@ -216,7 +244,11 @@ extension ConversationsListViewController: ThemeableViewController {
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black] //large title color ++
             
             //Settings Button Image
-            leftBarButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+            settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+            
+            //Adding channel Button
+            addNewChannelButton.setTitleColor(.black, for: .normal)
+            addNewChannelButton.setTitleColor(.gray, for: .highlighted)
             
         case .night:
             
@@ -228,7 +260,11 @@ extension ConversationsListViewController: ThemeableViewController {
             self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white] //large title color
             
             //Settings Button Image
-            leftBarButton.setImage(UIImage(named: "settingsNight"), for: .normal)
+            settingsButton.setImage(UIImage(named: "settingsNight"), for: .normal)
+            
+            //Adding channel Button
+            addNewChannelButton.setTitleColor(.white, for: .normal)
+            addNewChannelButton.setTitleColor(.gray, for: .highlighted)
             
         }
     }

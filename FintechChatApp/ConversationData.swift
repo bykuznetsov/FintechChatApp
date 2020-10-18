@@ -29,4 +29,13 @@ class ConversationData {
         let text: String
         let isOutgoingMessage: Bool
     }
+    
+    //New Model
+    struct Message {
+        let content: String
+        let created: Date
+        let senderId: String
+        let senderName: String
+    }
+    
 }
