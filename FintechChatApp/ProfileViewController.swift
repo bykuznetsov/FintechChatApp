@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var profileNameTextField: UITextField!
+    @IBOutlet weak var profileInitialsLabel: UILabel!
     
     @IBOutlet weak var profileDescriptionTextView: UITextView!
     
@@ -84,6 +85,13 @@ class ProfileViewController: UIViewController {
             //Name Text Field
             self.profileNameTextField.isEnabled = false
             self.profileNameTextField.isHidden = true
+            
+            //Initials
+            if let initials = self.profileNameTextField.text?.first {
+                self.profileInitialsLabel.text = String(describing: initials)
+            } else {
+                self.profileInitialsLabel.text = ""
+            }
             
             //Description Text View
             self.profileDescriptionTextView.isEditable = false
@@ -293,6 +301,13 @@ class ProfileViewController: UIViewController {
         //TextField and TextView
         self.profileNameTextField.text = self.profileDataManager.profileName
         self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+        
+        //Initials
+        if let initials = self.profileNameTextField.text?.first {
+            self.profileInitialsLabel.text = String(describing: initials)
+        } else {
+            self.profileInitialsLabel.text = ""
+        }
         
         //Label's
         self.profileNameLabel.text = self.profileDataManager.profileName

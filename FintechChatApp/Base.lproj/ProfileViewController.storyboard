@@ -187,6 +187,7 @@
                         <outlet property="profileDescriptionTextView" destination="b3x-Xa-HBo" id="kcJ-TK-iB8"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
                         <outlet property="profileImageView" destination="G1z-Eq-0pj" id="mc1-ZP-MO1"/>
+                        <outlet property="profileInitialsLabel" destination="3Jn-SX-9vf" id="X5K-pn-lBB"/>
                         <outlet property="profileNameLabel" destination="kiQ-0f-quT" id="fcv-nD-YTr"/>
                         <outlet property="profileNameTextField" destination="KDD-XN-PC8" id="XWB-6s-CYr"/>
                         <outlet property="saveWithGrandCentralDispatchButton" destination="OQm-JK-bTA" id="0is-b3-6c1"/>

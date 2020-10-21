@@ -41,7 +41,7 @@ class ConversationListServerManager {
                 let lastMessage = data["lastMessage"] as? String ?? ""
                 let lastActivity = data["lastActivity"] as? Timestamp
                 
-                //Sort channels
+                //Remove invalid data
                 if name.isEmpty {
                     return nil
                 }
@@ -49,6 +49,7 @@ class ConversationListServerManager {
                 return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity)
             }
             
+            //Sort data by date
             //self.channels = self.channels.filter( { ($0.lastActivity != nil) } ).sorted(by: { $0.lastActivity!.compare($1.lastActivity!) == .orderedDescending  })
             
             DispatchQueue.main.async {

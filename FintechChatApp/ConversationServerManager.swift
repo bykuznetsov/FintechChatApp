@@ -45,12 +45,16 @@ class ConversationServerManager {
                 let senderId = data["senderId"] as? String ?? ""
                 let senderName = data["senderName"] as? String ?? ""
                 
+                //Remove invalid data
                 if content.isEmpty || senderId.isEmpty || senderName.isEmpty {
                     return nil
                 }
                 
                 return Message(content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
             }
+            
+            //Sort data by date
+            
             
             DispatchQueue.main.async {
                 tableView.reloadData()

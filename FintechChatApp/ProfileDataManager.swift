@@ -105,14 +105,14 @@ class ProfileDataManager {
                 let profileName: ProfileName?
                 profileName = try decoder.decode(ProfileName.self, from: data)
 
-                return profileName?.name ?? "Marina Dudarenko"
+                return profileName?.name ?? "Nikita Kuznetsov"
                 
             } catch {
-                return "Marina Dudarenko"
+                return "Nikita Kuznetsov"
             }
             
         } catch {
-            return "Marina Dudarenko"
+            return "Nikita Kuznetsov"
         }
     }
     
