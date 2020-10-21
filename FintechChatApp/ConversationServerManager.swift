@@ -76,7 +76,7 @@ class ConversationServerManager {
     func addNewMessage(message: Message) {
         reference.addDocument(data: [
             "content": message.content,
-            "created": message.created,
+            "created": Timestamp(),
             "senderId": message.senderId,
             "senderName": message.senderName
         ])
