@@ -51,7 +51,6 @@ class ConversationsListViewController: UIViewController {
             guard self != nil else { return }
             ThemeManager.shared.updateTheme(new: theme)
             
-            print("\(theme) from closure")
         }
         
         //Transfer Theme with delegate
@@ -213,7 +212,6 @@ extension ConversationsListViewController: ThemesPickerDelegate {
     func transferThemeWithDelegate(theme: ThemeManager.Theme) {
 //        ThemeManager.shared.updateTheme(new: theme)
 //        
-//        print("\(theme) from delegate")
     }
 }
 
