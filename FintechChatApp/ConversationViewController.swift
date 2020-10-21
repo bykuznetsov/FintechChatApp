@@ -15,7 +15,7 @@ class ConversationViewController: UIViewController {
     lazy var documentId = ""
     
     //Object for working with Firebase (Database)
-    lazy var conversationServerManager = ConversationServerManager(documentId: self.documentId)
+    lazy var conversationServerManager = ConversationServerManager(documentId: "\(documentId)")
     
     //Plus button on Navigation Bar
     let addNewMessageButton = UIButton(type: .custom)
@@ -64,9 +64,9 @@ class ConversationViewController: UIViewController {
             textField.addTarget(self, action: #selector(self.inputMessageText), for: .editingChanged)
         }
         
-        let createAction = UIAlertAction(title: "Send", style: .default, handler: { (action) in
+        let createAction = UIAlertAction(title: "Send", style: .default, handler: { [weak self] (action) in
             
-            guard let textFields = self.alertWithAddingMessage.textFields else { return }
+            guard let textFields = self?.alertWithAddingMessage.textFields else { return }
             guard let textField = textFields.first else { return }
             guard let text = textField.text else { return }
             
@@ -74,7 +74,7 @@ class ConversationViewController: UIViewController {
             guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
             
             //text - text of message
-            self.conversationServerManager.addNewMessage(message: .init(content: text, created: Date(), senderId: mySenderId, senderName: GCDDataManager().initProfileName()))
+            self?.conversationServerManager.addNewMessage(message: .init(content: text, created: Date(), senderId: mySenderId, senderName: GCDDataManager().initProfileName()))
             
             action.isEnabled = false
             textField.text = ""
@@ -82,9 +82,9 @@ class ConversationViewController: UIViewController {
         })
         createAction.isEnabled = false
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak self] (_) in
             
-            guard let textFields = self.alertWithAddingMessage.textFields else { return }
+            guard let textFields = self?.alertWithAddingMessage.textFields else { return }
             guard let textField = textFields.first else { return }
             
             createAction.isEnabled = false
@@ -121,10 +121,6 @@ class ConversationViewController: UIViewController {
         
     }
     
-    deinit {
-        print("ConversationViewController deinit")
-    }
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -136,15 +132,17 @@ extension ConversationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        conversationServerManager.messages.count
+        return conversationServerManager.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else {return UITableViewCell()}
+        
         let message = conversationServerManager.messages[indexPath.row]
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else {return UITableViewCell()}
         cell.configure(with: .init(content: message.content, created: message.created, senderId: message.senderId, senderName: message.senderName))
+        
         return cell
     }
     

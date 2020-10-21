@@ -86,22 +86,22 @@ class ConversationsListViewController: UIViewController {
             textField.addTarget(self, action: #selector(self.inputChannelName), for: .editingChanged)
         }
         
-        let createAction = UIAlertAction(title: "Create", style: .default, handler: { (action) in
+        let createAction = UIAlertAction(title: "Create", style: .default, handler: { [weak self] (action) in
             
-            guard let textFields = self.alertWithAddingChannel.textFields else { return }
+            guard let textFields = self?.alertWithAddingChannel.textFields else { return }
             guard let textField = textFields.first else { return }
             guard let text = textField.text else { return }
             
             //text - name of new channel
-            self.conversationListServerManager.addNewChannel(channel: .init(identifier: "", name: text, lastMessage: nil, lastActivity: nil))
+            self?.conversationListServerManager.addNewChannel(channel: .init(identifier: "", name: text, lastMessage: nil, lastActivity: nil))
             
             action.isEnabled = false
             textField.text = ""
         })
         createAction.isEnabled = false
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
-            guard let textFields = self.alertWithAddingChannel.textFields else { return }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak self] (_) in
+            guard let textFields = self?.alertWithAddingChannel.textFields else { return }
             guard let textField = textFields.first else { return }
             
             createAction.isEnabled = false
@@ -163,7 +163,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversationListServerManager.channels.count
+        conversationListServerManager.channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -171,7 +171,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else { return UITableViewCell() }
         
-        cell.configure(with: .init(name: channel.name, date: channel.lastActivity?.dateValue(), message: channel.lastMessage))
+        cell.configure(with: .init(name: channel.name, date: channel.lastActivity, message: channel.lastMessage))
         
         return cell
     }
