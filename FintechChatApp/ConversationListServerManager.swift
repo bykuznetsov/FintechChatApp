@@ -47,6 +47,10 @@ class ConversationListServerManager {
                     return nil
                 }
                 
+                if (lastMessage.isEmpty && lastActivity != nil) || (!lastMessage.isEmpty && lastActivity == nil) {
+                    return nil
+                }
+                
                 return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity)
             }
             
