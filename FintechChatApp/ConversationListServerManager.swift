@@ -69,7 +69,7 @@ class ConversationListServerManager {
             "name" : channel.name,
             "lastMessage" : channel.lastMessage as String? as Any,
             "lastActivity" : channel.lastActivity as Timestamp? as Any
-            ])
+        ])
     }
     
 }

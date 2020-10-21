@@ -13,7 +13,7 @@ class ConversationsListViewController: UIViewController {
     
     //Object for working with Firebase (Database)
     lazy var conversationListServerManager = ConversationListServerManager()
-
+    
     //NavigationBar buttons
     let settingsButton = UIButton(type: .custom)
     let profileButton = UIButton(type: .custom)
@@ -210,8 +210,8 @@ protocol ThemesPickerDelegate: class {
 
 extension ConversationsListViewController: ThemesPickerDelegate {
     func transferThemeWithDelegate(theme: ThemeManager.Theme) {
-//        ThemeManager.shared.updateTheme(new: theme)
-//        
+        //        ThemeManager.shared.updateTheme(new: theme)
+        //
     }
 }
 
