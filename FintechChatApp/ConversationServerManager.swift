@@ -30,6 +30,7 @@ class ConversationServerManager {
         let senderName: String
     }
     
+    //Get exist messages from Firebase, remove invalid data, sort by date of lastActivity.
     func fetchingMessages(for tableView: UITableView) {
         
         reference.addSnapshotListener { [weak self] snapshot, error in
@@ -53,8 +54,8 @@ class ConversationServerManager {
                 return Message(content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
             }
             
-            //Sort data by date
-            
+            //Sort Messages by date
+            self?.messages.sort { $0.created.compare($1.created) == .orderedAscending }
             
             DispatchQueue.main.async {
                 tableView.reloadData()

@@ -25,6 +25,7 @@ class ConversationListServerManager {
         let lastActivity: Timestamp?
     }
     
+    //Get exist channels from Firebase, remove invalid data, sort by date of lastActivity.
     func fetchingChannels(for tableView: UITableView) {
         
         reference.addSnapshotListener { snapshot, error in
@@ -49,8 +50,12 @@ class ConversationListServerManager {
                 return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity)
             }
             
-            //Sort data by date
-            //self.channels = self.channels.filter( { ($0.lastActivity != nil) } ).sorted(by: { $0.lastActivity!.compare($1.lastActivity!) == .orderedDescending  })
+            //Sort Channels by date of lastActivity
+            self.channels.sort(by: {
+                let prevLastActivity = $0.lastActivity ?? Timestamp(date: Date(timeIntervalSince1970: 0))
+                let followLastActivity = $1.lastActivity ?? Timestamp(date: Date(timeIntervalSince1970: 0))
+                return prevLastActivity.dateValue() > followLastActivity.dateValue()
+            })
             
             DispatchQueue.main.async {
                 tableView.reloadData()
