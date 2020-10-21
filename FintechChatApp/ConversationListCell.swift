@@ -19,16 +19,8 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     //Model of data which we will get to fill our cell's.
     struct ConversationCellModel {
         let name: String
-        let date: Date
+        let date: Date?
         let message: String?
-    }
-    
-    //New Model
-    struct Channel {
-        let identifier: String
-        let name: String
-        let lastMessage: String?
-        let lastActivity: Date?
     }
     
     //All UILabel's depends on this value.
@@ -52,17 +44,16 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
             textOfLastMessageLabel.font = .systemFont(ofSize: self.nameFontSize - 5)
         }
         
-        
         //Date
         let dateFormatter = DateFormatter() // "HH:mm" or "dd MMM".
         
         if model.message != nil && model.message != "" { //Last message exist - time of it.
-            if Calendar.current.isDateInToday(model.date) { //is today.
+            if  Calendar.current.isDateInToday(model.date ?? Date()) { //is today.
                 dateFormatter.dateFormat = "HH:mm"
-                dateOfLastMessageLabel.text = dateFormatter.string(from: model.date)
+                dateOfLastMessageLabel.text = dateFormatter.string(from: model.date ?? Date())
             } else { //not today.
                 dateFormatter.dateFormat = "dd MMM"
-                dateOfLastMessageLabel.text = dateFormatter.string(from: model.date)
+                dateOfLastMessageLabel.text = dateFormatter.string(from: model.date ?? Date())
             }
         } else { //Last message doesn't exist - not time.
             dateOfLastMessageLabel.text = ""

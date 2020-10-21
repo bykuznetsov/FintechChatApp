@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationsListViewController: UIViewController {
-
-    var dialogs: [ConversationListData.Dialog] = ConversationListData.dialogs
+    
+    //Object for working with Firebase (Database)
+    lazy var conversationListServerManager = ConversationListServerManager()
 
     //NavigationBar buttons
     let settingsButton = UIButton(type: .custom)
     let profileButton = UIButton(type: .custom)
     let addNewChannelButton = UIButton(type: .custom)
+    
+    let alertWithAddingChannel = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
     
     //Cell Identifier (ConversationListCell).
     private let cellIdentifier = String(describing: ConversationListCell.self)
@@ -31,8 +35,11 @@ class ConversationsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationController()
         view.addSubview(tableView)
+        setupNavigationController()
+        setupAlertWithAddingChannel()
+        
+        conversationListServerManager.fetchingChannels(for: self.tableView)
     }
     
     //Func of settingsBarButton.
@@ -53,42 +60,58 @@ class ConversationsListViewController: UIViewController {
         self.navigationController?.pushViewController(themesViewController, animated: true)
     }
     
-    //Func of addNewChannelButton.
-    @objc func showAlertWithAddingChannel() {
-        
-        let alert = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
-        
-        alert.addTextField { textField in
-            textField.placeholder = "Channel name"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
-            
-            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
-            if let text = textField.text {
-                //Function of adding new chanel (text - name of chanel)
-                print(text)
-                //Function of adding new chanel (text - name of chanel)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     //Func of profileBarButton.
     @objc func openProfile() {
         guard let profileViewController = ProfileViewController.storyboardInstance() else { return }
         self.present(profileViewController, animated: true)
     }
     
-    //Filtering data (delete elements isOnline == false and Empty or nil message.
-//    func filterDialogs(dialogs: inout [ConversationListData.Dialog]) {
-//      for (index, dialog) in dialogs.enumerated() {
-//        dialogs[index].dialogInfo = dialog.dialogInfo.filter({ dialog.isOnline || !($0.message?.isEmpty ?? true) })
-//      }
-//    }
+    //Func of addNewChannelButton.
+    @objc func showAlertWithAddingChannel() {
+        DispatchQueue.main.async {
+            self.present(self.alertWithAddingChannel, animated: true, completion: nil)
+        }
+    }
+    
+    //Func of TextField in alertWithAddingChannel
+    @objc func inputChannelName(_ sender: UITextField) {
+        guard let text = sender.text else { return }
+        //Check input text (if it empty or only white-spaces - disable creating)
+        self.alertWithAddingChannel.actions[0].isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    func setupAlertWithAddingChannel() {
+        
+        self.alertWithAddingChannel.addTextField { textField in
+            textField.placeholder = "Channel name"
+            textField.addTarget(self, action: #selector(self.inputChannelName), for: .editingChanged)
+        }
+        
+        let createAction = UIAlertAction(title: "Create", style: .default, handler: { (action) in
+            
+            guard let textFields = self.alertWithAddingChannel.textFields else { return }
+            guard let textField = textFields.first else { return }
+            guard let text = textField.text else { return }
+            
+            //text - name of new channel
+            self.conversationListServerManager.addNewChannel(channel: .init(identifier: "", name: text, lastMessage: nil, lastActivity: nil))
+            
+            action.isEnabled = false
+            textField.text = ""
+        })
+        createAction.isEnabled = false
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+            guard let textFields = self.alertWithAddingChannel.textFields else { return }
+            guard let textField = textFields.first else { return }
+            
+            createAction.isEnabled = false
+            textField.text = ""
+        })
+        
+        self.alertWithAddingChannel.addAction(createAction)
+        self.alertWithAddingChannel.addAction(cancelAction)
+    }
     
     //NavigationBar Setup.
     func setupNavigationController() {
@@ -141,14 +164,16 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dialogs.count
+        return conversationListServerManager.channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dialog = dialogs[indexPath.row]
+        let channel = conversationListServerManager.channels[indexPath.row]
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else { return UITableViewCell() }
-        cell.configure(with: .init(name: dialog.name, date: dialog.date, message: dialog.message))
+        
+        cell.configure(with: .init(name: channel.name, date: channel.lastActivity?.dateValue(), message: channel.lastMessage))
+        
         return cell
     }
     
@@ -165,21 +190,9 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
         
         //Change Navigation Bar title to the name of companion.
-        conversationViewController.navigationItem.title = dialogs[indexPath.row].name
+        conversationViewController.navigationItem.title = conversationListServerManager.channels[indexPath.row].name
         
-        //Checking last message.
-        //Checking for nil.
-        guard let lastMessage = dialogs[indexPath.row].message else {
-            self.navigationController?.pushViewController(conversationViewController, animated: true)
-            return
-        }
-        
-        //Checking for empty.
-        if lastMessage.isEmpty {
-            
-        } else {
-            conversationViewController.lastMessage = .init(text: lastMessage, isOutgoingMessage: false)
-        }
+        conversationViewController.documentId = conversationListServerManager.channels[indexPath.row].identifier
         
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
