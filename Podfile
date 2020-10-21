@@ -7,5 +7,6 @@ target 'FintechChatApp' do
 
   # Pods for FintechChatApp
   pod 'Firebase/Firestore'
+  pod 'SwiftLint'
 
 end

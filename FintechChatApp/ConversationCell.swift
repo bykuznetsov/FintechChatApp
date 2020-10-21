@@ -93,7 +93,7 @@ class ConversationCell: UITableViewCell, ConfigurableView {
     }
 }
 
-//MARK: - ThemeableCell
+// MARK: - ThemeableCell
 
 extension ConversationCell: ThemeableCell {
     

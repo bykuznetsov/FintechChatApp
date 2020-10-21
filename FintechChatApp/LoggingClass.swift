@@ -19,16 +19,16 @@ class LogginClass {
     
     private init() {}
     
-    static func printAppLifeCycleEvent(_ description: String, _ event: String){
-        if self.printingAppEvents{
+    static func printAppLifeCycleEvent(_ description: String, _ event: String) {
+        if self.printingAppEvents {
             print("\(description): \(event)")
         } else {
             
         }
     }
     
-    static func printVCLifeCycleEvent(_ description: String?, _ event: String, _ nameOfVC: String){
-        if self.printingVCEvents{
+    static func printVCLifeCycleEvent(_ description: String?, _ event: String, _ nameOfVC: String) {
+        if self.printingVCEvents {
             print("\(description ?? ""): \(event) in \(nameOfVC)")
         } else {
             

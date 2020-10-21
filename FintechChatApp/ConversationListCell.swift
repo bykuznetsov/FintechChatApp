@@ -37,8 +37,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
             textOfLastMessageLabel.text = "No messages yet"
             textOfLastMessageLabel.textColor = .systemGray
             textOfLastMessageLabel.font = UIFont.italicSystemFont(ofSize: self.nameFontSize - 6)
-        }
-        else { //standart.
+        } else { //standart.
             textOfLastMessageLabel.text = model.message
             textOfLastMessageLabel.textColor = .systemGray
             textOfLastMessageLabel.font = .systemFont(ofSize: self.nameFontSize - 5)
@@ -65,7 +64,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     
 }
 
-//MARK: - ThemeableCell
+// MARK: - ThemeableCell
 
 extension ConversationListCell: ThemeableCell {
     

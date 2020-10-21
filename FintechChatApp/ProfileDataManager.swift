@@ -12,21 +12,15 @@ import UIKit
 class ProfileDataManager {
     
     var profileName: String? {
-        get {
-            self.initProfileName()
-        }
+        self.initProfileName()
     }
     
     var profileDescription: String? {
-        get {
-            self.initProfileDescription()
-        }
+        self.initProfileDescription()
     }
     
     var profileImage: UIImage? {
-        get {
-            self.initProfileImage()
-        }
+        self.initProfileImage()
     }
     
     //Path's and file name's
@@ -153,4 +147,3 @@ class ProfileDataManager {
     }
     
 }
-

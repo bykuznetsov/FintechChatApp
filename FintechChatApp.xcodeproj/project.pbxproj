@@ -14,6 +14,7 @@
 		5035DD70252E7E6D00846ECC /* ConversationServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */; };
 		50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50505814252B9FB700FD73CA /* ThemesViewController.swift */; };
 		50505817252BA03A00FD73CA /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50505816252BA03A00FD73CA /* ThemesViewController.storyboard */; };
+		5054DFD22540A7D800124432 /* ProfileViewControllerThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */; };
 		5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */; };
 		5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */; };
 		50700C31251F84C0003A060B /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C30251F84C0003A060B /* ConversationsListViewController.swift */; };
@@ -49,6 +50,7 @@
 		5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServerManager.swift; sourceTree = "<group>"; };
 		50505814252B9FB700FD73CA /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		50505816252BA03A00FD73CA /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
+		5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerThemes.swift; sourceTree = "<group>"; };
 		5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleViewController.swift; sourceTree = "<group>"; };
 		50700C30251F84C0003A060B /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				502FDAC0251403E400478792 /* ProfileViewController.swift */,
+				5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */,
 				50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */,
 			);
 			name = ProfileViewController;
@@ -269,6 +272,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50CCDB36250E5E2300348C98 /* Build configuration list for PBXNativeTarget "FintechChatApp" */;
 			buildPhases = (
+				5054DFCE25409D9B00124432 /* ShellScript */,
 				EB4E075DA5CF919AF937260A /* [CP] Check Pods Manifest.lock */,
 				50CCDB1E250E5E1C00348C98 /* Sources */,
 				50CCDB1F250E5E1C00348C98 /* Frameworks */,
@@ -356,6 +360,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FintechChatApp/Pods-FintechChatApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5054DFCE25409D9B00124432 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
 		EB4E075DA5CF919AF937260A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -400,6 +421,7 @@
 				50B63E9E2523B25900B9E6CA /* ConfigurableView.swift in Sources */,
 				507DE6E32536100800D797C6 /* ProfileDataManager.swift in Sources */,
 				50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */,
+				5054DFD22540A7D800124432 /* ProfileViewControllerThemes.swift in Sources */,
 				50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */,
 				50700C36251F87A2003A060B /* ConversationListCell.swift in Sources */,
 				50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */,

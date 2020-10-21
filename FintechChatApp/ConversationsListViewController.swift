@@ -120,7 +120,7 @@ class ConversationsListViewController: UIViewController {
         settingsButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
         settingsButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
-        settingsButton.addTarget(self, action:#selector(openSettings), for: .touchUpInside)
+        settingsButton.addTarget(self, action: #selector(openSettings), for: .touchUpInside)
         let settingsBarButton = UIBarButtonItem(customView: settingsButton)
         
         //Adding to Navigation Bar - settingsBarButton (Leftside)
@@ -128,7 +128,7 @@ class ConversationsListViewController: UIViewController {
         
         //Configure profileBarButton navigationBarItem.
         profileButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        profileButton.layer.cornerRadius = profileButton.bounds.height/2
+        profileButton.layer.cornerRadius = profileButton.bounds.height / 2
         profileButton.clipsToBounds = true
         profileButton.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
         profileButton.layer.borderWidth = 1
@@ -154,7 +154,7 @@ class ConversationsListViewController: UIViewController {
     
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension ConversationsListViewController: UITableViewDataSource {
     
@@ -178,7 +178,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension ConversationsListViewController: UITableViewDelegate {
     
@@ -202,7 +202,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     
 }
 
-//MARK: - ThemesPickerDelegate
+// MARK: - ThemesPickerDelegate
 
 protocol ThemesPickerDelegate: class {
     func transferThemeWithDelegate(theme: ThemeManager.Theme)
@@ -215,7 +215,7 @@ extension ConversationsListViewController: ThemesPickerDelegate {
     }
 }
 
-//MARK: - ThemeableViewController
+// MARK: - ThemeableViewController
 
 extension ConversationsListViewController: ThemeableViewController {
     
@@ -236,7 +236,7 @@ extension ConversationsListViewController: ThemeableViewController {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color
             
             tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black] //large title color
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color
             
             //Settings Button Image
             settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
@@ -252,7 +252,7 @@ extension ConversationsListViewController: ThemeableViewController {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
             
             tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black] //large title color ++
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color ++
             
             //Settings Button Image
             settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
@@ -268,7 +268,7 @@ extension ConversationsListViewController: ThemeableViewController {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //small title color
             
             tableView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (large)
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white] //large title color
+            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //large title color
             
             //Settings Button Image
             settingsButton.setImage(UIImage(named: "settingsNight"), for: .normal)

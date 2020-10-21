@@ -36,13 +36,13 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         LogginClass.printVCLifeCycleEvent(nil, #function, String(describing: type(of: self)))
-        
-    }
     
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         LogginClass.printVCLifeCycleEvent("\(String(describing: type(of: self))) moved from <Appeared> to <Disappearing>", #function, String(describing: type(of: self)))
-        
+
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -52,4 +52,3 @@ class ViewController: UIViewController {
     }
 
 }
-

@@ -11,29 +11,20 @@ import UIKit
 
 class GCDDataManager: ProfileDataManager {
     
-    let savingSerialQueue = DispatchQueue(label: "com.bykuznetsov.savingSerialQueue",qos: .background, attributes: .concurrent)
+    let savingSerialQueue = DispatchQueue(label: "com.bykuznetsov.savingSerialQueue", qos: .background, attributes: .concurrent)
     
     override var profileName: String? {
-        get {
-            self.initProfileName()
-        }
-        set {}
+        self.initProfileName()
     }
-
+    
     override var profileDescription: String? {
-        get {
-            self.initProfileDescription()
-        }
-        set {}
+        self.initProfileDescription()
     }
-
+    
     override var profileImage: UIImage? {
-        get {
-            self.initProfileImage()
-        }
-        set {}
+        self.initProfileImage()
     }
-
+    
     override func updateProfileName(with name: String) {
         self.savingSerialQueue.sync {
             super.updateProfileName(with: name)
@@ -72,7 +63,7 @@ class GCDDataManager: ProfileDataManager {
     
     //Make some UI changes (activity indicator, alert's and etc.)
     //Because savingSerialQueue is SERIAL Queue
-    func returnToMainQueue ( _ someMethod: @escaping () -> () ) {
+    func returnToMainQueue ( _ someMethod: @escaping () -> Void ) {
         self.savingSerialQueue.sync {
             DispatchQueue.main.async {
                 someMethod()

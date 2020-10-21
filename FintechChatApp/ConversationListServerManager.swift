@@ -28,7 +28,7 @@ class ConversationListServerManager {
     //Get exist channels from Firebase, remove invalid data, sort by date of lastActivity.
     func fetchingChannels(for tableView: UITableView) {
         
-        reference.addSnapshotListener { snapshot, error in
+        reference.addSnapshotListener { snapshot, _ in
             
             guard let documents = snapshot?.documents else { return }
             
@@ -66,9 +66,9 @@ class ConversationListServerManager {
     
     func addNewChannel(channel: Channel) {
         reference.addDocument(data: [
-            "name" : channel.name,
-            "lastMessage" : channel.lastMessage as String? as Any,
-            "lastActivity" : channel.lastActivity as Timestamp? as Any
+            "name": channel.name,
+            "lastMessage": channel.lastMessage as String? as Any,
+            "lastActivity": channel.lastActivity as Timestamp? as Any
         ])
     }
     

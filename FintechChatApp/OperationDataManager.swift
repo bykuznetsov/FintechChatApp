@@ -47,7 +47,7 @@ class OperationDataManager: ProfileDataManager {
     
     //Make some UI changes (activity indicator, alert's and etc.)
     //Because savingQueue is SERIAL Queue
-    func returnToMainQueue ( _ someMethod: @escaping () -> () ) {
+    func returnToMainQueue ( _ someMethod: @escaping () -> Void ) {
         self.savingSerialQueue.addOperation {
             OperationQueue.main.addOperation {
                 someMethod()

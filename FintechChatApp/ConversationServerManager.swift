@@ -33,7 +33,7 @@ class ConversationServerManager {
     //Get exist messages from Firebase, remove invalid data, sort by date of lastActivity.
     func fetchingMessages(for tableView: UITableView) {
         
-        reference.addSnapshotListener { [weak self] snapshot, error in
+        reference.addSnapshotListener { [weak self] snapshot, _ in
             
             guard let documents = snapshot?.documents else { return }
             
@@ -63,7 +63,7 @@ class ConversationServerManager {
                 //Scroll TableView to the bottom
                 guard let countOfMessages = self?.messages.count else { return }
                 if countOfMessages > 0 {
-                    let indexPath = IndexPath(row: countOfMessages-1, section: 0)
+                    let indexPath = IndexPath(row: countOfMessages - 1, section: 0)
                     tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
                 
@@ -75,10 +75,10 @@ class ConversationServerManager {
     
     func addNewMessage(message: Message) {
         reference.addDocument(data: [
-            "content" :message.content,
-            "created" : message.created,
-            "senderId" : message.senderId,
-            "senderName" : message.senderName
+            "content": message.content,
+            "created": message.created,
+            "senderId": message.senderId,
+            "senderName": message.senderName
         ])
     }
     

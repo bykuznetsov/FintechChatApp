@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-//MARK: // When implementing this protocol you should only change the colors of your views.
+// MARK: When implementing this protocol you should only change the colors of your views.
 
 //This protocol uses in ViewController's with 3 types theme: .classic, .day, .night
 //Method changeTheme(with theme:) uses in viewWillAppear

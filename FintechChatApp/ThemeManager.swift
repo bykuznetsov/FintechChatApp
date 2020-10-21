@@ -33,14 +33,14 @@ class ThemeManager {
             self.currentTheme = theme
             
             //Update in UserDefaults
-            self.defaults.set( String(describing: theme) , forKey: "Theme")
+            self.defaults.set( String(describing: theme), forKey: "Theme")
         }
     }
     
     private init() {
         
         //When init -> update currentTheme with UserDefaults
-        guard let themeFromDefaults = defaults.string(forKey:"Theme") else { return }
+        guard let themeFromDefaults = defaults.string(forKey: "Theme") else { return }
 
         if themeFromDefaults == "classic" {
             self.currentTheme = .classic
@@ -53,5 +53,3 @@ class ThemeManager {
     }
     
 }
-
-

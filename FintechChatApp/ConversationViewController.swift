@@ -127,7 +127,7 @@ class ConversationViewController: UIViewController {
     
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension ConversationViewController: UITableViewDataSource {
     
@@ -150,7 +150,7 @@ extension ConversationViewController: UITableViewDataSource {
     
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -158,7 +158,7 @@ extension ConversationViewController: UITableViewDelegate {
     }
 }
 
-//MARK: - ThemeableViewController
+// MARK: - ThemeableViewController
 
 extension ConversationViewController: ThemeableViewController {
     
