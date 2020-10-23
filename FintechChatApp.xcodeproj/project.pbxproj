@@ -21,6 +21,8 @@
 		50700C33251F851C003A060B /* ConversationsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50700C32251F851C003A060B /* ConversationsListViewController.storyboard */; };
 		50700C36251F87A2003A060B /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C34251F87A2003A060B /* ConversationListCell.swift */; };
 		50700C37251F87A2003A060B /* ConversationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50700C35251F87A2003A060B /* ConversationListCell.xib */; };
+		5074653C25437E8400BFE7D6 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5074653B25437E8400BFE7D6 /* CoreDataStack.swift */; };
+		5074653F25437EBA00BFE7D6 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5074653D25437EBA00BFE7D6 /* Chat.xcdatamodeld */; };
 		507DE6DC2535D40400D797C6 /* ProfileName.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507DE6DB2535D40400D797C6 /* ProfileName.plist */; };
 		507DE6DF2535D53700D797C6 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507DE6DE2535D53700D797C6 /* ProfileModel.swift */; };
 		507DE6E125360EA700D797C6 /* ProfileDescription.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507DE6E025360EA700D797C6 /* ProfileDescription.plist */; };
@@ -57,6 +59,8 @@
 		50700C32251F851C003A060B /* ConversationsListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsListViewController.storyboard; sourceTree = "<group>"; };
 		50700C34251F87A2003A060B /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		50700C35251F87A2003A060B /* ConversationListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationListCell.xib; sourceTree = "<group>"; };
+		5074653B25437E8400BFE7D6 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		5074653E25437EBA00BFE7D6 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		507DE6DB2535D40400D797C6 /* ProfileName.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProfileName.plist; sourceTree = "<group>"; };
 		507DE6DE2535D53700D797C6 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		507DE6E025360EA700D797C6 /* ProfileDescription.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProfileDescription.plist; sourceTree = "<group>"; };
@@ -195,6 +199,15 @@
 			name = Debugging;
 			sourceTree = "<group>";
 		};
+		5074653A25437DEE00BFE7D6 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				5074653B25437E8400BFE7D6 /* CoreDataStack.swift */,
+				5074653D25437EBA00BFE7D6 /* Chat.xcdatamodeld */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		507DE6DD2535D52000D797C6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +253,7 @@
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
 				5058C7CF251955C800DAD08C /* Debugging */,
 				5058C7C925194C0E00DAD08C /* Extensions */,
+				5074653A25437DEE00BFE7D6 /* CoreData */,
 				5050580F2525158800FD73CA /* ViewControllers */,
 				50CCDB2E250E5E2300348C98 /* Assets.xcassets */,
 				50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */,
@@ -414,6 +428,7 @@
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
 				5035DD70252E7E6D00846ECC /* ConversationServerManager.swift in Sources */,
 				50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */,
+				5074653F25437EBA00BFE7D6 /* Chat.xcdatamodeld in Sources */,
 				507DE6E72537792500D797C6 /* GCDDataManager.swift in Sources */,
 				5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */,
 				507DE6DF2535D53700D797C6 /* ProfileModel.swift in Sources */,
@@ -423,6 +438,7 @@
 				50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */,
 				5054DFD22540A7D800124432 /* ProfileViewControllerThemes.swift in Sources */,
 				50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */,
+				5074653C25437E8400BFE7D6 /* CoreDataStack.swift in Sources */,
 				50700C36251F87A2003A060B /* ConversationListCell.swift in Sources */,
 				50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */,
 				5035DD6E252E7D8C00846ECC /* ConversationListServerManager.swift in Sources */,
@@ -628,6 +644,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5074653D25437EBA00BFE7D6 /* Chat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5074653E25437EBA00BFE7D6 /* Chat.xcdatamodel */,
+			);
+			currentVersion = 5074653E25437EBA00BFE7D6 /* Chat.xcdatamodel */;
+			path = Chat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 50CCDB1A250E5E1C00348C98 /* Project object */;
 }
