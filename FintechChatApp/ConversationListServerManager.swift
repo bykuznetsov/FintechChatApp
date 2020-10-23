@@ -72,7 +72,7 @@ class ConversationListServerManager {
         reference.addDocument(data: [
             "name": channel.name,
             "lastMessage": channel.lastMessage as String? as Any,
-            "lastActivity": Timestamp()
+            "lastActivity": channel.lastActivity as Date? as Any
         ])
     }
     
