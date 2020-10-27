@@ -18,12 +18,19 @@ class ConversationServerManager {
     
     var messages: [Message] = []
     
+    //Object for caching data from Firebase server
+    lazy var coreDataStack = CoreDataStack.shared
+    
+    //Channel from CoreData
+    var channelCoreData: DBChannel?
+    
     init(documentId: String) {
         self.documentId = documentId
     }
     
     //Data Model
     struct Message {
+        let identifier: String
         let content: String
         let created: Date
         let senderId: String
@@ -39,6 +46,8 @@ class ConversationServerManager {
             
             self?.messages = documents.compactMap { queryDocumentSnapshot -> Message? in
                 
+                let identifier = queryDocumentSnapshot.documentID
+                
                 let data = queryDocumentSnapshot.data()
                 
                 let content = data["content"] as? String ?? ""
@@ -51,11 +60,41 @@ class ConversationServerManager {
                     return nil
                 }
                 
-                return Message(content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
+                return Message(identifier: identifier, content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
             }
             
             //Sort Messages by date
             self?.messages.sort { $0.created.compare($1.created) == .orderedAscending }
+            
+            //Caching data
+            self?.coreDataStack.performSave { context in
+                
+                //Find channel
+                if let id = self?.documentId {
+                    if let channel = self?.coreDataStack.fetchChannelById(by: id, in: context) {
+                        self?.channelCoreData = channel
+                    }
+                }
+                
+                if let messages = self?.messages {
+                    for message in messages {
+                        
+                        let identifier = message.identifier
+                        let content = message.content
+                        let created = message.created
+                        let senderId = message.senderId
+                        let senderName = message.senderName
+                        
+                        let message = DBMessage( identifier: identifier, content: content, created: created, senderId: senderId, senderName: senderName, in: context)
+                        
+                        //Add messages to the channel
+                        if let channelCoreData = self?.channelCoreData {
+                            channelCoreData.addToMessages(message)
+                        }
+                        
+                    }
+                }
+            }
             
             DispatchQueue.main.async {
                 tableView.reloadData()

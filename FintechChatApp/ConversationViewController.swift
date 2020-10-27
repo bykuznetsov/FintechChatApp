@@ -70,11 +70,12 @@ class ConversationViewController: UIViewController {
             guard let textField = textFields.first else { return }
             guard let text = textField.text else { return }
             
-            //Personal device ID
+            //Personal device ID and name from file
             guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
+            let senderName = GCDDataManager().initProfileName()
             
             //text - text of message
-            self?.conversationServerManager.addNewMessage(message: .init(content: text, created: Date(), senderId: mySenderId, senderName: GCDDataManager().initProfileName()))
+            self?.conversationServerManager.addNewMessage(message: .init(identifier: "", content: text, created: Date(), senderId: mySenderId, senderName: senderName))
             
             action.isEnabled = false
             textField.text = ""

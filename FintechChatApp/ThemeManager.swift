@@ -28,7 +28,7 @@ class ThemeManager {
     }
     
     func updateTheme(new theme: Theme) {
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .background).sync {
             //Update currentTheme
             self.currentTheme = theme
             

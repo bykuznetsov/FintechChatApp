@@ -36,6 +36,7 @@
 		50B63E9E2523B25900B9E6CA /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E9D2523B25900B9E6CA /* ConfigurableView.swift */; };
 		50B63EA12523B57100B9E6CA /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E9F2523B57100B9E6CA /* ConversationCell.swift */; };
 		50B63EA22523B57100B9E6CA /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B63EA02523B57100B9E6CA /* ConversationCell.xib */; };
+		50B78BDF2544755E0058166F /* EntityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B78BDE2544755E0058166F /* EntityExtensions.swift */; };
 		50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CCDB25250E5E1C00348C98 /* AppDelegate.swift */; };
 		50CCDB2D250E5E1C00348C98 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */; };
 		50CCDB2F250E5E2300348C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2E250E5E2300348C98 /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		50B63E9D2523B25900B9E6CA /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		50B63E9F2523B57100B9E6CA /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		50B63EA02523B57100B9E6CA /* ConversationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationCell.xib; sourceTree = "<group>"; };
+		50B78BDE2544755E0058166F /* EntityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityExtensions.swift; sourceTree = "<group>"; };
 		50CCDB22250E5E1C00348C98 /* FintechChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FintechChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CCDB25250E5E1C00348C98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50CCDB2C250E5E1C00348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				5074653B25437E8400BFE7D6 /* CoreDataStack.swift */,
+				50B78BDE2544755E0058166F /* EntityExtensions.swift */,
 				5074653D25437EBA00BFE7D6 /* Chat.xcdatamodeld */,
 			);
 			name = CoreData;
@@ -389,7 +392,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		EB4E075DA5CF919AF937260A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -426,6 +429,7 @@
 				502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */,
 				50B63E9825227D9400B9E6CA /* ConversationViewController.swift in Sources */,
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
+				50B78BDF2544755E0058166F /* EntityExtensions.swift in Sources */,
 				5035DD70252E7E6D00846ECC /* ConversationServerManager.swift in Sources */,
 				50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */,
 				5074653F25437EBA00BFE7D6 /* Chat.xcdatamodeld in Sources */,
