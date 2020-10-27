@@ -7,10 +7,20 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationViewController: UIViewController {
     
-    var messages: [ConversationData.MessageModel] = ConversationData.messages
+    //documentId get from ConversationsListViewController
+    lazy var documentId = ""
+    
+    //Object for working with Firebase (Database)
+    lazy var conversationServerManager = ConversationServerManager(documentId: "\(documentId)")
+    
+    //Plus button on Navigation Bar
+    let addNewMessageButton = UIButton(type: .custom)
+    
+    let alertWithAddingMessage = UIAlertController(title: "Send Message", message: "Enter text", preferredStyle: .alert)
     
     //Cell Identifier (ConversationCell).
     private let cellIdentifier = String(describing: ConversationCell.self)
@@ -22,34 +32,69 @@ class ConversationViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
+        
     }()
-    
-    //Get it from ConversationsListViewController.
-    var lastMessage: ConversationData.MessageModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
         setupNavigationBar()
-        setupMessageHistory(lastMessage: self.lastMessage)
+        setupAlertWithAddingMessage()
+        
+        conversationServerManager.fetchingMessages(for: self.tableView)
     }
     
-    //Consider 2 cases (if lastMessage is Empty or == nil)
-    func setupMessageHistory(lastMessage: ConversationData.MessageModel?) {
-        
-        guard let message = lastMessage else {
-            //If we not have last message -> we not have message history.
-            self.messages.removeAll()
-            self.tableView.tableFooterView = UIView()
-            return
-        }
-        //If we have last message -> we have message history.
-        self.messages.append(message)
-        
-        //Scroll to the bottom of tableView.
+    @objc func showAlertWithAddingMessage() {
         DispatchQueue.main.async {
-            self.tableView.scrollRectToVisible(CGRect.init(x: 0, y: self.tableView.contentSize.height - self.tableView.frame.size.height, width: self.tableView.frame.size.width, height: self.tableView.frame.size.height), animated: false)
+            self.present(self.alertWithAddingMessage, animated: true, completion: nil)
         }
+    }
+    
+    //Func of TextField in alertWithAddingMessage
+    @objc func inputMessageText(_ sender: UITextField) {
+        guard let text = sender.text else { return }
+        //Check input text (if it empty or only white-spaces - disable sending)
+        self.alertWithAddingMessage.actions[0].isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    func setupAlertWithAddingMessage() {
+        
+        self.alertWithAddingMessage.addTextField { textField in
+            textField.placeholder = "Message"
+            textField.addTarget(self, action: #selector(self.inputMessageText), for: .editingChanged)
+        }
+        
+        let createAction = UIAlertAction(title: "Send", style: .default, handler: { [weak self] (action) in
+            
+            guard let textFields = self?.alertWithAddingMessage.textFields else { return }
+            guard let textField = textFields.first else { return }
+            guard let text = textField.text else { return }
+            
+            //Personal device ID
+            guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
+            
+            //text - text of message
+            self?.conversationServerManager.addNewMessage(message: .init(content: text, created: Date(), senderId: mySenderId, senderName: GCDDataManager().initProfileName()))
+            
+            action.isEnabled = false
+            textField.text = ""
+            
+        })
+        createAction.isEnabled = false
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak self] (_) in
+            
+            guard let textFields = self?.alertWithAddingMessage.textFields else { return }
+            guard let textField = textFields.first else { return }
+            
+            createAction.isEnabled = false
+            textField.text = ""
+            
+        })
+        
+        self.alertWithAddingMessage.addAction(createAction)
+        self.alertWithAddingMessage.addAction(cancelAction)
+        
     }
     
     //NavigationBar Setup.
@@ -61,11 +106,24 @@ class ConversationViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        
+        //Configure addNewMessageButton navigationBarItem.
+        addNewMessageButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+        addNewMessageButton.setTitle("+", for: .normal)
+        addNewMessageButton.setTitleColor(.systemBlue, for: .normal)
+        addNewMessageButton.setTitleColor(.gray, for: .highlighted)
+        addNewMessageButton.titleLabel?.font = UIFont.systemFont(ofSize: 32)
+        addNewMessageButton.addTarget(self, action: #selector(showAlertWithAddingMessage), for: .touchUpInside)
+        let addNewMessageBarButton = UIBarButtonItem(customView: addNewMessageButton)
+        
+        //Adding to Navigation Bar - profileBarButton, addNewChannelBarButton (Rightside)
+        self.navigationItem.rightBarButtonItems = [addNewMessageBarButton]
+        
     }
     
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension ConversationViewController: UITableViewDataSource {
     
@@ -74,21 +132,23 @@ extension ConversationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        messages.count
+        return conversationServerManager.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let message = messages[indexPath.row]
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else {return UITableViewCell()}
-        cell.configure(with: .init(text: message.text, isOutgoingMessage: message.isOutgoingMessage))
+        
+        let message = conversationServerManager.messages[indexPath.row]
+        
+        cell.configure(with: .init(content: message.content, created: message.created, senderId: message.senderId, senderName: message.senderName))
+        
         return cell
     }
     
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,7 +156,7 @@ extension ConversationViewController: UITableViewDelegate {
     }
 }
 
-//MARK: - ThemeableViewController
+// MARK: - ThemeableViewController
 
 extension ConversationViewController: ThemeableViewController {
     

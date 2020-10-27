@@ -15,4 +15,3 @@ struct ProfileName: Codable {
 struct ProfileDescription: Codable {
     var description: String
 }
-

@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tinkoff Chat-->
+        <!--Channels-->
         <scene sceneID="Tkp-Jw-oSt">
             <objects>
                 <viewController id="aTP-aC-K4p" customClass="ConversationsListViewController" customModule="FintechChatApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="RKW-1u-prm"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tinkoff Chat" id="rlj-mY-qjx"/>
+                    <navigationItem key="navigationItem" title="Channels" id="rlj-mY-qjx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lVT-Ex-w7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -27,7 +27,6 @@
         <!--Navigation Controller-->
         <scene sceneID="aAW-Ct-3JG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="v1c-xA-luJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QkL-zB-W08" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Nrc-hr-IK2">
@@ -39,6 +38,7 @@
                         <segue destination="aTP-aC-K4p" kind="relationship" relationship="rootViewController" id="tT5-Vd-DEd"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v1c-xA-luJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="86.956521739130437" y="6.6964285714285712"/>
         </scene>

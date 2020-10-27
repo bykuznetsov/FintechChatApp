@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension UIViewController {
     //Method with initialization of View Controller (for Navigation between VC's)
     //Rule: .swift & .storyboard -> the same name

@@ -15,7 +15,6 @@ class DayTheme: ThemeProtocol {
         
     }
     
-    
     init() {
         
     }

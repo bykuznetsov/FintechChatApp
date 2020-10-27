@@ -12,21 +12,15 @@ import UIKit
 class ProfileDataManager {
     
     var profileName: String? {
-        get {
-            self.initProfileName()
-        }
+        self.initProfileName()
     }
     
     var profileDescription: String? {
-        get {
-            self.initProfileDescription()
-        }
+        self.initProfileDescription()
     }
     
     var profileImage: UIImage? {
-        get {
-            self.initProfileImage()
-        }
+        self.initProfileImage()
     }
     
     //Path's and file name's
@@ -105,14 +99,14 @@ class ProfileDataManager {
                 let profileName: ProfileName?
                 profileName = try decoder.decode(ProfileName.self, from: data)
 
-                return profileName?.name ?? "Marina Dudarenko"
+                return profileName?.name ?? "Nikita Kuznetsov"
                 
             } catch {
-                return "Marina Dudarenko"
+                return "Nikita Kuznetsov"
             }
             
         } catch {
-            return "Marina Dudarenko"
+            return "Nikita Kuznetsov"
         }
     }
     
@@ -153,4 +147,3 @@ class ProfileDataManager {
     }
     
 }
-

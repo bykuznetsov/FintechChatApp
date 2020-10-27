@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
 
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         
         LogginClass.printAppLifeCycleEvent("Application moved from <> to <>", #function)
         
@@ -21,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
         
         LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
         
@@ -48,4 +51,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
-
