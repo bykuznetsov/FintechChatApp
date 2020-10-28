@@ -124,7 +124,8 @@ class CoreDataStack {
         
         didUpdateDataBase?(self)
         
-        print("", terminator: Array(repeating: "\n", count: 100).joined())
+        //For console
+        print("", terminator: Array(repeating: "\n", count: 20).joined())
         
         print("🆕➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖🆕")
         
