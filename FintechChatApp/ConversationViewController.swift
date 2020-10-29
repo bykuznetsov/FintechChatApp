@@ -11,91 +11,74 @@ import Firebase
 
 class ConversationViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var sendButton: UIButton!
+    
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
     //documentId get from ConversationsListViewController
     lazy var documentId = ""
     
     //Object for working with Firebase (Database)
     lazy var conversationServerManager = ConversationServerManager(documentId: "\(documentId)")
     
-    //Plus button on Navigation Bar
-    let addNewMessageButton = UIButton(type: .custom)
-    
-    let alertWithAddingMessage = UIAlertController(title: "Send Message", message: "Enter text", preferredStyle: .alert)
-    
-    //Cell Identifier (ConversationCell).
-    private let cellIdentifier = String(describing: ConversationCell.self)
-    
-    //Create and setup tableView.
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: view.frame, style: .plain)
-        tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        return tableView
-        
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
+        setupTableView()
+        setuptMessageTextView()
         setupNavigationBar()
-        setupAlertWithAddingMessage()
+        addKeyboardNotifications()
         
         conversationServerManager.fetchingMessages(for: self.tableView)
     }
     
-    @objc func showAlertWithAddingMessage() {
-        DispatchQueue.main.async {
-            self.present(self.alertWithAddingMessage, animated: true, completion: nil)
-        }
-    }
-    
-    //Func of TextField in alertWithAddingMessage
-    @objc func inputMessageText(_ sender: UITextField) {
-        guard let text = sender.text else { return }
+    @IBAction func inputMessageText(_ sender: Any) {
+        guard let text = messageTextField.text else { return }
         //Check input text (if it empty or only white-spaces - disable sending)
-        self.alertWithAddingMessage.actions[0].isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+        self.sendButton.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
-    func setupAlertWithAddingMessage() {
+    @IBAction func sendMessage(_ sender: Any) {
         
-        self.alertWithAddingMessage.addTextField { textField in
-            textField.placeholder = "Message"
-            textField.addTarget(self, action: #selector(self.inputMessageText), for: .editingChanged)
-        }
+        guard let textOfMessage = self.messageTextField.text else { return }
         
-        let createAction = UIAlertAction(title: "Send", style: .default, handler: { [weak self] (action) in
-            
-            guard let textFields = self?.alertWithAddingMessage.textFields else { return }
-            guard let textField = textFields.first else { return }
-            guard let text = textField.text else { return }
-            
-            //Personal device ID and name from file
-            guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
-            let senderName = GCDDataManager().initProfileName()
-            
-            //text - text of message
-            self?.conversationServerManager.addNewMessage(message: .init(identifier: "", content: text, created: Date(), senderId: mySenderId, senderName: senderName))
-            
-            action.isEnabled = false
-            textField.text = ""
-            
-        })
-        createAction.isEnabled = false
+        //Personal device ID and name from file
+        guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
+        let senderName = GCDDataManager().initProfileName()
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak self] (_) in
-            
-            guard let textFields = self?.alertWithAddingMessage.textFields else { return }
-            guard let textField = textFields.first else { return }
-            
-            createAction.isEnabled = false
-            textField.text = ""
-            
-        })
+        self.conversationServerManager.addNewMessage(message: .init(identifier: "", content: textOfMessage, created: Date(), senderId: mySenderId, senderName: senderName))
         
-        self.alertWithAddingMessage.addAction(createAction)
-        self.alertWithAddingMessage.addAction(cancelAction)
+        self.sendButton.isEnabled = false
+        self.messageTextField.text = ""
+    }
+    
+    //Cell Identifier (ConversationCell).
+    private let cellIdentifier = String(describing: ConversationCell.self)
+    
+    //TableView Setup
+    func setupTableView() {
         
+        //Flip tableView
+        self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        
+        self.tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+    }
+    
+    //MessageTextView Setup
+    func setuptMessageTextView() {
+        self.messageTextField.delegate = self
+        self.messageTextField.returnKeyType = .done
+        self.messageTextField.layer.cornerRadius = self.messageTextField.bounds.height / 2
+        self.messageTextField.layer.borderColor = UIColor.gray.withAlphaComponent(1).cgColor
+        self.messageTextField.layer.borderWidth = 0.7
+        self.messageTextField.clipsToBounds = true
+        self.messageTextField.attributedPlaceholder = NSAttributedString(string: "Message Text",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
     }
     
     //NavigationBar Setup.
@@ -107,18 +90,6 @@ class ConversationViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        
-        //Configure addNewMessageButton navigationBarItem.
-        addNewMessageButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        addNewMessageButton.setTitle("+", for: .normal)
-        addNewMessageButton.setTitleColor(.systemBlue, for: .normal)
-        addNewMessageButton.setTitleColor(.gray, for: .highlighted)
-        addNewMessageButton.titleLabel?.font = UIFont.systemFont(ofSize: 32)
-        addNewMessageButton.addTarget(self, action: #selector(showAlertWithAddingMessage), for: .touchUpInside)
-        let addNewMessageBarButton = UIBarButtonItem(customView: addNewMessageButton)
-        
-        //Adding to Navigation Bar - profileBarButton, addNewChannelBarButton (Rightside)
-        self.navigationItem.rightBarButtonItems = [addNewMessageBarButton]
         
     }
     
@@ -144,6 +115,9 @@ extension ConversationViewController: UITableViewDataSource {
         
         cell.configure(with: .init(content: message.content, created: message.created, senderId: message.senderId, senderName: message.senderName))
         
+        //Flip cell's
+        cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+        
         return cell
     }
     
@@ -155,6 +129,45 @@ extension ConversationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ConversationViewController: UITextFieldDelegate {
+    
+    //Press Done Button in TextField -> dismiss keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+}
+
+// MARK: - Keyboard
+
+extension ConversationViewController {
+    
+    //Moving view.frame if keyboard Show.
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.bottomConstraint.constant == 0 {
+                self.bottomConstraint.constant -= keyboardSize.height
+            }
+        }
+    }
+    
+    //Moving view.frame if keyboard Hide.
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.bottomConstraint.constant != 0 {
+            self.bottomConstraint.constant = 0
+        }
+    }
+    
+    func addKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
 }
 
 // MARK: - ThemeableViewController
@@ -177,7 +190,14 @@ extension ConversationViewController: ThemeableViewController {
             self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             
+            self.view.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            self.bottomView.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            
             self.tableView.backgroundColor = .white
+            
+            //Message TextField
+            self.messageTextField.backgroundColor = .white
+            self.messageTextField.textColor = .black
             
         case .day:
             
@@ -185,7 +205,14 @@ extension ConversationViewController: ThemeableViewController {
             self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             
+            self.view.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            self.bottomView.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+            
             self.tableView.backgroundColor = .white
+            
+            //Message TextField
+            self.messageTextField.backgroundColor = .white
+            self.messageTextField.textColor = .black
             
         case .night:
             
@@ -193,7 +220,14 @@ extension ConversationViewController: ThemeableViewController {
             self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             
+            self.view.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            self.bottomView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            
             self.tableView.backgroundColor = .black
+            
+            //Message TextField
+            self.messageTextField.backgroundColor = #colorLiteral(red: 0.3148368597, green: 0.3464637399, blue: 0.3928565383, alpha: 1)
+            self.messageTextField.textColor = .white
             
         }
     }

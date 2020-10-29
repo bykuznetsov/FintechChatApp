@@ -66,6 +66,9 @@ class ConversationServerManager {
             //Sort Messages by date
             self?.messages.sort { $0.created.compare($1.created) == .orderedAscending }
             
+            //Flip data (because our tableView reversed)
+            self?.messages.reverse()
+            
             //Caching data
             self?.coreDataStack.performSave { context in
                 
@@ -98,14 +101,6 @@ class ConversationServerManager {
             
             DispatchQueue.main.async {
                 tableView.reloadData()
-                
-                //Scroll TableView to the bottom
-                guard let countOfMessages = self?.messages.count else { return }
-                if countOfMessages > 0 {
-                    let indexPath = IndexPath(row: countOfMessages - 1, section: 0)
-                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                }
-                
             }
             
         }

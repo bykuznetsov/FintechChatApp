@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="85i-2A-JmK">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -13,16 +13,73 @@
             <objects>
                 <viewController storyboardIdentifier="ConversationViewController" id="85i-2A-JmK" customClass="ConversationViewController" customModule="FintechChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zkf-t1-jUr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bjD-kK-8gh">
+                                <rect key="frame" x="0.0" y="44" width="375" height="684"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHo-Hm-2Kb">
+                                <rect key="frame" x="0.0" y="728" width="375" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XVk-Wo-EN1">
+                                        <rect key="frame" x="8" y="6" width="314" height="38"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="YMK-vJ-hnI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="inputMessageText:" destination="85i-2A-JmK" eventType="editingChanged" id="hjH-ja-Xgk"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10d-wH-nAx">
+                                        <rect key="frame" x="330" y="5" width="37" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="Send"/>
+                                        <connections>
+                                            <action selector="sendMessage:" destination="85i-2A-JmK" eventType="touchUpInside" id="SEB-3n-ABV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0Ml-wJ-8Ml"/>
+                                    <constraint firstItem="10d-wH-nAx" firstAttribute="leading" secondItem="XVk-Wo-EN1" secondAttribute="trailing" constant="8" id="77D-Qs-F0Q"/>
+                                    <constraint firstItem="10d-wH-nAx" firstAttribute="top" secondItem="nHo-Hm-2Kb" secondAttribute="top" constant="5" id="CpK-c8-Gir"/>
+                                    <constraint firstAttribute="bottom" secondItem="10d-wH-nAx" secondAttribute="bottom" constant="5" id="LXT-Gb-mIh"/>
+                                    <constraint firstItem="XVk-Wo-EN1" firstAttribute="leading" secondItem="nHo-Hm-2Kb" secondAttribute="leading" constant="8" id="NI1-lF-taR"/>
+                                    <constraint firstItem="XVk-Wo-EN1" firstAttribute="top" secondItem="nHo-Hm-2Kb" secondAttribute="top" constant="6" id="Zsb-7B-pbL"/>
+                                    <constraint firstAttribute="trailing" secondItem="10d-wH-nAx" secondAttribute="trailing" constant="8" id="dRu-Vt-iNZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="XVk-Wo-EN1" secondAttribute="bottom" constant="6" id="zlb-NN-GZT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="nHo-Hm-2Kb" firstAttribute="trailing" secondItem="aDd-4A-X6e" secondAttribute="trailing" id="A5e-g9-2Ia"/>
+                            <constraint firstItem="nHo-Hm-2Kb" firstAttribute="bottom" secondItem="aDd-4A-X6e" secondAttribute="bottom" id="BjQ-sK-0TQ"/>
+                            <constraint firstItem="bjD-kK-8gh" firstAttribute="trailing" secondItem="aDd-4A-X6e" secondAttribute="trailing" id="Lf8-u3-K4A"/>
+                            <constraint firstItem="bjD-kK-8gh" firstAttribute="top" secondItem="aDd-4A-X6e" secondAttribute="top" id="OHw-Cm-ttM"/>
+                            <constraint firstItem="nHo-Hm-2Kb" firstAttribute="leading" secondItem="aDd-4A-X6e" secondAttribute="leading" id="Wcq-Tz-RJX"/>
+                            <constraint firstItem="nHo-Hm-2Kb" firstAttribute="top" secondItem="bjD-kK-8gh" secondAttribute="bottom" id="brz-uO-zz2"/>
+                            <constraint firstItem="bjD-kK-8gh" firstAttribute="leading" secondItem="aDd-4A-X6e" secondAttribute="leading" id="gbI-l9-HCU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="aDd-4A-X6e"/>
                     </view>
                     <navigationItem key="navigationItem" id="61M-ru-XpY"/>
+                    <connections>
+                        <outlet property="bottomConstraint" destination="BjQ-sK-0TQ" id="usT-YV-ovX"/>
+                        <outlet property="bottomView" destination="nHo-Hm-2Kb" id="wpU-kv-vWl"/>
+                        <outlet property="messageTextField" destination="XVk-Wo-EN1" id="3wU-X6-cwF"/>
+                        <outlet property="sendButton" destination="10d-wH-nAx" id="gLE-Jo-r84"/>
+                        <outlet property="tableView" destination="bjD-kK-8gh" id="pxI-Z6-8hM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z6X-Qz-4U5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2826.0869565217395" y="79.6875"/>
+            <point key="canvasLocation" x="2825.625" y="78.16901408450704"/>
         </scene>
     </scenes>
 </document>

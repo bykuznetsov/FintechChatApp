@@ -69,7 +69,12 @@ class ConversationListServerManager {
                 if let channels = self?.channels {
                     for channel in channels {
                         
-                        _ = DBChannel(identifier: channel.identifier, name: channel.name, lastMessage: channel.lastMessage, lastActivity: channel.lastActivity, in: context)
+                        let identifier = channel.identifier
+                        let name = channel.name
+                        let lastMessage = channel.lastMessage
+                        let lastActivity = channel.lastActivity
+                        
+                        _ = DBChannel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity, in: context)
                         
                     }
                 }

@@ -148,7 +148,6 @@ class CoreDataStack {
             print("Обновлено объектов: \(updates.count)")
             print("Из них:")
             
-            //Когда добавляем сообщения в канал
             if let updateChannels = updates as? Set<DBChannel> {
                 print("🟡 \(updateChannels.count) канала(ов)")
             }
