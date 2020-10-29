@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        let coreDataStack = CoreDataStack.shared
+        
+        coreDataStack.enableObservers()
+        coreDataStack.didUpdateDataBase = { stack in
+            stack.printDatabaseStatistics()
+        }
+        
         LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
         
         return true

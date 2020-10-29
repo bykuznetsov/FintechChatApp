@@ -24,6 +24,9 @@ class ConversationListServerManager {
         let lastMessage: String?
         let lastActivity: Date?
     }
+     
+    //Object for caching data from Firebase server
+    lazy var coreDataStack = CoreDataStack.shared
     
     //Get exist channels from Firebase, remove invalid data, sort by date of lastActivity.
     func fetchingChannels(for tableView: UITableView) {
@@ -60,6 +63,22 @@ class ConversationListServerManager {
                 let followLastActivity = $1.lastActivity ?? Date(timeIntervalSince1970: 0)
                 return prevLastActivity > followLastActivity
             })
+            
+            //Caching data
+            self?.coreDataStack.performSave { context in
+                if let channels = self?.channels {
+                    for channel in channels {
+                        
+                        let identifier = channel.identifier
+                        let name = channel.name
+                        let lastMessage = channel.lastMessage
+                        let lastActivity = channel.lastActivity
+                        
+                        _ = DBChannel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity, in: context)
+                        
+                    }
+                }
+            }
             
             DispatchQueue.main.async {
                 tableView.reloadData()
