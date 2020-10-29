@@ -73,11 +73,9 @@ class ConversationServerManager {
             self?.coreDataStack.performSave { context in
                 
                 //Find channel
-                DispatchQueue.main.async {
-                    if let id = self?.documentId {
-                        if let channel = self?.coreDataStack.fetchChannelById(by: id, in: context) {
-                            self?.channelCoreData = channel
-                        }
+                if let id = self?.documentId {
+                    if let channel = self?.coreDataStack.fetchChannelById(by: id, in: context) {
+                        self?.channelCoreData = channel
                     }
                 }
                 
