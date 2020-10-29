@@ -147,19 +147,31 @@ extension ConversationViewController: UITextFieldDelegate {
 
 extension ConversationViewController {
     
-    //Moving view.frame if keyboard Show.
+    //Moving bottomConstraint if keyboard Show.
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.bottomConstraint.constant == 0 {
-                self.bottomConstraint.constant -= keyboardSize.height
+
+        UIView.animate(withDuration: 0.5) {
+            
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                if self.bottomConstraint.constant == 0 {
+                    self.bottomConstraint.constant -= keyboardSize.height
+                }
             }
+            
+            self.view.layoutIfNeeded()
         }
     }
     
-    //Moving view.frame if keyboard Hide.
+    //Moving bottomConstraint if keyboard Hide.
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.bottomConstraint.constant != 0 {
-            self.bottomConstraint.constant = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            
+            if self.bottomConstraint.constant != 0 {
+                self.bottomConstraint.constant = 0
+            }
+            
+            self.view.layoutIfNeeded()
         }
     }
     
