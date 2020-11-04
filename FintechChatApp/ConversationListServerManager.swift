@@ -28,10 +28,15 @@ class ConversationListServerManager {
     //Object for caching data from Firebase server
     lazy var coreDataStack = CoreDataStack.shared
     
-    //Get exist channels from Firebase, remove invalid data, sort by date of lastActivity.
+    //Get exist channels from Firebase, remove invalid data and caching it.
     func fetchingChannels() {
         
-        reference.addSnapshotListener { [weak self] snapshot, _ in
+        reference.addSnapshotListener { [weak self] (snapshot, error) in
+            
+            if let error = error {
+                print(error)
+                return
+            }
             
             guard let documents = snapshot?.documents else { return }
             
@@ -57,9 +62,10 @@ class ConversationListServerManager {
                 return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity?.dateValue())
             }
             
-            //Caching data
+            //Caching data.
             self?.coreDataStack.performSave { context in
-                
+                    
+                //Updating and inserting in CoreData.
                 if let channels = self?.channels {
                     for channel in channels {
                         
@@ -68,10 +74,39 @@ class ConversationListServerManager {
                         let lastMessage = channel.lastMessage
                         let lastActivity = channel.lastActivity
                         
-                        _ = DBChannel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity, in: context)
+                        let dbChannel = self?.coreDataStack.fetchChannelById(by: identifier, in: context)
+                        
+                        //If channel exist in CoreData -> update it.
+                        if let dbChannel = dbChannel {
+                            dbChannel.name = name
+                            dbChannel.lastMessage = lastMessage
+                            dbChannel.lastActivity = lastActivity
+                        } else { //If channel not exist in CoreData -> insert it.
+                            
+                            _ = DBChannel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity, in: context)
+                        }
                         
                     }
                 }
+                
+                //Deleting from CoreData.
+                let dbChannels = self?.coreDataStack.fetchAllChannels(in: context)
+                
+                //Get arrays of Identifiers.
+                let dbIdentifiers = dbChannels?.map { $0.identifier }
+                let identifiers = self?.channels.map { $0.identifier }
+                
+                //Check if data from server doesn't include id's from CoreData -> Delete.
+                if let dbIdentifiers = dbIdentifiers, let identifiers = identifiers {
+                    for dbIdentifier in dbIdentifiers {
+                        if let dbIdentifier = dbIdentifier {
+                            if !identifiers.contains(dbIdentifier) {
+                                self?.coreDataStack.deleteChannelById(by: dbIdentifier, in: context)
+                            }
+                        }
+                    }
+                }
+                
             }
         }
     }
@@ -85,11 +120,8 @@ class ConversationListServerManager {
     }
     
     func deleteChannel(at documentPath: String) {
-        //Delete from cache
-        self.coreDataStack.deleteChannelById(by: documentPath)
         //Delete from server
         reference.document("\(documentPath)").delete()
-        
     }
     
 }

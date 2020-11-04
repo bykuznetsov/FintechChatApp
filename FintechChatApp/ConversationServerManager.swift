@@ -82,12 +82,24 @@ class ConversationServerManager {
                         let senderId = message.senderId
                         let senderName = message.senderName
                         
-                        let message = DBMessage( identifier: identifier, content: content, created: created, senderId: senderId, senderName: senderName, in: context)
+                        let dbMessage = self?.coreDataStack.fetchMessageById(by: identifier, in: context)
                         
-                        //Add messages to the channel
-                        if let channelCoreData = self?.channelCoreData {
-                            channelCoreData.addToMessages(message)
+                        //If message exist in CoreData -> update it
+                        if let dbMessage = dbMessage {
+                            dbMessage.content = content
+                            dbMessage.created = created
+                            dbMessage.senderId = senderId
+                            dbMessage.senderName = senderName
+                        } else { //If message not exist in CoreData -> insert it
+                            
+                            let message = DBMessage( identifier: identifier, content: content, created: created, senderId: senderId, senderName: senderName, in: context)
+                            
+                            //Add messages to the channel
+                            if let channelCoreData = self?.channelCoreData {
+                                channelCoreData.addToMessages(message)
+                            }
                         }
+                        
                     }
                 }
             }

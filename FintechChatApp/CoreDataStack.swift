@@ -217,10 +217,22 @@ class CoreDataStack {
         }
     }
     
+    func fetchAllChannels(in context: NSManagedObjectContext) -> [DBChannel]? {
+        let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+        
+        do {
+            let channels = try context.fetch(fetchRequest)
+            return channels
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
     func fetchChannelById(by id: String, in context: NSManagedObjectContext) -> DBChannel? {
         
         let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier = %@", id)
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id)
         
         do {
             let channels = try context.fetch(fetchRequest)
@@ -237,12 +249,30 @@ class CoreDataStack {
         return nil
     }
     
-    func deleteChannelById(by id: String) {
+    func fetchMessageById(by id: String, in context: NSManagedObjectContext) -> DBMessage? {
         
-        let context = saveContext()
+        let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id)
         
+        do {
+            let messages = try context.fetch(fetchRequest)
+            
+            if let message = messages.first {
+                return message
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+        
+        return nil
+    }
+    
+    func deleteChannelById(by id: String, in context: NSManagedObjectContext) {
+    
         let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier = %@", id)
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id)
         
         context.perform {
             do {
@@ -251,7 +281,6 @@ class CoreDataStack {
                 guard let channel = channels.first else { return }
                 
                 context.delete(channel)
-                try context.save()
         
             } catch {
                 print(error)
