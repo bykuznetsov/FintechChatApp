@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class ConversationViewController: UIViewController {
     
@@ -25,6 +26,9 @@ class ConversationViewController: UIViewController {
     //Object for working with Firebase (Database)
     lazy var conversationServerManager = ConversationServerManager(documentId: "\(documentId)")
     
+    //Object for working with Local Database (data after caching)
+    lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = CoreDataStack.shared.messagesFetchedResultsController(channelId: "\(documentId)")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -32,7 +36,8 @@ class ConversationViewController: UIViewController {
         setupNavigationBar()
         addKeyboardNotifications()
         
-        conversationServerManager.fetchingMessages(for: self.tableView)
+        setupFetchedResultsController()
+        conversationServerManager.fetchingMessages()
     }
     
     @IBAction func inputMessageText(_ sender: Any) {
@@ -58,8 +63,20 @@ class ConversationViewController: UIViewController {
     //Cell Identifier (ConversationCell).
     private let cellIdentifier = String(describing: ConversationCell.self)
     
+    func setupFetchedResultsController() {
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
+        
+        self.fetchedResultsController.delegate = self
+    }
+    
     //TableView Setup
     func setupTableView() {
+        view.addSubview(tableView)
         
         //Flip tableView
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
@@ -100,20 +117,30 @@ class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversationServerManager.messages.count
+        guard let sections = fetchedResultsController.sections else {
+            return 0
+        }
+        
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else {return UITableViewCell()}
         
-        let message = conversationServerManager.messages[indexPath.row]
+        let message = self.fetchedResultsController.object(at: indexPath)
         
-        cell.configure(with: .init(content: message.content, created: message.created, senderId: message.senderId, senderName: message.senderName))
+        let content = message.content ?? "Not found"
+        let created = message.created ?? Date()
+        let senderId = message.senderId ?? "Not found"
+        let senderName = message.senderName ?? "Not found"
+        
+        cell.configure(with: .init(content: content, created: created, senderId: senderId, senderName: senderName))
         
         //Flip cell's
         cell.transform = CGAffineTransform(scaleX: 1, y: -1)
@@ -139,6 +166,46 @@ extension ConversationViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+    
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
+        
+            switch type {
+            case .insert:
+                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+                print("Вставка")
+            case .move:
+                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+                print("Сдвиг")
+            case .update:
+                self.tableView.reloadRows(at: [indexPath!], with: .automatic)
+                print("Обновили")
+            case .delete:
+                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+                print("Удаление")
+            @unknown default:
+                print("")
+            }
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
     }
     
 }

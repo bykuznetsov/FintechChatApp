@@ -8,11 +8,15 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class ConversationsListViewController: UIViewController {
     
     //Object for working with Firebase (Database)
     lazy var conversationListServerManager = ConversationListServerManager()
+    
+    //Object for working with Local Database (data after caching)
+    lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = CoreDataStack.shared.channelsFetchedResultsController
     
     //NavigationBar buttons
     let settingsButton = UIButton(type: .custom)
@@ -39,7 +43,8 @@ class ConversationsListViewController: UIViewController {
         setupNavigationController()
         setupAlertWithAddingChannel()
         
-        conversationListServerManager.fetchingChannels(for: self.tableView)
+        setupFetchedResultsController()
+        conversationListServerManager.fetchingChannels()
     }
     
     //Func of settingsBarButton.
@@ -77,6 +82,17 @@ class ConversationsListViewController: UIViewController {
         guard let text = sender.text else { return }
         //Check input text (if it empty or only white-spaces - disable creating)
         self.alertWithAddingChannel.actions[0].isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    func setupFetchedResultsController() {
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
+        
+        self.fetchedResultsController.delegate = self
     }
     
     func setupAlertWithAddingChannel() {
@@ -159,21 +175,36 @@ class ConversationsListViewController: UIViewController {
 extension ConversationsListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        conversationListServerManager.channels.count
+        
+        guard let sections = fetchedResultsController.sections else {
+            return 0
+        }
+
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let channel = conversationListServerManager.channels[indexPath.row]
+        let channel = self.fetchedResultsController.object(at: indexPath)
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else { return UITableViewCell() }
         
-        cell.configure(with: .init(name: channel.name, date: channel.lastActivity, message: channel.lastMessage))
+        cell.configure(with: .init(name: channel.name ?? "Not found", date: channel.lastActivity, message: channel.lastMessage))
         
         return cell
+    }
+    
+    //Delete cell by swipe
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let identifier = fetchedResultsController.object(at: indexPath).identifier else { return }
+            self.conversationListServerManager.deleteChannel(at: identifier)
+        }
     }
     
 }
@@ -189,10 +220,14 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
         
         //Change Navigation Bar title to the name of companion.
-        conversationViewController.navigationItem.title = conversationListServerManager.channels[indexPath.row].name
+        //conversationViewController.navigationItem.title = conversationListServerManager.channels[indexPath.row].name
+        conversationViewController.navigationItem.title = fetchedResultsController.object(at: indexPath).name
         
-        conversationViewController.documentId = conversationListServerManager.channels[indexPath.row].identifier
-        
+        //conversationViewController.documentId = conversationListServerManager.channels[indexPath.row].identifier
+        if let identifier = fetchedResultsController.object(at: indexPath).identifier {
+            conversationViewController.documentId = identifier
+        }
+       
         self.navigationController?.pushViewController(conversationViewController, animated: true)
     }
     
@@ -210,9 +245,52 @@ protocol ThemesPickerDelegate: class {
 
 extension ConversationsListViewController: ThemesPickerDelegate {
     func transferThemeWithDelegate(theme: ThemeManager.Theme) {
-        //        ThemeManager.shared.updateTheme(new: theme)
-        //
+        //ThemeManager.shared.updateTheme(new: theme)
     }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
+        
+            switch type {
+            case .insert:
+                if let newIndexPath = newIndexPath {
+                    self.tableView.insertRows(at: [newIndexPath], with: .left)
+                }
+            case .move:
+                if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                    self.tableView.deleteRows(at: [indexPath], with: .left)
+                    self.tableView.insertRows(at: [newIndexPath], with: .left)
+                }
+            case .update:
+                if let indexPath = indexPath {
+                    self.tableView.reloadRows(at: [indexPath], with: .left)
+                }
+            case .delete:
+                if let indexPath = indexPath {
+                    self.tableView.deleteRows(at: [indexPath], with: .left)
+                }
+            @unknown default:
+                print("")
+            }
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+    
 }
 
 // MARK: - ThemeableViewController
