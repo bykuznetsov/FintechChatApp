@@ -183,18 +183,22 @@ extension ConversationViewController: NSFetchedResultsControllerDelegate {
         
             switch type {
             case .insert:
-                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
-                print("Вставка")
+                if let newIndexPath = newIndexPath {
+                    self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                }
             case .move:
-                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
-                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
-                print("Сдвиг")
+                if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                    self.tableView.deleteRows(at: [indexPath], with: .left)
+                    self.tableView.insertRows(at: [newIndexPath], with: .left)
+                }
             case .update:
-                self.tableView.reloadRows(at: [indexPath!], with: .automatic)
-                print("Обновили")
+                if let indexPath = indexPath {
+                    self.tableView.reloadRows(at: [indexPath], with: .left)
+                }
             case .delete:
-                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
-                print("Удаление")
+                if let indexPath = indexPath {
+                    self.tableView.deleteRows(at: [indexPath], with: .left)
+                }
             @unknown default:
                 print("")
             }

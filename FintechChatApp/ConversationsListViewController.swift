@@ -220,7 +220,6 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
         
         //Change Navigation Bar title to the name of companion.
-        //conversationViewController.navigationItem.title = conversationListServerManager.channels[indexPath.row].name
         conversationViewController.navigationItem.title = fetchedResultsController.object(at: indexPath).name
         
         //conversationViewController.documentId = conversationListServerManager.channels[indexPath.row].identifier
