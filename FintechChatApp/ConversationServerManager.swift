@@ -18,6 +18,15 @@ class ConversationServerManager {
     
     var messages: [Message] = []
     
+    //Data Model
+    struct Message {
+        let identifier: String
+        let content: String
+        let created: Date
+        let senderId: String
+        let senderName: String
+    }
+    
     //Object for caching data from Firebase server
     lazy var coreDataStack = CoreDataStack.shared
     
@@ -28,17 +37,8 @@ class ConversationServerManager {
         self.documentId = documentId
     }
     
-    //Data Model
-    struct Message {
-        let identifier: String
-        let content: String
-        let created: Date
-        let senderId: String
-        let senderName: String
-    }
-    
     //Get exist messages from Firebase, remove invalid data, sort by date of lastActivity.
-    func fetchingMessages(for tableView: UITableView) {
+    func fetchingMessages() {
         
         reference.addSnapshotListener { [weak self] snapshot, _ in
             
@@ -63,12 +63,6 @@ class ConversationServerManager {
                 return Message(identifier: identifier, content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
             }
             
-            //Sort Messages by date
-            self?.messages.sort { $0.created.compare($1.created) == .orderedAscending }
-            
-            //Flip data (because our tableView reversed)
-            self?.messages.reverse()
-            
             //Caching data
             self?.coreDataStack.performSave { context in
                 
@@ -88,23 +82,28 @@ class ConversationServerManager {
                         let senderId = message.senderId
                         let senderName = message.senderName
                         
-                        let message = DBMessage( identifier: identifier, content: content, created: created, senderId: senderId, senderName: senderName, in: context)
+                        let dbMessage = self?.coreDataStack.fetchMessageById(by: identifier, in: context)
                         
-                        //Add messages to the channel
-                        if let channelCoreData = self?.channelCoreData {
-                            channelCoreData.addToMessages(message)
+                        //If message exist in CoreData -> update it
+                        if let dbMessage = dbMessage {
+                            dbMessage.content = content
+                            dbMessage.created = created
+                            dbMessage.senderId = senderId
+                            dbMessage.senderName = senderName
+                        } else { //If message not exist in CoreData -> insert it
+                            
+                            let message = DBMessage( identifier: identifier, content: content, created: created, senderId: senderId, senderName: senderName, in: context)
+                            
+                            //Add messages to the channel
+                            if let channelCoreData = self?.channelCoreData {
+                                channelCoreData.addToMessages(message)
+                            }
                         }
                         
                     }
                 }
             }
-            
-            DispatchQueue.main.async {
-                tableView.reloadData()
-            }
-            
         }
-        
     }
     
     func addNewMessage(message: Message) {

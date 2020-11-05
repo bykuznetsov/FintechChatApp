@@ -89,10 +89,16 @@ class CoreDataStack {
     
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
         let context = saveContext()
-        context.perform {
+        context.perform { [weak self] in
             block(context)
             if context.hasChanges {
-                self.performSave(in: context)
+                do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
+                } catch {
+                    print(assertionFailure(error.localizedDescription))
+                }
+                
+                self?.performSave(in: context)
             }
         }
     }
@@ -100,10 +106,8 @@ class CoreDataStack {
     private func performSave(in context: NSManagedObjectContext) {
         context.perform {
             do {
-                
                 try context.save()
                 if let parent = context.parent { self.performSave(in: parent) }
-                
             } catch {
                 assertionFailure(error.localizedDescription)
             }
@@ -213,10 +217,22 @@ class CoreDataStack {
         }
     }
     
+    func fetchAllChannels(in context: NSManagedObjectContext) -> [DBChannel]? {
+        let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+        
+        do {
+            let channels = try context.fetch(fetchRequest)
+            return channels
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
     func fetchChannelById(by id: String, in context: NSManagedObjectContext) -> DBChannel? {
         
         let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier = %@", id)
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id)
         
         do {
             let channels = try context.fetch(fetchRequest)
@@ -231,6 +247,82 @@ class CoreDataStack {
         }
         
         return nil
+    }
+    
+    func fetchMessageById(by id: String, in context: NSManagedObjectContext) -> DBMessage? {
+        
+        let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id)
+        
+        do {
+            let messages = try context.fetch(fetchRequest)
+            
+            if let message = messages.first {
+                return message
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+        
+        return nil
+    }
+    
+    func deleteChannelById(by id: String, in context: NSManagedObjectContext) {
+    
+        let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id)
+        
+        context.perform {
+            do {
+                
+                let channels = try context.fetch(fetchRequest)
+                guard let channel = channels.first else { return }
+                
+                context.delete(channel)
+        
+            } catch {
+                print(error)
+            }
+        }
+        
+    }
+    
+    //NSFetchedResultsController for ConversationListViewController tableView
+    lazy var channelsFetchedResultsController: NSFetchedResultsController<DBChannel> = {
+        // Initialize Fetch Request
+        let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
+
+        // Add Sort Descriptors
+        let sortDescriptorByLastActivity = NSSortDescriptor(key: "lastActivity", ascending: false)
+        let sortDescriptorByLastMessage = NSSortDescriptor(key: "lastMessage", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptorByLastActivity, sortDescriptorByLastMessage]
+        
+        fetchRequest.fetchBatchSize = 20
+
+        // Initialize Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
+    }()
+    
+    //NSFetchedResultsController for ConversationViewController tableView
+    func messagesFetchedResultsController(channelId id: String) -> NSFetchedResultsController<DBMessage> {
+        // Initialize Fetch Request
+        let fetchRequest: NSFetchRequest<DBMessage> = DBMessage.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "channel.identifier == %@", id)
+        
+        // Add Sort Descriptors
+        let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchRequest.fetchBatchSize = 20
+
+        // Initialize Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+
+        return fetchedResultsController
     }
     
 }
