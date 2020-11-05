@@ -149,7 +149,7 @@ class ConversationsListViewController: UIViewController {
         profileButton.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
         profileButton.layer.borderWidth = 1
         profileButton.layer.borderColor = #colorLiteral(red: 0.9175510406, green: 0.91209656, blue: 0.9217438698, alpha: 1)
-        profileButton.setTitle("MD", for: .normal)
+        profileButton.setTitle("N", for: .normal)
         profileButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
         profileButton.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
         let profileBarButton = UIBarButtonItem(customView: profileButton)

@@ -55,15 +55,37 @@ class ConversationListServerManager {
                     return nil
                 }
                 
-                if (lastMessage.isEmpty && lastActivity != nil) || (!lastMessage.isEmpty && lastActivity == nil) {
-                    return nil
-                }
+//                if (lastMessage.isEmpty && lastActivity != nil) || (!lastMessage.isEmpty && lastActivity == nil) {
+//                    return nil
+//                }
+
+//                if lastMessage.isEmpty && lastActivity != nil {
+//                    return nil
+//                }
                 
                 return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity?.dateValue())
             }
             
             //Caching data.
             self?.coreDataStack.performSave { context in
+                
+                //Deleting from CoreData.
+                let dbChannels = self?.coreDataStack.fetchAllChannels(in: context)
+                
+                //Get arrays of Identifiers.
+                let dbIdentifiers = dbChannels?.map { $0.identifier }
+                let identifiers = self?.channels.map { $0.identifier }
+                
+                //Check if data from server doesn't include id's from CoreData -> Delete.
+                if let dbIdentifiers = dbIdentifiers, let identifiers = identifiers {
+                    for dbIdentifier in dbIdentifiers {
+                        if let dbIdentifier = dbIdentifier {
+                            if !identifiers.contains(dbIdentifier) {
+                                self?.coreDataStack.deleteChannelById(by: dbIdentifier, in: context)
+                            }
+                        }
+                    }
+                }
                     
                 //Updating and inserting in CoreData.
                 if let channels = self?.channels {
@@ -86,24 +108,6 @@ class ConversationListServerManager {
                             _ = DBChannel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity, in: context)
                         }
                         
-                    }
-                }
-                
-                //Deleting from CoreData.
-                let dbChannels = self?.coreDataStack.fetchAllChannels(in: context)
-                
-                //Get arrays of Identifiers.
-                let dbIdentifiers = dbChannels?.map { $0.identifier }
-                let identifiers = self?.channels.map { $0.identifier }
-                
-                //Check if data from server doesn't include id's from CoreData -> Delete.
-                if let dbIdentifiers = dbIdentifiers, let identifiers = identifiers {
-                    for dbIdentifier in dbIdentifiers {
-                        if let dbIdentifier = dbIdentifier {
-                            if !identifiers.contains(dbIdentifier) {
-                                self?.coreDataStack.deleteChannelById(by: dbIdentifier, in: context)
-                            }
-                        }
                     }
                 }
                 

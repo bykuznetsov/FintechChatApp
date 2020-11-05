@@ -295,8 +295,11 @@ class CoreDataStack {
         let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
 
         // Add Sort Descriptors
-        let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        let sortDescriptorByLastActivity = NSSortDescriptor(key: "lastActivity", ascending: false)
+        let sortDescriptorByLastMessage = NSSortDescriptor(key: "lastMessage", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptorByLastActivity, sortDescriptorByLastMessage]
+        
+        fetchRequest.fetchBatchSize = 20
 
         // Initialize Fetched Results Controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.mainContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -313,6 +316,8 @@ class CoreDataStack {
         // Add Sort Descriptors
         let sortDescriptor = NSSortDescriptor(key: "created", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchRequest.fetchBatchSize = 20
 
         // Initialize Fetched Results Controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.mainContext, sectionNameKeyPath: nil, cacheName: nil)
