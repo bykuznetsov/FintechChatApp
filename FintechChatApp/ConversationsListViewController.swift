@@ -47,6 +47,16 @@ class ConversationsListViewController: UIViewController {
         conversationListServerManager.fetchingChannels()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
+    }
+    
     //Func of settingsBarButton.
     @objc func openSettings() {
         guard let themesViewController = ThemesViewController.storyboardInstance() as? ThemesViewController else { return }
@@ -259,6 +269,8 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
         
+        guard self.isViewLoaded, self.view.window != nil else { return }
+        
             switch type {
             case .insert:
                 if let newIndexPath = newIndexPath {
@@ -283,10 +295,14 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard self.isViewLoaded, self.view.window != nil else { return }
+        
         self.tableView.beginUpdates()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard self.isViewLoaded, self.view.window != nil else { return }
+        
         self.tableView.endUpdates()
     }
     
