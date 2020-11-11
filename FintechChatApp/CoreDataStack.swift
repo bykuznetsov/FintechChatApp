@@ -9,13 +9,19 @@
 import Foundation
 import CoreData
 
-//Singleton, first init and setup in AppDelegate.swift.
-class CoreDataStack {
+protocol CoreDataStackProtocol {
+    static var shared: CoreDataStack { get }
+    
+    var writterContext: NSManagedObjectContext { get }
+    var mainContext: NSManagedObjectContext { get }
+    func saveContext() -> NSManagedObjectContext
+}
+
+class CoreDataStack: CoreDataStackProtocol {
     
     private init() {}
     
     static var shared: CoreDataStack = {
-        
         return CoreDataStack()
     }()
     
@@ -44,7 +50,7 @@ class CoreDataStack {
         return managedObjectModel
     }()
     
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+    internal lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
 
         let globalBackgroundQueue = DispatchQueue.global(qos: .background)
@@ -62,7 +68,7 @@ class CoreDataStack {
     
     // MARK: - Contexts
     
-    private lazy var writterContext: NSManagedObjectContext = {
+    internal lazy var writterContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         context.mergePolicy = NSOverwriteMergePolicy
@@ -77,7 +83,7 @@ class CoreDataStack {
         return context
     }()
     
-    private func saveContext() -> NSManagedObjectContext {
+    internal func saveContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = self.mainContext
         context.automaticallyMergesChangesFromParent = true

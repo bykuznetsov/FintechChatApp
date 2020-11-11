@@ -13,6 +13,8 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    
+    private let rootAssembly = RootAssembly()
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         
@@ -23,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        //self.window = UIWindow(frame: UIScreen.main.bounds)
+        //let controller = rootAssembly.presentationAssembly
+        //window?.rootViewController = controller
+        //window?.makeKeyAndVisible()
+        
+        //
         FirebaseApp.configure()
         
         let coreDataStack = CoreDataStack.shared
@@ -33,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
+        //
         
         return true
     }

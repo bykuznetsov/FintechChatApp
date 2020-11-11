@@ -10,7 +10,20 @@ import UIKit
 import Firebase
 import CoreData
 
-class ConversationsListViewController: UIViewController {
+class ConversationsListViewController: UIViewController, IConversationListModelDelegate {
+    
+    private let presentationAssembly: IPresentationAssembly
+    private let model: IConversationListModel
+    
+    init(presentationAssembly: IPresentationAssembly, model: IConversationListModel) {
+        self.presentationAssembly = presentationAssembly
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //Object for working with Firebase (Database)
     lazy var conversationListServerManager = ConversationListServerManager()
@@ -178,6 +191,8 @@ class ConversationsListViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .always
     }
     
+// MARK: - IConversationListModelDelegate
+        
 }
 
 // MARK: - UITableViewDataSource

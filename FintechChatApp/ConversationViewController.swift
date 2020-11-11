@@ -29,6 +29,9 @@ class ConversationViewController: UIViewController {
     //Object for working with Local Database (data after caching)
     lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = CoreDataStack.shared.messagesFetchedResultsController(channelId: "\(documentId)")
     
+    //Cell Identifier (ConversationCell).
+    private let cellIdentifier = String(describing: ConversationCell.self)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -59,9 +62,6 @@ class ConversationViewController: UIViewController {
         self.sendButton.isEnabled = false
         self.messageTextField.text = ""
     }
-    
-    //Cell Identifier (ConversationCell).
-    private let cellIdentifier = String(describing: ConversationCell.self)
     
     func setupFetchedResultsController() {
         
