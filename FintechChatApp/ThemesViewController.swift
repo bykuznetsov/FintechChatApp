@@ -19,7 +19,20 @@ import UIKit
 // А так инстанс ThemesViewController у меня создается в функции обработчика нажатия кнопки настроек
 // И поэтому этот инстанс живет, только пока срабатывает эта функция.
 
-class ThemesViewController: UIViewController {
+class ThemesViewController: UIViewController, IThemesModelDelegate {
+    
+    private let presentationAssembly: IPresentationAssembly
+    private let model: IThemesModel
+    
+    init(presentationAssembly: IPresentationAssembly, model: IThemesModel) {
+        self.presentationAssembly = presentationAssembly
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBOutlet weak var classicButton: UIView!
     @IBOutlet weak var classicImageView: UIImageView!

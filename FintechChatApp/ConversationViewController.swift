@@ -10,7 +10,20 @@ import UIKit
 import Firebase
 import CoreData
 
-class ConversationViewController: UIViewController {
+class ConversationViewController: UIViewController, IConversationModelDelegate {
+    
+    private let presentationAssembly: IPresentationAssembly
+    private let model: IConversationModel
+    
+    init(presentationAssembly: IPresentationAssembly, model: IConversationModel) {
+        self.presentationAssembly = presentationAssembly
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBOutlet weak var tableView: UITableView!
     

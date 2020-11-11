@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct CellDisplayModel {
     let identifier: String
@@ -38,6 +39,10 @@ class ConversationListModel: IConversationListModel {
     
     func fetchAndCacheChannels() {
         channelService.fetchAndCacheChannels()
+    }
+    
+    func getFRC() -> NSFetchedResultsController<DBChannel> {
+        channelFRC.channelsFetchedResultsController()
     }
     
 }

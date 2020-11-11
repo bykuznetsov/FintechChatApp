@@ -36,7 +36,7 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationListViewController() -> ConversationsListViewController {
         
         let model = conversationListModel()
-        let conversationListVC = conversationListViewController()
+        let conversationListVC = ConversationsListViewController(presentationAssembly: self, model: model)
         model.delegate = conversationListVC
         
         return conversationListVC
@@ -49,17 +49,45 @@ class PresentationAssembly: IPresentationAssembly {
     
     // MARK: - ConversationViewController
     func conversationViewController() -> ConversationViewController {
-         return ConversationViewController()
-     }
+        
+        let model = conversationModel()
+        let conversationVC = ConversationViewController(presentationAssembly: self, model: model)
+        model.delegate = conversationVC
+        
+        return conversationVC
+    }
+    
+    private func conversationModel() -> IConversationModel {
+        return ConversationModel(messageService: self.serviceAssembly.messageService,
+                                     messageFRC: self.serviceAssembly.messageFRC)
+    }
         
     // MARK: - ProfileViewController
     func profileViewController() -> ProfileViewController {
-        return ProfileViewController()
+        
+        let model = profileModel()
+        let profileVC = ProfileViewController(presentationAssembly: self, model: model)
+        model.delegate = profileVC
+        
+        return profileVC
+    }
+    
+    private func profileModel() -> IProfileModel {
+        return ProfileModel(gcdProfileService: self.serviceAssembly.gcdProfileService,
+                            operationProfileService: self.serviceAssembly.operationProfileService)
     }
     
     // MARK: - ThemesViewController
     func themesViewController() -> ThemesViewController {
-        return ThemesViewController()
+        
+        let model = themesModel()
+        let themesVC = ThemesViewController(presentationAssembly: self, model: model)
+        model.delegate = themesVC
+        
+        return themesVC
     }
     
+    private func themesModel() -> IThemesModel {
+        return ThemesModel(themeService: self.serviceAssembly.themeService)
+    }
 }
