@@ -12,18 +12,26 @@ import CoreData
 
 class ConversationsListViewController: UIViewController, IConversationListModelDelegate {
     
-    private let presentationAssembly: IPresentationAssembly
-    private let model: IConversationListModel
+//    private let presentationAssembly: IPresentationAssembly
+//    private let model: IConversationListModel
+//    
+//    init(presentationAssembly: IPresentationAssembly, model: IConversationListModel) {
+//        self.presentationAssembly = presentationAssembly
+//        self.model = model
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
-    init(presentationAssembly: IPresentationAssembly, model: IConversationListModel) {
-        self.presentationAssembly = presentationAssembly
-        self.model = model
-        super.init(nibName: nil, bundle: nil)
-    }
+    //Cell Identifier (ConversationListCell).
+    private let cellIdentifier = String(describing: ConversationListCell.self)
+    @IBOutlet weak var tableView: UITableView!
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @IBOutlet weak var settingsButton: SettingsButton!
+    @IBOutlet weak var addNewChannelButton: AddNewChannelButton!
+    @IBOutlet weak var profileButton: ProfileButton!
     
     //Object for working with Firebase (Database)
     lazy var conversationListServerManager = ConversationListServerManager()
@@ -31,47 +39,26 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     //Object for working with Local Database (data after caching)
     lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = CoreDataStack.shared.channelsFetchedResultsController
     
-    //NavigationBar buttons
-    let settingsButton = UIButton(type: .custom)
-    let profileButton = UIButton(type: .custom)
-    let addNewChannelButton = UIButton(type: .custom)
-    
     let alertWithAddingChannel = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
-    
-    //Cell Identifier (ConversationListCell).
-    private let cellIdentifier = String(describing: ConversationListCell.self)
-    
-    //Create and setup tableView.
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: view.frame, style: .plain)
-        tableView.register(UINib(nibName: String(describing: ConversationListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        return tableView
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
-        setupNavigationController()
-        setupAlertWithAddingChannel()
+        configureTableView()
         
-        setupFetchedResultsController()
+        configureAlertWithAddingChannel()
+        
+        configureFetchedResultsController()
         conversationListServerManager.fetchingChannels()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        do {
-            try self.fetchedResultsController.performFetch()
-        } catch {
-            print(error)
-        }
+    func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: String(describing: ConversationListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
     }
     
     //Func of settingsBarButton.
-    @objc func openSettings() {
+    @IBAction func openSettings(_ sender: Any) {
         guard let themesViewController = ThemesViewController.storyboardInstance() as? ThemesViewController else { return }
         
         //Transfer Theme from closure
@@ -81,25 +68,22 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
             
         }
         
-        //Transfer Theme with delegate
-        themesViewController.themeDelegate = self
-        
         self.navigationController?.pushViewController(themesViewController, animated: true)
     }
     
     //Func of profileBarButton.
-    @objc func openProfile() {
+    @IBAction func openProfile(_ sender: Any) {
         guard let profileViewController = ProfileViewController.storyboardInstance() else { return }
         self.present(profileViewController, animated: true)
     }
     
     //Func of addNewChannelButton.
-    @objc func showAlertWithAddingChannel() {
+    @IBAction func showAlertWithAddingChannel(_ sender: Any) {
         DispatchQueue.main.async {
-            self.present(self.alertWithAddingChannel, animated: true, completion: nil)
-        }
+             self.present(self.alertWithAddingChannel, animated: true, completion: nil)
+         }
     }
-    
+        
     //Func of TextField in alertWithAddingChannel
     @objc func inputChannelName(_ sender: UITextField) {
         guard let text = sender.text else { return }
@@ -107,7 +91,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         self.alertWithAddingChannel.actions[0].isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
-    func setupFetchedResultsController() {
+    func configureFetchedResultsController() {
         
         do {
             try self.fetchedResultsController.performFetch()
@@ -118,7 +102,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         self.fetchedResultsController.delegate = self
     }
     
-    func setupAlertWithAddingChannel() {
+    func configureAlertWithAddingChannel() {
         
         self.alertWithAddingChannel.addTextField { textField in
             textField.placeholder = "Channel name"
@@ -149,46 +133,6 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         
         self.alertWithAddingChannel.addAction(createAction)
         self.alertWithAddingChannel.addAction(cancelAction)
-    }
-    
-    //NavigationBar Setup.
-    func setupNavigationController() {
-        
-        //Configure settingsBarButton navigationBarItem.
-        settingsButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        settingsButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        settingsButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
-        settingsButton.addTarget(self, action: #selector(openSettings), for: .touchUpInside)
-        let settingsBarButton = UIBarButtonItem(customView: settingsButton)
-        
-        //Adding to Navigation Bar - settingsBarButton (Leftside)
-        self.navigationItem.leftBarButtonItems = [settingsBarButton]
-        
-        //Configure profileBarButton navigationBarItem.
-        profileButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        profileButton.layer.cornerRadius = profileButton.bounds.height / 2
-        profileButton.clipsToBounds = true
-        profileButton.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
-        profileButton.layer.borderWidth = 1
-        profileButton.layer.borderColor = #colorLiteral(red: 0.9175510406, green: 0.91209656, blue: 0.9217438698, alpha: 1)
-        profileButton.setTitle("N", for: .normal)
-        profileButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-        profileButton.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
-        let profileBarButton = UIBarButtonItem(customView: profileButton)
-        
-        //Configure addNewChannelButton navigationBarItem.
-        addNewChannelButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        addNewChannelButton.setTitle("+", for: .normal)
-        addNewChannelButton.titleLabel?.font = UIFont.systemFont(ofSize: 32)
-        addNewChannelButton.addTarget(self, action: #selector(showAlertWithAddingChannel), for: .touchUpInside)
-        let addNewChannelBarButton = UIBarButtonItem(customView: addNewChannelButton)
-        
-        //Adding to Navigation Bar - profileBarButton, addNewChannelBarButton (Rightside)
-        self.navigationItem.rightBarButtonItems = [profileBarButton, addNewChannelBarButton]
-        
-        self.navigationController?.title = "Channels"
-        self.navigationItem.largeTitleDisplayMode = .always
     }
     
 // MARK: - IConversationListModelDelegate
@@ -247,7 +191,6 @@ extension ConversationsListViewController: UITableViewDelegate {
         //Change Navigation Bar title to the name of companion.
         conversationViewController.navigationItem.title = fetchedResultsController.object(at: indexPath).name
         
-        //conversationViewController.documentId = conversationListServerManager.channels[indexPath.row].identifier
         if let identifier = fetchedResultsController.object(at: indexPath).identifier {
             conversationViewController.documentId = identifier
         }
@@ -259,18 +202,6 @@ extension ConversationsListViewController: UITableViewDelegate {
         return CGFloat(110) //Constant size (like in ConversationListTableViewCell.xib)
     }
     
-}
-
-// MARK: - ThemesPickerDelegate
-
-protocol ThemesPickerDelegate: class {
-    func transferThemeWithDelegate(theme: ThemeManager.Theme)
-}
-
-extension ConversationsListViewController: ThemesPickerDelegate {
-    func transferThemeWithDelegate(theme: ThemeManager.Theme) {
-        //ThemeManager.shared.updateTheme(new: theme)
-    }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
@@ -338,54 +269,60 @@ extension ConversationsListViewController: ThemeableViewController {
         switch theme {
             
         case .classic:
-            
-            //NavigationBar
-            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color
-            
-            tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color
-            
-            //Settings Button Image
-            settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
-            
-            //Adding channel Button
-            addNewChannelButton.setTitleColor(.black, for: .normal)
-            addNewChannelButton.setTitleColor(.gray, for: .highlighted)
-            
+            self.setClassicTheme()
         case .day:
-            
-            //NavigationBar
-            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
-            
-            tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color ++
-            
-            //Settings Button Image
-            settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
-            
-            //Adding channel Button
-            addNewChannelButton.setTitleColor(.black, for: .normal)
-            addNewChannelButton.setTitleColor(.gray, for: .highlighted)
-            
+            self.setDayTheme()
         case .night:
-            
-            //NavigationBar
-            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (small)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //small title color
-            
-            tableView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (large)
-            self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //large title color
-            
-            //Settings Button Image
-            settingsButton.setImage(UIImage(named: "settingsNight"), for: .normal)
-            
-            //Adding channel Button
-            addNewChannelButton.setTitleColor(.white, for: .normal)
-            addNewChannelButton.setTitleColor(.gray, for: .highlighted)
-            
+            self.setNightTheme()
         }
+    }
+    
+    func setClassicTheme() {
+        //NavigationBar
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color
+        
+        tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color
+        
+        //Settings Button Image
+        settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+        
+        //Adding channel Button
+        addNewChannelButton.setTitleColor(.black, for: .normal)
+        addNewChannelButton.setTitleColor(.gray, for: .highlighted)
+    }
+    
+    func setDayTheme() {
+        //NavigationBar
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
+        
+        tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color ++
+        
+        //Settings Button Image
+        settingsButton.setImage(UIImage(named: "settingsDay"), for: .normal)
+        
+        //Adding channel Button
+        addNewChannelButton.setTitleColor(.black, for: .normal)
+        addNewChannelButton.setTitleColor(.gray, for: .highlighted)
+    }
+    
+    func setNightTheme() {
+        //NavigationBar
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (small)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //small title color
+        
+        tableView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (large)
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //large title color
+        
+        //Settings Button Image
+        settingsButton.setImage(UIImage(named: "settingsNight"), for: .normal)
+        
+        //Adding channel Button
+        addNewChannelButton.setTitleColor(.white, for: .normal)
+        addNewChannelButton.setTitleColor(.gray, for: .highlighted)
     }
     
 }

@@ -12,19 +12,21 @@ import CoreData
 
 class ConversationViewController: UIViewController, IConversationModelDelegate {
     
-    private let presentationAssembly: IPresentationAssembly
-    private let model: IConversationModel
+//    private let presentationAssembly: IPresentationAssembly
+//    private let model: IConversationModel
+//    
+//    init(presentationAssembly: IPresentationAssembly, model: IConversationModel) {
+//        self.presentationAssembly = presentationAssembly
+//        self.model = model
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
-    init(presentationAssembly: IPresentationAssembly, model: IConversationModel) {
-        self.presentationAssembly = presentationAssembly
-        self.model = model
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    //Cell Identifier (ConversationCell).
+    private let cellIdentifier = String(describing: ConversationCell.self)
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var bottomView: UIView!
@@ -42,14 +44,12 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
     //Object for working with Local Database (data after caching)
     lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = CoreDataStack.shared.messagesFetchedResultsController(channelId: "\(documentId)")
     
-    //Cell Identifier (ConversationCell).
-    private let cellIdentifier = String(describing: ConversationCell.self)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        setuptMessageTextView()
-        setupNavigationBar()
+        configureTableView()
+        configureMessageTextField()
+        configureNavigationBar()
+        
         addKeyboardNotifications()
         
         setupFetchedResultsController()
@@ -87,10 +87,8 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
         self.fetchedResultsController.delegate = self
     }
     
-    //TableView Setup
-    func setupTableView() {
-        view.addSubview(tableView)
-        
+    //TableView Configure
+    func configureTableView() {
         //Flip tableView
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
@@ -99,20 +97,13 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
         self.tableView.delegate = self
     }
     
-    //MessageTextView Setup
-    func setuptMessageTextView() {
+    //MessageTextView Configure
+    func configureMessageTextField() {
         self.messageTextField.delegate = self
-        self.messageTextField.returnKeyType = .done
-        self.messageTextField.layer.cornerRadius = self.messageTextField.bounds.height / 2
-        self.messageTextField.layer.borderColor = UIColor.gray.withAlphaComponent(1).cgColor
-        self.messageTextField.layer.borderWidth = 0.7
-        self.messageTextField.clipsToBounds = true
-        self.messageTextField.attributedPlaceholder = NSAttributedString(string: "Message Text",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
     }
     
     //NavigationBar Setup.
-    func setupNavigationBar() {
+    func configureNavigationBar() {
         //Title.
         self.navigationItem.largeTitleDisplayMode = .never
         
@@ -154,9 +145,6 @@ extension ConversationViewController: UITableViewDataSource {
         let senderName = message.senderName ?? "Not found"
         
         cell.configure(with: .init(content: content, created: created, senderId: senderId, senderName: senderName))
-        
-        //Flip cell's
-        cell.transform = CGAffineTransform(scaleX: 1, y: -1)
         
         return cell
     }
@@ -274,58 +262,62 @@ extension ConversationViewController: ThemeableViewController {
         super.viewWillAppear(animated)
         
         changeTheme(with: ThemeManager.shared.getTheme())
-        self.tableView.reloadData()
     }
     
     func changeTheme(with theme: ThemeManager.Theme) {
         switch theme {
-            
         case .classic:
-            
-            //Navigation Bar
-            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-            
-            self.view.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
-            self.bottomView.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
-            
-            self.tableView.backgroundColor = .white
-            
-            //Message TextField
-            self.messageTextField.backgroundColor = .white
-            self.messageTextField.textColor = .black
-            
+            self.setClassicTheme()
         case .day:
-            
-            //Navigation Bar
-            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-            
-            self.view.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
-            self.bottomView.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
-            
-            self.tableView.backgroundColor = .white
-            
-            //Message TextField
-            self.messageTextField.backgroundColor = .white
-            self.messageTextField.textColor = .black
-            
+            self.setDayTheme()
         case .night:
-            
-            //Navigation Bar
-            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-            
-            self.view.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-            self.bottomView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-            
-            self.tableView.backgroundColor = .black
-            
-            //Message TextField
-            self.messageTextField.backgroundColor = #colorLiteral(red: 0.3148368597, green: 0.3464637399, blue: 0.3928565383, alpha: 1)
-            self.messageTextField.textColor = .white
-            
+            self.setNightTheme()
         }
+    }
+    
+    func setClassicTheme() {
+        //Navigation Bar
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+        self.view.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+        self.bottomView.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+        
+        self.tableView.backgroundColor = .white
+        
+        //Message TextField
+        self.messageTextField.backgroundColor = .white
+        self.messageTextField.textColor = .black
+    }
+    
+    func setDayTheme() {
+       //Navigation Bar
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+        self.view.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+        self.bottomView.backgroundColor = #colorLiteral(red: 0.9606898427, green: 0.9608504176, blue: 0.9606687427, alpha: 1)
+        
+        self.tableView.backgroundColor = .white
+        
+        //Message TextField
+        self.messageTextField.backgroundColor = .white
+        self.messageTextField.textColor = .black
+    }
+    
+    func setNightTheme() {
+        //Navigation Bar
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        self.view.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        self.bottomView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        
+        self.tableView.backgroundColor = .black
+        
+        //Message TextField
+        self.messageTextField.backgroundColor = #colorLiteral(red: 0.3148368597, green: 0.3464637399, blue: 0.3928565383, alpha: 1)
+        self.messageTextField.textColor = .white
     }
     
 }

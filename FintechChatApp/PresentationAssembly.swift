@@ -36,10 +36,11 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationListViewController() -> ConversationsListViewController {
         
         let model = conversationListModel()
-        let conversationListVC = ConversationsListViewController(presentationAssembly: self, model: model)
-        model.delegate = conversationListVC
+        //let conversationListVC = ConversationsListViewController(presentationAssembly: self, model: model)
+        let conversationListVC = ConversationsListViewController.storyboardInstance() as? ConversationsListViewController
+        //model.delegate = conversationListVC
         
-        return conversationListVC
+        return conversationListVC!
     }
     
     private func conversationListModel() -> IConversationListModel {
@@ -51,7 +52,8 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationViewController() -> ConversationViewController {
         
         let model = conversationModel()
-        let conversationVC = ConversationViewController(presentationAssembly: self, model: model)
+        //let conversationVC = ConversationViewController(presentationAssembly: self, model: model)
+        let conversationVC = ConversationViewController()
         model.delegate = conversationVC
         
         return conversationVC
@@ -66,7 +68,8 @@ class PresentationAssembly: IPresentationAssembly {
     func profileViewController() -> ProfileViewController {
         
         let model = profileModel()
-        let profileVC = ProfileViewController(presentationAssembly: self, model: model)
+        //let profileVC = ProfileViewController(presentationAssembly: self, model: model)
+        let profileVC = ProfileViewController()
         model.delegate = profileVC
         
         return profileVC
@@ -81,7 +84,8 @@ class PresentationAssembly: IPresentationAssembly {
     func themesViewController() -> ThemesViewController {
         
         let model = themesModel()
-        let themesVC = ThemesViewController(presentationAssembly: self, model: model)
+        //let themesVC = ThemesViewController(presentationAssembly: self, model: model)
+        let themesVC = ThemesViewController()
         model.delegate = themesVC
         
         return themesVC

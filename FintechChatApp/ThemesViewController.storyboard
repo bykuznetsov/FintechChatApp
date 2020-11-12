@@ -16,10 +16,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDJ-Ko-ztO">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDJ-Ko-ztO" customClass="ClassicButton" customModule="FintechChatApp" customModuleProvider="target">
                                 <rect key="frame" x="33.5" y="156" width="308" height="63"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XWY-Zu-OMr">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="classicTheme" translatesAutoresizingMaskIntoConstraints="NO" id="XWY-Zu-OMr">
                                         <rect key="frame" x="0.0" y="5" width="308" height="55"/>
                                     </imageView>
                                 </subviews>
@@ -39,10 +39,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0U7-ZB-IPo">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0U7-ZB-IPo" customClass="DayButton" customModule="FintechChatApp" customModuleProvider="target">
                                 <rect key="frame" x="33.5" y="302" width="308" height="63"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ckl-jT-n4M">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dayTheme" translatesAutoresizingMaskIntoConstraints="NO" id="Ckl-jT-n4M">
                                         <rect key="frame" x="0.0" y="5" width="308" height="55"/>
                                     </imageView>
                                 </subviews>
@@ -62,10 +62,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2l-Wj-1mV">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2l-Wj-1mV" customClass="NightButton" customModule="FintechChatApp" customModuleProvider="target">
                                 <rect key="frame" x="33.5" y="448" width="308" height="63"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f8P-Ug-h1J">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nightTheme" translatesAutoresizingMaskIntoConstraints="NO" id="f8P-Ug-h1J">
                                         <rect key="frame" x="0.0" y="5" width="308" height="55"/>
                                     </imageView>
                                 </subviews>
@@ -125,4 +125,9 @@
             <point key="canvasLocation" x="829.60000000000002" y="-15.517241379310345"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="classicTheme" width="300" height="57"/>
+        <image name="dayTheme" width="300" height="57"/>
+        <image name="nightTheme" width="300" height="57"/>
+    </resources>
 </document>

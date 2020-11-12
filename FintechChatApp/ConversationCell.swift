@@ -88,6 +88,9 @@ class ConversationCell: UITableViewCell, ConfigurableView {
             
         }
         
+        //Flip cell's
+        self.transform = CGAffineTransform(scaleX: 1, y: -1)
+        
         configureTheme(with: ThemeManager.shared.getTheme(), with: model)
         
     }

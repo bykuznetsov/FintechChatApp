@@ -10,18 +10,18 @@ import UIKit
 
 class ProfileViewController: UIViewController, IProfileModelDelegate {
     
-    private let presentationAssembly: IPresentationAssembly
-    private let model: IProfileModel
-    
-    init(presentationAssembly: IPresentationAssembly, model: IProfileModel) {
-        self.presentationAssembly = presentationAssembly
-        self.model = model
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    private let presentationAssembly: IPresentationAssembly
+//    private let model: IProfileModel
+//    
+//    init(presentationAssembly: IPresentationAssembly, model: IProfileModel) {
+//        self.presentationAssembly = presentationAssembly
+//        self.model = model
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
     @IBOutlet weak var saveWithOperationsButton: UIButton!
@@ -45,13 +45,15 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         super.viewDidLoad()
         
         initProfileInformation()
-        setupProfileFieldForImage()
         setupNavigationBar()
-        setupSaveButtons()
-        setupTextFields()
+        configureTextFields()
         addKeyboardNotifications()
-        setupActivityIndicator()
-        
+        configureActivityIndicator()
+    }
+    
+    func configureTextFields() {
+        self.profileNameTextField.delegate = self
+        self.profileDescriptionTextView.delegate = self
     }
     
     //Left navigationBarItem.
@@ -339,27 +341,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    //UI Setups.
-    func setupProfileFieldForImage() {
-        profileFieldForImage.layer.cornerRadius = profileFieldForImage.bounds.height / 2
-        profileFieldForImage.layer.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9137254902, blue: 0.1764705882, alpha: 1)
-        profileFieldForImage.layer.borderWidth = 7
-        profileFieldForImage.layer.borderColor = #colorLiteral(red: 0.9419991374, green: 0.9363991618, blue: 0.9463036656, alpha: 1)
-    }
-    
-    func setupSaveButtons() {
-        //With GCD
-        saveWithGrandCentralDispatchButton.layer.cornerRadius = 14
-        saveWithGrandCentralDispatchButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
-        saveWithGrandCentralDispatchButton.isEnabled = false
-        
-        //With Operations
-        saveWithOperationsButton.layer.cornerRadius = 14
-        saveWithOperationsButton.layer.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
-        saveWithOperationsButton.isEnabled = false
-    }
-    
-    func setupActivityIndicator() {
+    func configureActivityIndicator() {
         activityIndicator.hidesWhenStopped = true
     }
 }
@@ -367,24 +349,6 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
 // MARK: - UITextFieldDelegate, UITextViewDelegate
 
 extension ProfileViewController: UITextFieldDelegate, UITextViewDelegate {
-    
-    func setupTextFields() {
-        //Profile Name
-        self.profileNameTextField.isEnabled = false
-        self.profileNameTextField.layer.cornerRadius = 5.0
-        self.profileNameTextField.alpha = 1
-        self.profileNameTextField.placeholder = "Name"
-        self.profileNameTextField.isHidden = true
-        self.profileNameTextField.returnKeyType = .done
-        self.profileNameTextField.delegate = self
-        
-        //Profile Description
-        self.profileDescriptionTextView.isEditable = false
-        self.profileDescriptionTextView.layer.cornerRadius = 5.0
-        self.profileDescriptionTextView.alpha = 1
-        self.profileDescriptionTextView.returnKeyType = .done
-        self.profileDescriptionTextView.delegate = self
-    }
     
     //Typing something in TextField (after every character)
     @IBAction func inputName(_ sender: UITextField) {

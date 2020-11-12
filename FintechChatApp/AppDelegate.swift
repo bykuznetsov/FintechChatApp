@@ -25,10 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //self.window = UIWindow(frame: UIScreen.main.bounds)
-        //let controller = rootAssembly.presentationAssembly
-        //window?.rootViewController = controller
-        //window?.makeKeyAndVisible()
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        let controller = rootAssembly.presentationAssembly.conversationListViewController()
+//        window?.rootViewController = controller
+//        window?.makeKeyAndVisible()
         
         //
         FirebaseApp.configure()

@@ -17,6 +17,10 @@ protocol ThemeableViewController {
     
     func changeTheme(with theme: ThemeManager.Theme)
     
+    func setClassicTheme()
+    func setDayTheme()
+    func setNightTheme()
+    
 }
 
 //This protocol uses in TableViewCell's with 3 types theme: .classic, .day, .night
