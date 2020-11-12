@@ -15,7 +15,7 @@ import Foundation
 
 protocol ThemeableViewController {
     
-    func changeTheme(with theme: ThemeManager.Theme)
+    func changeTheme(with theme: Theme)
     
     func setClassicTheme()
     func setDayTheme()
@@ -30,6 +30,6 @@ protocol ThemeableCell {
     
     associatedtype ConfigurationModel
     
-    func configureTheme(with theme: ThemeManager.Theme, with model: ConfigurationModel)
+    func configureTheme(with theme: Theme, with model: ConfigurationModel)
     
 }

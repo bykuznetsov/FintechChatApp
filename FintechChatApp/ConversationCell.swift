@@ -100,7 +100,7 @@ class ConversationCell: UITableViewCell, ConfigurableView {
 
 extension ConversationCell: ThemeableCell {
     
-    func configureTheme(with theme: ThemeManager.Theme, with model: Message) {
+    func configureTheme(with theme: Theme, with model: Message) {
         switch theme {
         case .classic:
             

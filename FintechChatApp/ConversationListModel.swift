@@ -23,10 +23,13 @@ protocol IConversationListModelDelegate: class {
 protocol IConversationListModel: class {
     var delegate: IConversationListModelDelegate? { get set }
     func fetchAndCacheChannels()
+    func getFRC() -> NSFetchedResultsController<DBChannel>
+    func addNewChannel(channel: Channel)
+    func deleteChannel(at documentPath: String)
 }
 
 class ConversationListModel: IConversationListModel {
-    
+
     weak var delegate: IConversationListModelDelegate?
     
     let channelService: ChannelServiceProtocol
@@ -43,6 +46,14 @@ class ConversationListModel: IConversationListModel {
     
     func getFRC() -> NSFetchedResultsController<DBChannel> {
         channelFRC.channelsFetchedResultsController()
+    }
+    
+    func addNewChannel(channel: Channel) {
+        channelService.addNewChannel(channel: channel)
+    }
+    
+    func deleteChannel(at documentPath: String) {
+        channelService.deleteChannel(at: documentPath)
     }
     
 }

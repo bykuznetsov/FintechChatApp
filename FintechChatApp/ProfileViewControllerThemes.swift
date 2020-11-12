@@ -19,7 +19,7 @@ extension ProfileViewController: ThemeableViewController {
         changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
     }
     
-    func changeTheme(with theme: ThemeManager.Theme) {
+    func changeTheme(with theme: Theme) {
         switch theme {
         case .classic:
             self.setClassicTheme()

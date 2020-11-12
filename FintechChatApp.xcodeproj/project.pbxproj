@@ -536,13 +536,13 @@
 			name = ThemeManager;
 			sourceTree = "<group>";
 		};
-		5058C7C925194C0E00DAD08C /* Extensions */ = {
+		5058C7C925194C0E00DAD08C /* UIExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */,
 				50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */,
 			);
-			name = Extensions;
+			name = UIExtensions;
 			sourceTree = "<group>";
 		};
 		5058C7CF251955C800DAD08C /* Debugging */ = {
@@ -590,7 +590,7 @@
 				5011D79125599E430065A65C /* Supporting Files */,
 				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
 				5011D7982559AB9D0065A65C /* RootAssembly.swift */,
-				5058C7C925194C0E00DAD08C /* Extensions */,
+				5058C7C925194C0E00DAD08C /* UIExtensions */,
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
 				5058C7CF251955C800DAD08C /* Debugging */,
 				50505818252CAD2C00FD73CA /* ThemeManager */,

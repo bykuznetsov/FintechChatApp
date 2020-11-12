@@ -10,18 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController, IProfileModelDelegate {
     
-//    private let presentationAssembly: IPresentationAssembly
-//    private let model: IProfileModel
-//    
-//    init(presentationAssembly: IPresentationAssembly, model: IProfileModel) {
-//        self.presentationAssembly = presentationAssembly
-//        self.model = model
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    private var presentationAssembly: IPresentationAssembly?
+    private var model: IProfileModel?
     
     @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
     @IBOutlet weak var saveWithOperationsButton: UIButton!
@@ -49,6 +39,11 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         configureTextFields()
         addKeyboardNotifications()
         configureActivityIndicator()
+    }
+    
+    func applyDependencies(model: IProfileModel, presentationAssembly: IPresentationAssembly) {
+        self.model = model
+        self.presentationAssembly = presentationAssembly
     }
     
     func configureTextFields() {

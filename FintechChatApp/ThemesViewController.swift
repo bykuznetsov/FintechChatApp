@@ -10,18 +10,8 @@ import UIKit
 
 class ThemesViewController: UIViewController, IThemesModelDelegate {
     
-//    private let presentationAssembly: IPresentationAssembly
-//    private let model: IThemesModel
-//    
-//    init(presentationAssembly: IPresentationAssembly, model: IThemesModel) {
-//        self.presentationAssembly = presentationAssembly
-//        self.model = model
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    private var presentationAssembly: IPresentationAssembly?
+    private var model: IThemesModel?
     
     @IBOutlet weak var classicButton: UIView!
     @IBOutlet weak var classicImageView: UIImageView!
@@ -35,18 +25,20 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
     @IBOutlet weak var nightImageView: UIImageView!
     @IBOutlet weak var nightLabel: UILabel!
     
-    var transferThemeWithClosure: ((ThemeManager.Theme) -> Void)?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
         configureThemeButtons()
     }
     
+    func applyDependencies(model: IThemesModel, presentationAssembly: IPresentationAssembly) {
+        self.model = model
+        self.presentationAssembly = presentationAssembly
+    }
+    
     @objc func setClassicThemeByButton() {
-
-        //Transfer Theme to ThemeManager with closure
-        self.transferThemeWithClosure?(.classic)
+        
+        ThemeManager.shared.updateTheme(new: .classic)
         
         //Change local UI
         changeTheme(with: ThemeManager.shared.getTheme())
@@ -54,9 +46,8 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
     }
     
     @objc func setDayThemeByButton() {
-        
-        //Transfer Theme to ThemeManager with closure
-        self.transferThemeWithClosure?(.day)
+    
+        ThemeManager.shared.updateTheme(new: .day)
         
         //Change local UI
         changeTheme(with: ThemeManager.shared.getTheme())
@@ -65,8 +56,7 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
     
     @objc func setNightThemeByButton() {
         
-        //Transfer Theme to ThemeManager with closure
-        self.transferThemeWithClosure?(.night)
+        ThemeManager.shared.updateTheme(new: .night)
         
         //Change local UI
         changeTheme(with: ThemeManager.shared.getTheme())
@@ -122,7 +112,7 @@ extension ThemesViewController: ThemeableViewController {
         changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
     }
     
-    func changeTheme(with theme: ThemeManager.Theme) {
+    func changeTheme(with theme: Theme) {
         switch theme {
         case .classic:
             self.setClassicTheme()

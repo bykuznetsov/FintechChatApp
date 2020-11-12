@@ -12,18 +12,8 @@ import CoreData
 
 class ConversationViewController: UIViewController, IConversationModelDelegate {
     
-//    private let presentationAssembly: IPresentationAssembly
-//    private let model: IConversationModel
-//    
-//    init(presentationAssembly: IPresentationAssembly, model: IConversationModel) {
-//        self.presentationAssembly = presentationAssembly
-//        self.model = model
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    private var presentationAssembly: IPresentationAssembly?
+    private var model: IConversationModel?
     
     //Cell Identifier (ConversationCell).
     private let cellIdentifier = String(describing: ConversationCell.self)
@@ -54,6 +44,11 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
         
         setupFetchedResultsController()
         conversationServerManager.fetchingMessages()
+    }
+    
+    func applyDependencies(model: IConversationModel, presentationAssembly: IPresentationAssembly) {
+        self.model = model
+        self.presentationAssembly = presentationAssembly
     }
     
     @IBAction func inputMessageText(_ sender: Any) {
@@ -264,7 +259,7 @@ extension ConversationViewController: ThemeableViewController {
         changeTheme(with: ThemeManager.shared.getTheme())
     }
     
-    func changeTheme(with theme: ThemeManager.Theme) {
+    func changeTheme(with theme: Theme) {
         switch theme {
         case .classic:
             self.setClassicTheme()

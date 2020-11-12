@@ -11,12 +11,6 @@ import UIKit
 
 class ThemeManager {
     
-    enum Theme {
-        case classic
-        case day
-        case night
-    }
-    
     static let shared = ThemeManager()
     
     var currentTheme: Theme = .classic

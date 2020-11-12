@@ -15,7 +15,17 @@ extension UIViewController {
         let storyboard = UIStoryboard(name: String(describing: self), bundle: nil)
         return storyboard.instantiateInitialViewController()
     }
+    
     class func storyboardInstance() -> UIViewController? {
         return storyboardInstancePrivate()
+    }
+    
+    private class func storyboardInstanceFromIdPrivate(storyboardName: String, vcIdentifier: String) -> UIViewController? {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: vcIdentifier)
+    }
+    
+    class func storyboardInstanceFromId(storyboardName: String, vcIdentifier: String) -> UIViewController? {
+        return storyboardInstanceFromIdPrivate(storyboardName: storyboardName, vcIdentifier: vcIdentifier)
     }
 }

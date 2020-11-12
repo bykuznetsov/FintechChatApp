@@ -14,6 +14,8 @@ protocol IThemesModelDelegate: class {
 
 protocol IThemesModel: class {
     var delegate: IThemesModelDelegate? { get set }
+    func getTheme() -> Theme
+    func setTheme(new theme: Theme)
 }
 
 class ThemesModel: IThemesModel {

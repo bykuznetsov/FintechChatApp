@@ -33,7 +33,8 @@ class ServiceAssembly: ServiceAssemblyProtocol {
     
     lazy var channelService: ChannelServiceProtocol = ChannelService(saveRequest: self.coreAssembly.saveRequest,
                                                                      channelRequest: self.coreAssembly.channelRequest,
-                                                                     channelPath: self.coreAssembly.channelPath)
+                                                                     channelPath: self.coreAssembly.channelPath,
+                                                                     fsChannelRequest: self.coreAssembly.fsChannelRequest)
     
     lazy var messageService: MessageServiceProtocol = MessageService(saveRequest: self.coreAssembly.saveRequest,
                                                                      messageRequest: self.coreAssembly.messageRequest,

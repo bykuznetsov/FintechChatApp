@@ -35,12 +35,17 @@ class PresentationAssembly: IPresentationAssembly {
     // MARK: - ConversationListViewController
     func conversationListViewController() -> ConversationsListViewController {
         
-        let model = conversationListModel()
-        //let conversationListVC = ConversationsListViewController(presentationAssembly: self, model: model)
-        let conversationListVC = ConversationsListViewController.storyboardInstance() as? ConversationsListViewController
-        //model.delegate = conversationListVC
+        guard let conversationListVC = ConversationsListViewController.storyboardInstanceFromId(
+            storyboardName: "ConversationsListViewController",
+            vcIdentifier: "ConversationsListViewController") as? ConversationsListViewController else {
+            fatalError("Can't load ConversationsListViewController")
+        }
         
-        return conversationListVC!
+        let model = conversationListModel()
+        conversationListVC.applyDependencies(model: model, presentationAssembly: self)
+        model.delegate = conversationListVC
+
+        return conversationListVC
     }
     
     private func conversationListModel() -> IConversationListModel {
@@ -51,9 +56,11 @@ class PresentationAssembly: IPresentationAssembly {
     // MARK: - ConversationViewController
     func conversationViewController() -> ConversationViewController {
         
+        guard let conversationVC = ConversationViewController.storyboardInstance() as? ConversationViewController else { fatalError("Can't load ConversationVC")
+        }
+        
         let model = conversationModel()
-        //let conversationVC = ConversationViewController(presentationAssembly: self, model: model)
-        let conversationVC = ConversationViewController()
+        conversationVC.applyDependencies(model: model, presentationAssembly: self)
         model.delegate = conversationVC
         
         return conversationVC
@@ -67,9 +74,13 @@ class PresentationAssembly: IPresentationAssembly {
     // MARK: - ProfileViewController
     func profileViewController() -> ProfileViewController {
         
+        guard let profileVC = ProfileViewController.storyboardInstanceFromId(
+        storyboardName: "ProfileViewController",
+        vcIdentifier: "ProfileViewController") as? ProfileViewController else {
+            fatalError("Can't load ProfileViewController") }
+        
         let model = profileModel()
-        //let profileVC = ProfileViewController(presentationAssembly: self, model: model)
-        let profileVC = ProfileViewController()
+        profileVC.applyDependencies(model: model, presentationAssembly: self)
         model.delegate = profileVC
         
         return profileVC
@@ -83,9 +94,12 @@ class PresentationAssembly: IPresentationAssembly {
     // MARK: - ThemesViewController
     func themesViewController() -> ThemesViewController {
         
+        guard let themesVC = ThemesViewController.storyboardInstance() as? ThemesViewController else {
+            fatalError("Can't load ThemesVC")
+        }
+        
         let model = themesModel()
-        //let themesVC = ThemesViewController(presentationAssembly: self, model: model)
-        let themesVC = ThemesViewController()
+        themesVC.applyDependencies(model: model, presentationAssembly: self)
         model.delegate = themesVC
         
         return themesVC

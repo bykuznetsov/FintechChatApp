@@ -10,6 +10,8 @@ import Foundation
 
 protocol ChannelServiceProtocol {
     func fetchAndCacheChannels()
+    func addNewChannel(channel: Channel)
+    func deleteChannel(at documentPath: String)
 }
 
 ///Service for getting channels from Firestore server and caching it to CoreData
@@ -22,13 +24,23 @@ class ChannelService: ChannelServiceProtocol {
     let saveRequest: SaveRequestProtocol
     let channelRequest: ChannelRequestProtocol
     let channelPath: ChannelPathProtocol
+    let fsChannelRequest: FSChannelRequestProtocol
     
     var channels: [Channel]  = []
     
-    init(saveRequest: SaveRequestProtocol, channelRequest: ChannelRequestProtocol, channelPath: ChannelPathProtocol) {
+    init(saveRequest: SaveRequestProtocol, channelRequest: ChannelRequestProtocol, channelPath: ChannelPathProtocol, fsChannelRequest: FSChannelRequestProtocol) {
         self.saveRequest = saveRequest
         self.channelRequest = channelRequest
         self.channelPath = channelPath
+        self.fsChannelRequest = fsChannelRequest
+    }
+    
+    func addNewChannel(channel: Channel) {
+        fsChannelRequest.addNewChannel(channel: channel)
+    }
+    
+    func deleteChannel(at documentPath: String) {
+        fsChannelRequest.deleteChannel(at: documentPath)
     }
     
     func fetchAndCacheChannels() {

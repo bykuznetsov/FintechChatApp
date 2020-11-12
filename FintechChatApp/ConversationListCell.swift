@@ -68,7 +68,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
 
 extension ConversationListCell: ThemeableCell {
     
-    func configureTheme(with theme: ThemeManager.Theme, with model: ConversationCellModel) {
+    func configureTheme(with theme: Theme, with model: ConversationCellModel) {
         switch theme {
         case .classic:
             

@@ -12,18 +12,8 @@ import CoreData
 
 class ConversationsListViewController: UIViewController, IConversationListModelDelegate {
     
-//    private let presentationAssembly: IPresentationAssembly
-//    private let model: IConversationListModel
-//    
-//    init(presentationAssembly: IPresentationAssembly, model: IConversationListModel) {
-//        self.presentationAssembly = presentationAssembly
-//        self.model = model
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    private var presentationAssembly: IPresentationAssembly?
+    private var model: IConversationListModel?
     
     //Cell Identifier (ConversationListCell).
     private let cellIdentifier = String(describing: ConversationListCell.self)
@@ -33,11 +23,8 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     @IBOutlet weak var addNewChannelButton: AddNewChannelButton!
     @IBOutlet weak var profileButton: ProfileButton!
     
-    //Object for working with Firebase (Database)
-    lazy var conversationListServerManager = ConversationListServerManager()
-    
     //Object for working with Local Database (data after caching)
-    lazy var fetchedResultsController: NSFetchedResultsController<DBChannel> = CoreDataStack.shared.channelsFetchedResultsController
+    lazy var fetchedResultsController: NSFetchedResultsController<DBChannel>? = self.model?.getFRC()
     
     let alertWithAddingChannel = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
     
@@ -48,7 +35,15 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         configureAlertWithAddingChannel()
         
         configureFetchedResultsController()
-        conversationListServerManager.fetchingChannels()
+        
+        if let model = self.model {
+            model.fetchAndCacheChannels()
+        }
+    }
+    
+    func applyDependencies(model: IConversationListModel, presentationAssembly: IPresentationAssembly) {
+        self.model = model
+        self.presentationAssembly = presentationAssembly
     }
     
     func configureTableView() {
@@ -59,22 +54,15 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     
     //Func of settingsBarButton.
     @IBAction func openSettings(_ sender: Any) {
-        guard let themesViewController = ThemesViewController.storyboardInstance() as? ThemesViewController else { return }
-        
-        //Transfer Theme from closure
-        themesViewController.transferThemeWithClosure = { [weak self] theme in
-            guard self != nil else { return }
-            ThemeManager.shared.updateTheme(new: theme)
-            
-        }
-        
-        self.navigationController?.pushViewController(themesViewController, animated: true)
+        guard let themesVC = self.presentationAssembly?.themesViewController() else { return }
+        self.navigationController?.pushViewController(themesVC, animated: true)
     }
     
     //Func of profileBarButton.
     @IBAction func openProfile(_ sender: Any) {
-        guard let profileViewController = ProfileViewController.storyboardInstance() else { return }
-        self.present(profileViewController, animated: true)
+        guard let profileVC = self.presentationAssembly?.profileViewController() else { return }
+        let profileVCWithNavigation = UINavigationController(rootViewController: profileVC)
+        self.present(profileVCWithNavigation, animated: true)
     }
     
     //Func of addNewChannelButton.
@@ -92,14 +80,14 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     }
     
     func configureFetchedResultsController() {
-        
+        guard let frc = self.fetchedResultsController else { return }
         do {
-            try self.fetchedResultsController.performFetch()
+            try frc.performFetch()
         } catch {
             print(error)
         }
         
-        self.fetchedResultsController.delegate = self
+        frc.delegate = self
     }
     
     func configureAlertWithAddingChannel() {
@@ -116,7 +104,9 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
             guard let text = textField.text else { return }
             
             //text - name of new channel
-            self?.conversationListServerManager.addNewChannel(channel: .init(identifier: "", name: text, lastMessage: nil, lastActivity: nil))
+            if let model = self?.model {
+                model.addNewChannel(channel: .init(identifier: "", name: text, lastMessage: nil, lastActivity: nil))
+            }
             
             action.isEnabled = false
             textField.text = ""
@@ -134,8 +124,6 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         self.alertWithAddingChannel.addAction(createAction)
         self.alertWithAddingChannel.addAction(cancelAction)
     }
-    
-// MARK: - IConversationListModelDelegate
         
 }
 
@@ -144,14 +132,17 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
 extension ConversationsListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        if let frc = self.fetchedResultsController {
+            return frc.sections?.count ?? 0
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let sections = fetchedResultsController.sections else {
-            return 0
-        }
+        guard let frc = self.fetchedResultsController else { return 0 }
+        guard let sections = frc.sections else { return 0 }
 
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
@@ -159,7 +150,10 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let channel = self.fetchedResultsController.object(at: indexPath)
+        
+        guard let frc = self.fetchedResultsController else { return UITableViewCell() }
+        
+        let channel = frc.object(at: indexPath)
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else { return UITableViewCell() }
         
@@ -171,8 +165,13 @@ extension ConversationsListViewController: UITableViewDataSource {
     //Delete cell by swipe
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let identifier = fetchedResultsController.object(at: indexPath).identifier else { return }
-            self.conversationListServerManager.deleteChannel(at: identifier)
+            
+            guard let frc = self.fetchedResultsController else { return }
+            guard let identifier = frc.object(at: indexPath).identifier else { return }
+            
+            if let model = self.model {
+                model.deleteChannel(at: identifier)
+            }
         }
     }
     
@@ -188,10 +187,12 @@ extension ConversationsListViewController: UITableViewDelegate {
         //Init ConversationViewController.
         guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
         
-        //Change Navigation Bar title to the name of companion.
-        conversationViewController.navigationItem.title = fetchedResultsController.object(at: indexPath).name
+        guard let frc = self.fetchedResultsController else { return }
         
-        if let identifier = fetchedResultsController.object(at: indexPath).identifier {
+        //Change Navigation Bar title to the name of companion.
+        conversationViewController.navigationItem.title = frc.object(at: indexPath).name
+        
+        if let identifier = frc.object(at: indexPath).identifier {
             conversationViewController.documentId = identifier
         }
        
@@ -214,8 +215,6 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
         at indexPath: IndexPath?,
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
-        
-        guard self.isViewLoaded, self.view.window != nil else { return }
         
             switch type {
             case .insert:
@@ -241,13 +240,11 @@ extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard self.isViewLoaded, self.view.window != nil else { return }
         
         self.tableView.beginUpdates()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard self.isViewLoaded, self.view.window != nil else { return }
         
         self.tableView.endUpdates()
     }
@@ -265,7 +262,7 @@ extension ConversationsListViewController: ThemeableViewController {
         self.tableView.reloadData() //Change Theme of TableView
     }
     
-    func changeTheme(with theme: ThemeManager.Theme) {
+    func changeTheme(with theme: Theme) {
         switch theme {
             
         case .classic:
@@ -281,6 +278,8 @@ extension ConversationsListViewController: ThemeableViewController {
         //NavigationBar
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color
+        
+        self.view.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
         
         tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color
@@ -298,6 +297,8 @@ extension ConversationsListViewController: ThemeableViewController {
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
         
+        self.view.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        
         tableView.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (large)
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //large title color ++
         
@@ -313,6 +314,8 @@ extension ConversationsListViewController: ThemeableViewController {
         //NavigationBar
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (small)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //small title color
+        
+        self.view.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         
         tableView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (large)
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //large title color
