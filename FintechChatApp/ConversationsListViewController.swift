@@ -101,11 +101,11 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
             
             guard let textFields = self?.alertWithAddingChannel.textFields else { return }
             guard let textField = textFields.first else { return }
-            guard let text = textField.text else { return }
+            guard let name = textField.text else { return }
             
             //text - name of new channel
             if let model = self?.model {
-                model.addNewChannel(channel: .init(identifier: "", name: text, lastMessage: nil, lastActivity: nil))
+                model.addNewChannel(channel: .init(identifier: "", name: name, lastMessage: "Created by Nikita K", lastActivity: Timestamp().dateValue()))
             }
             
             action.isEnabled = false

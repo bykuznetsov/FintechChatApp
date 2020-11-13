@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 protocol ChannelServiceProtocol {
     func fetchAndCacheChannels()
@@ -62,14 +63,22 @@ class ChannelService: ChannelServiceProtocol {
                 
                 let name = data["name"] as? String ?? ""
                 let lastMessage = data["lastMessage"] as? String ?? ""
-                let lastActivity = data["lastActivity"] as? Date
+                let lastActivity = data["lastActivity"] as? Timestamp
                 
                 //Remove invalid data
                 if name.isEmpty {
                     return nil
                 }
                 
-                return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity)
+                if (lastMessage.isEmpty && lastActivity != nil) || (!lastMessage.isEmpty && lastActivity == nil) {
+                    return nil
+                }
+                
+                if lastMessage.isEmpty && lastActivity != nil {
+                    return nil
+                }
+                
+                return Channel(identifier: identifier, name: name, lastMessage: lastMessage, lastActivity: lastActivity?.dateValue())
             }
             
             self?.saveRequest.performSave { context in
