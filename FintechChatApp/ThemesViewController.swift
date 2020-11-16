@@ -54,7 +54,7 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
         self.changeTheme(with: model.getTheme())
     }
     
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         //Title.
         self.navigationItem.title = "Settings"
         self.navigationItem.largeTitleDisplayMode = .never
@@ -66,7 +66,7 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     
-    func configureThemeButtons() {
+    private func configureThemeButtons() {
         
         //Classic Theme
         let tapOnClassicLabel = UITapGestureRecognizer(target: self, action: #selector(self.setClassicThemeByButton))
@@ -103,7 +103,6 @@ extension ThemesViewController: ThemeableViewController {
         if let model = model {
             changeTheme(with: model.getTheme())
         }
-        //changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
     }
     
     func changeTheme(with theme: Theme) {
