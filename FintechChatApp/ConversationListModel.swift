@@ -26,6 +26,7 @@ protocol IConversationListModel: class {
     func getFRC() -> NSFetchedResultsController<DBChannel>
     func addNewChannel(channel: Channel)
     func deleteChannel(at documentPath: String)
+    func getTheme() -> Theme
 }
 
 class ConversationListModel: IConversationListModel {
@@ -34,10 +35,12 @@ class ConversationListModel: IConversationListModel {
     
     let channelService: ChannelServiceProtocol
     let channelFRC: ChannelFRCProtocol
+    let themeService: ThemeServiceProtocol
     
-    init(channelService: ChannelServiceProtocol, channelFRC: ChannelFRCProtocol) {
+    init(channelService: ChannelServiceProtocol, channelFRC: ChannelFRCProtocol, themeService: ThemeServiceProtocol) {
         self.channelService = channelService
         self.channelFRC = channelFRC
+        self.themeService = themeService
     }
     
     func fetchAndCacheChannels() {
@@ -54,6 +57,10 @@ class ConversationListModel: IConversationListModel {
     
     func deleteChannel(at documentPath: String) {
         channelService.deleteChannel(at: documentPath)
+    }
+    
+    func getTheme() -> Theme {
+        return self.themeService.getTheme()
     }
     
 }

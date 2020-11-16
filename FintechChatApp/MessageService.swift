@@ -9,7 +9,9 @@
 import Foundation
 
 protocol MessageServiceProtocol {
-    func fetchAndCacheMessages()
+    func fetchAndCacheMessages(documentId: String)
+    func addNewMessage(message: Message)
+    func deleteMessage(at documentPath: String)
     var documentId: String? { get set }
 }
 
@@ -23,6 +25,7 @@ class MessageService: MessageServiceProtocol {
     let saveRequest: SaveRequestProtocol
     let messageRequest: MessageRequestProtocol
     var messagePath: MessagePathProtocol
+    let fsMessageRequest: FSMessageRequestProtocol
     let channelRequest: ChannelRequestProtocol
     
     var messages: [Message] = []
@@ -30,17 +33,32 @@ class MessageService: MessageServiceProtocol {
     var documentId: String?
     var channelCoreData: DBChannel?
     
-    init(saveRequest: SaveRequestProtocol, messageRequest: MessageRequestProtocol, messagePath: MessagePathProtocol, channelRequest: ChannelRequestProtocol, documentId: String) {
+    init(saveRequest: SaveRequestProtocol,
+         messageRequest: MessageRequestProtocol,
+         messagePath: MessagePathProtocol,
+         channelRequest: ChannelRequestProtocol,
+         fsMessageRequest: FSMessageRequestProtocol,
+         documentId: String) {
+        
         self.saveRequest = saveRequest
         self.messageRequest = messageRequest
         
         self.messagePath = messagePath
+        self.fsMessageRequest = fsMessageRequest
         self.messagePath.documentId = documentId
         
         self.channelRequest = channelRequest
     }
     
-    func fetchAndCacheMessages() {
+    func addNewMessage(message: Message) {
+        self.fsMessageRequest.addNewMessage(message: message)
+    }
+    
+    func deleteMessage(at documentPath: String) {
+        self.fsMessageRequest.deleteMessage(at: documentPath)
+    }
+    
+    func fetchAndCacheMessages(documentId: String) {
         
         messagePath.reference.addSnapshotListener { [weak self] (snapshot, error) in
             
@@ -74,11 +92,11 @@ class MessageService: MessageServiceProtocol {
             self?.saveRequest.performSave { context in
                 
                 //Find channel
-                if let id = self?.documentId {
-                    if let channel = self?.channelRequest.fetchChannelById(by: id, in: context) {
+                //if let id = self?.documentId {
+                if let channel = self?.channelRequest.fetchChannelById(by: documentId, in: context) {
                         self?.channelCoreData = channel
                     }
-                }
+                //}
                 
                 if let messages = self?.messages {
                     for message in messages {

@@ -37,30 +37,21 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
     }
     
     @objc func setClassicThemeByButton() {
-        
-        ThemeManager.shared.updateTheme(new: .classic)
-        
-        //Change local UI
-        changeTheme(with: ThemeManager.shared.getTheme())
-        
+        guard let model = self.model else { return }
+        model.setTheme(new: .classic)
+        self.changeTheme(with: model.getTheme())
     }
     
     @objc func setDayThemeByButton() {
-    
-        ThemeManager.shared.updateTheme(new: .day)
-        
-        //Change local UI
-        changeTheme(with: ThemeManager.shared.getTheme())
-        
+        guard let model = self.model else { return }
+        model.setTheme(new: .day)
+        self.changeTheme(with: model.getTheme())
     }
     
     @objc func setNightThemeByButton() {
-        
-        ThemeManager.shared.updateTheme(new: .night)
-        
-        //Change local UI
-        changeTheme(with: ThemeManager.shared.getTheme())
-    
+        guard let model = self.model else { return }
+        model.setTheme(new: .night)
+        self.changeTheme(with: model.getTheme())
     }
     
     func configureNavigationBar() {
@@ -109,7 +100,10 @@ extension ThemesViewController: ThemeableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
+        if let model = model {
+            changeTheme(with: model.getTheme())
+        }
+        //changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
     }
     
     func changeTheme(with theme: Theme) {

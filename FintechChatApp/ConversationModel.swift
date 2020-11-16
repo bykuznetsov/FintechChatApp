@@ -15,7 +15,11 @@ protocol IConversationModelDelegate: class {
 
 protocol IConversationModel: class {
     var delegate: IConversationModelDelegate? { get set }
-    func fetchAndCacheMessages(from documentId: String)
+    func fetchAndCacheMessages()
+    func getFRC() -> NSFetchedResultsController<DBMessage>
+    func addNewMessage(message: Message)
+    func deleteChannel(at documentPath: String)
+    func getTheme() -> Theme
 }
 
 class ConversationModel: IConversationModel {
@@ -24,19 +28,35 @@ class ConversationModel: IConversationModel {
     
     var messageService: MessageServiceProtocol
     let messageFRC: MessageFRCProtocol
+    let themeService: ThemeServiceProtocol
     
-    init(messageService: MessageServiceProtocol, messageFRC: MessageFRCProtocol) {
+    var documentId: String
+    
+    init(messageService: MessageServiceProtocol, messageFRC: MessageFRCProtocol, themeService: ThemeServiceProtocol, documentId: String) {
         self.messageService = messageService
         self.messageFRC = messageFRC
+        self.themeService = themeService
+        self.documentId = documentId
     }
     
-    func fetchAndCacheMessages(from documentId: String) {
-        self.messageService.documentId = documentId
-        self.messageService.fetchAndCacheMessages()
+    func addNewMessage(message: Message) {
+        self.messageService.addNewMessage(message: message)
     }
     
-    func getFRC(channelId id: String) -> NSFetchedResultsController<DBMessage> {
-        self.messageFRC.messagesFetchedResultsController(channelId: id)
+    func deleteChannel(at documentPath: String) {
+        self.messageService.deleteMessage(at: documentPath)
+    }
+    
+    func fetchAndCacheMessages() {
+        self.messageService.fetchAndCacheMessages(documentId: self.documentId)
+    }
+    
+    func getFRC() -> NSFetchedResultsController<DBMessage> {
+        self.messageFRC.messagesFetchedResultsController(channelId: self.documentId)
+    }
+    
+    func getTheme() -> Theme {
+        return self.themeService.getTheme()
     }
     
 }

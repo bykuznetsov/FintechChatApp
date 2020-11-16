@@ -14,7 +14,7 @@ protocol IPresentationAssembly {
     func conversationListViewController() -> ConversationsListViewController
     
     //Создание экрана с беседой
-    func conversationViewController() -> ConversationViewController
+    func conversationViewController(documentId: String) -> ConversationViewController
     
     //Создание экрана профиля
     func profileViewController() -> ProfileViewController
@@ -50,25 +50,27 @@ class PresentationAssembly: IPresentationAssembly {
     
     private func conversationListModel() -> IConversationListModel {
         return ConversationListModel(channelService: self.serviceAssembly.channelService,
-                                     channelFRC: self.serviceAssembly.channelFRC)
+                                     channelFRC: self.serviceAssembly.channelFRC, themeService: serviceAssembly.themeService)
     }
     
     // MARK: - ConversationViewController
-    func conversationViewController() -> ConversationViewController {
+    func conversationViewController(documentId: String) -> ConversationViewController {
         
         guard let conversationVC = ConversationViewController.storyboardInstance() as? ConversationViewController else { fatalError("Can't load ConversationVC")
         }
         
-        let model = conversationModel()
+        let model = conversationModel(documentId: documentId)
         conversationVC.applyDependencies(model: model, presentationAssembly: self)
         model.delegate = conversationVC
         
         return conversationVC
     }
     
-    private func conversationModel() -> IConversationModel {
+    private func conversationModel(documentId: String) -> IConversationModel {
         return ConversationModel(messageService: self.serviceAssembly.messageService,
-                                     messageFRC: self.serviceAssembly.messageFRC)
+                                     messageFRC: self.serviceAssembly.messageFRC,
+                                     themeService: self.serviceAssembly.themeService,
+                                     documentId: documentId)
     }
         
     // MARK: - ProfileViewController
@@ -88,7 +90,8 @@ class PresentationAssembly: IPresentationAssembly {
     
     private func profileModel() -> IProfileModel {
         return ProfileModel(gcdProfileService: self.serviceAssembly.gcdProfileService,
-                            operationProfileService: self.serviceAssembly.operationProfileService)
+                            operationProfileService: self.serviceAssembly.operationProfileService,
+                            themeService: self.serviceAssembly.themeService)
     }
     
     // MARK: - ThemesViewController

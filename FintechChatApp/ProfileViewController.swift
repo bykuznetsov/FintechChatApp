@@ -10,8 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController, IProfileModelDelegate {
     
-    private var presentationAssembly: IPresentationAssembly?
-    private var model: IProfileModel?
+    var presentationAssembly: IPresentationAssembly?
+    var model: IProfileModel?
     
     @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
     @IBOutlet weak var saveWithOperationsButton: UIButton!
@@ -29,16 +29,13 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    let profileDataManager = GCDDataManager()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        initProfileInformation()
-        setupNavigationBar()
-        configureTextFields()
-        addKeyboardNotifications()
+        configureNavigationBar()
         configureActivityIndicator()
+        configureTextFields()
+        initProfileInformation()
+        addKeyboardNotifications()
     }
     
     func applyDependencies(model: IProfileModel, presentationAssembly: IPresentationAssembly) {
@@ -46,7 +43,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         self.presentationAssembly = presentationAssembly
     }
     
-    func configureTextFields() {
+    private func configureTextFields() {
         self.profileNameTextField.delegate = self
         self.profileDescriptionTextView.delegate = self
     }
@@ -121,92 +118,92 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     }
     
     @IBAction func saveProfileWithGrandCentralDispatch(_ sender: Any?) {
-        self.activityIndicator.startAnimating()
         
-        let grandCentralDispatchDataManager = GCDDataManager()
+        guard let model = self.model else { return }
+        
+        self.activityIndicator.startAnimating()
     
         self.saveWithGrandCentralDispatchButton.isEnabled = false
         self.saveWithOperationsButton.isEnabled = false
         
-        if self.profileNameTextField.text != grandCentralDispatchDataManager.profileName {
+        if self.profileNameTextField.text != model.gcdGetProfileName() {
             //Update name
             print("Update name")
             if let name = self.profileNameTextField.text {
-                grandCentralDispatchDataManager.updateProfileName(with: name)
+                model.gcdUpdateProfileName(with: name)
             }
         }
         
-        if self.profileDescriptionTextView.text != grandCentralDispatchDataManager.profileDescription?.description {
+        if self.profileDescriptionTextView.text != model.gcdGetProfileDescription() {
             //Update description
             print("Update description")
             if let description = self.profileDescriptionTextView.text {
-                grandCentralDispatchDataManager.updateProfileDescription(with: description)
+                model.gcdUpdateProfileDescription(with: description)
             }
         }
         
-        if self.profileImageView.image?.pngData() != grandCentralDispatchDataManager.profileImage?.pngData() {
+        if self.profileImageView.image?.pngData() != model.gcdGetProfileImage()?.pngData() {
             //Update image
             print("Update image")
             if let image = self.profileImageView.image {
-                grandCentralDispatchDataManager.updateProfileImage(with: image)
+                model.gcdUpdateProfileImage(with: image)
             }
         }
         
-        grandCentralDispatchDataManager.returnToMainQueue {
-            self.activityIndicator.stopAnimating()
+        self.activityIndicator.stopAnimating()
+        
+        //Out of editing mode if we saving data (case when we change image)
+        if self.editButton.title != "Edit" {
             
-            //Out of editing mode if we saving data (case when we change image)
-            if self.editButton.title != "Edit" {
-                
-                //func of our EditButton
-                self.editProfile(nil)
-                
-            }
+            //func of our EditButton
+            self.editProfile(nil)
             
-            if self.isAllDataSaved() {
-                self.alertWithMessageAboutSuccessSaving()
-            } else {
-                self.alertWithMessageAboutFailureSaving {
-                    self.saveProfileWithGrandCentralDispatch(nil)
-                }
+        }
+        
+        if self.isAllDataSaved() {
+            self.alertWithMessageAboutSuccessSaving()
+        } else {
+            self.alertWithMessageAboutFailureSaving {
+                self.saveProfileWithGrandCentralDispatch(nil)
             }
         }
     }
     
     @IBAction func saveProfileWithOperations(_ sender: Any?) {
-        activityIndicator.startAnimating()
         
-        let operationDataManager = OperationDataManager()
+        guard let model = self.model else { return }
+        
+        activityIndicator.startAnimating()
         
         self.saveWithGrandCentralDispatchButton.isEnabled = false
         self.saveWithOperationsButton.isEnabled = false
         
-        if self.profileNameTextField.text != operationDataManager.profileName {
+        if self.profileNameTextField.text != model.operationGetProfileName() {
             //Update name
             print("Update name")
             if let name = self.profileNameTextField.text {
-                operationDataManager.updateProfileName(with: name)
+                model.operationUpdateProfileName(with: name)
             }
         }
         
-        if self.profileDescriptionTextView.text != operationDataManager.profileDescription?.description {
+        if self.profileDescriptionTextView.text != model.operationGetProfileDescription() {
             //Update description
             print("Update description")
             if let description = self.profileDescriptionTextView.text {
-                operationDataManager.updateProfileDescription(with: description)
+                model.operationUpdateProfileDescription(with: description)
             }
         }
         
-        if self.profileImageView.image?.pngData() != operationDataManager.profileImage?.pngData() {
+        if self.profileImageView.image?.pngData() != model.operationGetProfileImage()?.pngData() {
             
             //Update image
             print("Update image")
             if let image = self.profileImageView.image {
-                operationDataManager.updateProfileImage(with: image)
+                model.operationUpdateProfileImage(with: image)
             }
         }
         
-        operationDataManager.returnToMainQueue {
+        //operationDataManager.returnToMainQueue {
             self.activityIndicator.stopAnimating()
             
             //Out of editing mode if we saving data (case when we change image)
@@ -224,11 +221,11 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
                     self.saveProfileWithOperations(nil)
                 }
             }
-        }
+        //}
     }
     
     //Use it after saving Data
-    func alertWithMessageAboutSuccessSaving() {
+    private func alertWithMessageAboutSuccessSaving() {
         let alert = UIAlertController(title: "Canges saved", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: { (_) in
         }))
@@ -236,7 +233,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     }
     
     //Use it after saving Data
-    func alertWithMessageAboutFailureSaving( _ repeatSaving: @escaping () -> Void ) {
+    private func alertWithMessageAboutFailureSaving( _ repeatSaving: @escaping () -> Void ) {
         let alert = UIAlertController(title: "Not all data saved", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
         }))
@@ -247,7 +244,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     }
     
     //Use it if user change something and doesn't save, but press Done Button on NavigationBar
-    func alertWithMessageAboutSaving() {
+    private func alertWithMessageAboutSaving() {
         
         let alert = UIAlertController(title: "Save changes", message: "After making edits", preferredStyle: .alert)
         
@@ -285,8 +282,11 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     
     //Use it when typing something in TextField, TextView or when tap on Done button in NavigationBar.
     //Check only TextField and TextView.
-    func isNothingInTextsChanged() -> Bool {
-        if self.profileNameTextField.text == self.profileDataManager.profileName && self.profileDescriptionTextView.text == self.profileDataManager.profileDescription {
+    private func isNothingInTextsChanged() -> Bool {
+        
+        guard let model = self.model else { return false }
+        
+        if self.profileNameTextField.text == model.gcdGetProfileName() && self.profileDescriptionTextView.text == model.gcdGetProfileDescription() {
             return true
         } else {
             return false
@@ -294,11 +294,13 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     }
     
     //Use it when save data.
-    func isAllDataSaved() -> Bool {
+    private func isAllDataSaved() -> Bool {
         
-        if self.profileNameTextField.text == self.profileDataManager.profileName {
-            if self.profileDescriptionTextView.text == self.profileDataManager.profileDescription {
-                if self.profileImageView.image?.pngData() == self.profileDataManager.profileImage?.pngData() {
+        guard let model = self.model else { return false }
+        
+        if self.profileNameTextField.text == model.gcdGetProfileName() {
+            if self.profileDescriptionTextView.text == model.gcdGetProfileDescription() {
+                if self.profileImageView.image?.pngData() == model.gcdGetProfileImage()?.pngData() {
                     return true
                 }
             }
@@ -309,11 +311,13 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     }
     
     //Use it in ViewDidLoad()
-    func initProfileInformation() {
+    private func initProfileInformation() {
+        
+        guard let model = self.model else { return }
         
         //TextField and TextView
-        self.profileNameTextField.text = self.profileDataManager.profileName
-        self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+        self.profileNameTextField.text = model.gcdGetProfileName()
+        self.profileDescriptionTextView.text = model.gcdGetProfileDescription()
         
         //Initials
         if let initials = self.profileNameTextField.text?.first {
@@ -323,15 +327,15 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         }
         
         //Label's
-        self.profileNameLabel.text = self.profileDataManager.profileName
-        self.profileDescriptionTextView.text = self.profileDataManager.profileDescription?.description
+        self.profileNameLabel.text = model.gcdGetProfileName()
+        self.profileDescriptionTextView.text = model.gcdGetProfileDescription()
         
         //Image
-        self.profileImageView.image = self.profileDataManager.profileImage
+        self.profileImageView.image = model.gcdGetProfileImage()
     }
     
     //NavigationBar Setup.
-    func setupNavigationBar() {
+    private func configureNavigationBar() {
         self.navigationItem.title = "My profile"
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }

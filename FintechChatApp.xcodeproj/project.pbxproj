@@ -44,9 +44,7 @@
 		5011D811255D85AB0065A65C /* DayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D810255D85AB0065A65C /* DayButton.swift */; };
 		5011D813255D85B60065A65C /* NightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D812255D85B60065A65C /* NightButton.swift */; };
 		502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FDAC0251403E400478792 /* ProfileViewController.swift */; };
-		5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD69252DDC0000846ECC /* ThemeManager.swift */; };
 		5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6B252E33F800846ECC /* ThemeableView.swift */; };
-		5035DD6E252E7D8C00846ECC /* ConversationListServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6D252E7D8C00846ECC /* ConversationListServerManager.swift */; };
 		5035DD70252E7E6D00846ECC /* ConversationServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */; };
 		50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50505814252B9FB700FD73CA /* ThemesViewController.swift */; };
 		50505817252BA03A00FD73CA /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50505816252BA03A00FD73CA /* ThemesViewController.storyboard */; };
@@ -119,9 +117,7 @@
 		5011D810255D85AB0065A65C /* DayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayButton.swift; sourceTree = "<group>"; };
 		5011D812255D85B60065A65C /* NightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightButton.swift; sourceTree = "<group>"; };
 		502FDAC0251403E400478792 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		5035DD69252DDC0000846ECC /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		5035DD6B252E33F800846ECC /* ThemeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeableView.swift; sourceTree = "<group>"; };
-		5035DD6D252E7D8C00846ECC /* ConversationListServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListServerManager.swift; sourceTree = "<group>"; };
 		5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServerManager.swift; sourceTree = "<group>"; };
 		50505814252B9FB700FD73CA /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		50505816252BA03A00FD73CA /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
@@ -502,7 +498,6 @@
 				50700C30251F84C0003A060B /* ConversationsListViewController.swift */,
 				5011D7C7255BF3C60065A65C /* ConversationListModel.swift */,
 				5011D7DD255C44F10065A65C /* View */,
-				5035DD6D252E7D8C00846ECC /* ConversationListServerManager.swift */,
 			);
 			name = ConversationListViewController;
 			sourceTree = "<group>";
@@ -526,14 +521,6 @@
 				5011D7E9255C920E0065A65C /* View */,
 			);
 			name = ThemesViewController;
-			sourceTree = "<group>";
-		};
-		50505818252CAD2C00FD73CA /* ThemeManager */ = {
-			isa = PBXGroup;
-			children = (
-				5035DD69252DDC0000846ECC /* ThemeManager.swift */,
-			);
-			name = ThemeManager;
 			sourceTree = "<group>";
 		};
 		5058C7C925194C0E00DAD08C /* UIExtensions */ = {
@@ -593,7 +580,6 @@
 				5058C7C925194C0E00DAD08C /* UIExtensions */,
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
 				5058C7CF251955C800DAD08C /* Debugging */,
-				50505818252CAD2C00FD73CA /* ThemeManager */,
 				5034A8122534C83500198486 /* DataManager */,
 			);
 			path = FintechChatApp;
@@ -783,7 +769,6 @@
 				507DE6E72537792500D797C6 /* GCDDataManager.swift in Sources */,
 				5011D7FE255D69910065A65C /* MessageTextField.swift in Sources */,
 				5011D79D2559B4BA0065A65C /* ServiceAssembly.swift in Sources */,
-				5035DD6A252DDC0000846ECC /* ThemeManager.swift in Sources */,
 				507DE6DF2535D53700D797C6 /* ProfileDataModels.swift in Sources */,
 				5011D7C0255B45DD0065A65C /* ChannelPath.swift in Sources */,
 				507DE6E92537956900D797C6 /* OperationDataManager.swift in Sources */,
@@ -813,7 +798,6 @@
 				5011D7C2255B475A0065A65C /* MessagePath.swift in Sources */,
 				50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */,
 				5011D7D0255C15190065A65C /* FMProfileRequest.swift in Sources */,
-				5035DD6E252E7D8C00846ECC /* ConversationListServerManager.swift in Sources */,
 				5011D7AA255ADEE70065A65C /* ChannelRequest.swift in Sources */,
 				5011D806255D7FE00065A65C /* ProfileFieldForImage.swift in Sources */,
 				50700C31251F84C0003A060B /* ConversationsListViewController.swift in Sources */,

@@ -34,16 +34,22 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
     //Object for working with Local Database (data after caching)
     lazy var fetchedResultsController: NSFetchedResultsController<DBMessage> = CoreDataStack.shared.messagesFetchedResultsController(channelId: "\(documentId)")
     
+    //lazy var fetchedResultsController: NSFetchedResultsController<DBMessage>? = self.model?.getFRC()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        configureFetchedResultsController()
         configureMessageTextField()
         configureNavigationBar()
         
         addKeyboardNotifications()
         
-        setupFetchedResultsController()
         conversationServerManager.fetchingMessages()
+        
+//        if let model = self.model {
+//            model.fetchAndCacheMessages()
+//        }
     }
     
     func applyDependencies(model: IConversationModel, presentationAssembly: IPresentationAssembly) {
@@ -60,10 +66,13 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
     @IBAction func sendMessage(_ sender: Any) {
         
         guard let textOfMessage = self.messageTextField.text else { return }
+        //guard let model = self.model else {  return }
         
         //Personal device ID and name from file
         guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
         let senderName = GCDDataManager().initProfileName()
+        
+        //model.addNewMessage(message: .init(identifier: "", content: textOfMessage, created: Date(), senderId: mySenderId, senderName: senderName))
         
         self.conversationServerManager.addNewMessage(message: .init(identifier: "", content: textOfMessage, created: Date(), senderId: mySenderId, senderName: senderName))
         
@@ -71,19 +80,28 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
         self.messageTextField.text = ""
     }
     
-    func setupFetchedResultsController() {
+    private func configureFetchedResultsController() {
         
         do {
             try self.fetchedResultsController.performFetch()
         } catch {
             print(error)
         }
-        
+
         self.fetchedResultsController.delegate = self
+        
+//        guard let frc = self.fetchedResultsController else { return }
+//        do {
+//            try frc.performFetch()
+//        } catch {
+//            print(error)
+//        }
+//
+//        frc.delegate = self
     }
     
     //TableView Configure
-    func configureTableView() {
+    private func configureTableView() {
         //Flip tableView
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
@@ -93,12 +111,12 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
     }
     
     //MessageTextView Configure
-    func configureMessageTextField() {
+    private func configureMessageTextField() {
         self.messageTextField.delegate = self
     }
     
     //NavigationBar Setup.
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         //Title.
         self.navigationItem.largeTitleDisplayMode = .never
         
@@ -117,6 +135,11 @@ extension ConversationViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
+//        if let frc = self.fetchedResultsController {
+//            return frc.sections?.count ?? 0
+//        } else {
+//            return 0
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -126,20 +149,29 @@ extension ConversationViewController: UITableViewDataSource {
         
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
+        
+//        guard let frc = self.fetchedResultsController else { return 0 }
+//        guard let sections = frc.sections else { return 0 }
+//
+//        let sectionInfo = sections[section]
+//        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationCell else { return UITableViewCell() }
+        guard let model = self.model else { return UITableViewCell() }
+        //guard let frc = self.fetchedResultsController else { return UITableViewCell() }
         
         let message = self.fetchedResultsController.object(at: indexPath)
+        //let message = frc.object(at: indexPath)
         
         let content = message.content ?? "Not found"
         let created = message.created ?? Date()
         let senderId = message.senderId ?? "Not found"
         let senderName = message.senderName ?? "Not found"
         
-        cell.configure(with: .init(content: content, created: created, senderId: senderId, senderName: senderName))
+        cell.configure(with: .init(content: content, created: created, senderId: senderId, senderName: senderName), with: model.getTheme())
         
         return cell
     }
@@ -256,7 +288,9 @@ extension ConversationViewController: ThemeableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        changeTheme(with: ThemeManager.shared.getTheme())
+        if let model = model {
+            changeTheme(with: model.getTheme())
+        }
     }
     
     func changeTheme(with theme: Theme) {

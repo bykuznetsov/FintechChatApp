@@ -29,6 +29,8 @@ protocol IProfileModel: class {
     func operationUpdateProfileName(with name: String)
     func operationUpdateProfileDescription(with description: String)
     func operationUpdateProfileImage(with image: UIImage?)
+    
+    func getTheme() -> Theme
 }
 
 class ProfileModel: IProfileModel {
@@ -37,10 +39,12 @@ class ProfileModel: IProfileModel {
     
     let gcdProfileService: ProfileServiceProtocol
     let operationProfileService: ProfileServiceProtocol
+    let themeService: ThemeServiceProtocol
     
-    init(gcdProfileService: ProfileServiceProtocol, operationProfileService: ProfileServiceProtocol) {
+    init(gcdProfileService: ProfileServiceProtocol, operationProfileService: ProfileServiceProtocol, themeService: ThemeServiceProtocol) {
         self.gcdProfileService = gcdProfileService
         self.operationProfileService = operationProfileService
+        self.themeService = themeService
     }
     
     func gcdGetProfileName() -> String? {
@@ -90,4 +94,9 @@ class ProfileModel: IProfileModel {
     func operationUpdateProfileImage(with image: UIImage?) {
         self.operationProfileService.updateProfileImage(with: image)
     }
+    
+    func getTheme() -> Theme {
+        return self.themeService.getTheme()
+    }
+    
 }

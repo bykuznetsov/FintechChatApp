@@ -12,6 +12,7 @@ import CoreData
 
 class ConversationsListViewController: UIViewController, IConversationListModelDelegate {
     
+    //Dependencies
     private var presentationAssembly: IPresentationAssembly?
     private var model: IConversationListModel?
     
@@ -26,14 +27,12 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     //Object for working with Local Database (data after caching)
     lazy var fetchedResultsController: NSFetchedResultsController<DBChannel>? = self.model?.getFRC()
     
-    let alertWithAddingChannel = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
+    private let alertWithAddingChannel = UIAlertController(title: "Create channel", message: "Enter name", preferredStyle: .alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        
         configureAlertWithAddingChannel()
-        
         configureFetchedResultsController()
         
         if let model = self.model {
@@ -46,7 +45,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         self.presentationAssembly = presentationAssembly
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: String(describing: ConversationListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
@@ -79,7 +78,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         self.alertWithAddingChannel.actions[0].isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
-    func configureFetchedResultsController() {
+    private func configureFetchedResultsController() {
         guard let frc = self.fetchedResultsController else { return }
         do {
             try frc.performFetch()
@@ -90,7 +89,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         frc.delegate = self
     }
     
-    func configureAlertWithAddingChannel() {
+    private func configureAlertWithAddingChannel() {
         
         self.alertWithAddingChannel.addTextField { textField in
             textField.placeholder = "Channel name"
@@ -152,12 +151,13 @@ extension ConversationsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let frc = self.fetchedResultsController else { return UITableViewCell() }
+        guard let model = self.model else { return UITableViewCell() }
         
         let channel = frc.object(at: indexPath)
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConversationListCell else { return UITableViewCell() }
         
-        cell.configure(with: .init(name: channel.name ?? "Not found", date: channel.lastActivity, message: channel.lastMessage))
+        cell.configure(with: .init(name: channel.name ?? "Not found", date: channel.lastActivity, message: channel.lastMessage), with: model.getTheme())
         
         return cell
     }
@@ -183,20 +183,22 @@ extension ConversationsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    
         //Data transfer.
         //Init ConversationViewController.
-        guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
+        
+        //guard let conversationViewController = ConversationViewController.storyboardInstance() as? ConversationViewController else { return }
         
         guard let frc = self.fetchedResultsController else { return }
+        guard let identifier = frc.object(at: indexPath).identifier else { return }
         
+        guard let conversationVC = self.presentationAssembly?.conversationViewController(documentId: identifier) else { return }
+        conversationVC.navigationItem.title = frc.object(at: indexPath).name
+        conversationVC.documentId = identifier
         //Change Navigation Bar title to the name of companion.
-        conversationViewController.navigationItem.title = frc.object(at: indexPath).name
-        
-        if let identifier = frc.object(at: indexPath).identifier {
-            conversationViewController.documentId = identifier
-        }
+        //conversationVC.navigationItem.title = frc.object(at: indexPath).name
        
-        self.navigationController?.pushViewController(conversationViewController, animated: true)
+        self.navigationController?.pushViewController(conversationVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -258,13 +260,16 @@ extension ConversationsListViewController: ThemeableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
-        self.tableView.reloadData() //Change Theme of TableView
+        if let model = self.model {
+            changeTheme(with: model.getTheme())
+            self.tableView.reloadData() //Change Theme of TableView
+        }
+        //changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
+        //self.tableView.reloadData() //Change Theme of TableView
     }
     
     func changeTheme(with theme: Theme) {
         switch theme {
-            
         case .classic:
             self.setClassicTheme()
         case .day:

@@ -26,7 +26,7 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
     //All UILabel's depends on this value.
     let nameFontSize: CGFloat = 21.0
     
-    func configure(with model: ConversationCellModel) {
+    func configure(with model: ConversationCellModel, with theme: Theme) {
         
         //Name.
         userNameLabel.text = model.name
@@ -58,17 +58,6 @@ class ConversationListCell: UITableViewCell, ConfigurableView {
             dateOfLastMessageLabel.text = ""
         }
         
-        configureTheme(with: ThemeManager.shared.getTheme(), with: model)
-        
-    }
-    
-}
-
-// MARK: - ThemeableCell
-
-extension ConversationListCell: ThemeableCell {
-    
-    func configureTheme(with theme: Theme, with model: ConversationCellModel) {
         switch theme {
         case .classic:
             
@@ -95,6 +84,9 @@ extension ConversationListCell: ThemeableCell {
             self.dateOfLastMessageLabel.textColor = #colorLiteral(red: 0.7585204244, green: 0.7540128827, blue: 0.7619863153, alpha: 1)
             
         }
+        
+        //configureTheme(with: ThemeManager.shared.getTheme(), with: model)
+        
     }
     
 }

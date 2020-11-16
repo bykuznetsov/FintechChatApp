@@ -40,6 +40,7 @@ class ServiceAssembly: ServiceAssemblyProtocol {
                                                                      messageRequest: self.coreAssembly.messageRequest,
                                                                      messagePath: self.coreAssembly.messagePath,
                                                                      channelRequest: self.coreAssembly.channelRequest,
+                                                                     fsMessageRequest: self.coreAssembly.fsMessageRequest,
                                                                      documentId: "")
     
     lazy var themeService: ThemeServiceProtocol = ThemeService(userDefaultsEntity: self.coreAssembly.userDefaultsEntity)

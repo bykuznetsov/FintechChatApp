@@ -16,7 +16,9 @@ extension ProfileViewController: ThemeableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
+        if let model = model {
+            changeTheme(with: model.getTheme())
+        }
     }
     
     func changeTheme(with theme: Theme) {
