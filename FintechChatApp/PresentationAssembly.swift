@@ -70,6 +70,7 @@ class PresentationAssembly: IPresentationAssembly {
         return ConversationModel(messageService: self.serviceAssembly.messageService,
                                      messageFRC: self.serviceAssembly.messageFRC,
                                      themeService: self.serviceAssembly.themeService,
+                                     profileService: self.serviceAssembly.gcdProfileService,
                                      documentId: documentId)
     }
         

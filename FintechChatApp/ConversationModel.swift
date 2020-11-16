@@ -19,6 +19,7 @@ protocol IConversationModel: class {
     func getFRC() -> NSFetchedResultsController<DBMessage>
     func addNewMessage(message: Message)
     func deleteChannel(at documentPath: String)
+    func gcdGetProfileName() -> String?
     func getTheme() -> Theme
 }
 
@@ -29,13 +30,15 @@ class ConversationModel: IConversationModel {
     var messageService: MessageServiceProtocol
     let messageFRC: MessageFRCProtocol
     let themeService: ThemeServiceProtocol
+    let profileService: ProfileServiceProtocol
     
     var documentId: String
     
-    init(messageService: MessageServiceProtocol, messageFRC: MessageFRCProtocol, themeService: ThemeServiceProtocol, documentId: String) {
+    init(messageService: MessageServiceProtocol, messageFRC: MessageFRCProtocol, themeService: ThemeServiceProtocol, profileService: ProfileServiceProtocol, documentId: String) {
         self.messageService = messageService
         self.messageFRC = messageFRC
         self.themeService = themeService
+        self.profileService = profileService
         self.documentId = documentId
     }
     
@@ -53,6 +56,10 @@ class ConversationModel: IConversationModel {
     
     func getFRC() -> NSFetchedResultsController<DBMessage> {
         self.messageFRC.messagesFetchedResultsController(channelId: self.documentId)
+    }
+    
+    func gcdGetProfileName() -> String? {
+        return self.profileService.getProfileName()
     }
     
     func getTheme() -> Theme {

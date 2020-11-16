@@ -66,15 +66,17 @@ class ConversationViewController: UIViewController, IConversationModelDelegate {
     @IBAction func sendMessage(_ sender: Any) {
         
         guard let textOfMessage = self.messageTextField.text else { return }
-        //guard let model = self.model else {  return }
+        guard let model = self.model else {  return }
         
         //Personal device ID and name from file
         guard let mySenderId = UIDevice.current.identifierForVendor?.uuidString else { return }
-        let senderName = GCDDataManager().initProfileName()
+        let senderName = model.gcdGetProfileName()
         
-        //model.addNewMessage(message: .init(identifier: "", content: textOfMessage, created: Date(), senderId: mySenderId, senderName: senderName))
-        
-        self.conversationServerManager.addNewMessage(message: .init(identifier: "", content: textOfMessage, created: Date(), senderId: mySenderId, senderName: senderName))
+        self.conversationServerManager.addNewMessage(message: .init(identifier: "",
+                                                                    content: textOfMessage,
+                                                                    created: Date(),
+                                                                    senderId: mySenderId,
+                                                                    senderName: senderName ?? "Not found"))
         
         self.sendButton.isEnabled = false
         self.messageTextField.text = ""
