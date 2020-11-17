@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-protocol MessageFRCProtocol {
+protocol IMessageFRC {
     func messagesFetchedResultsController(channelId id: String) -> NSFetchedResultsController<DBMessage>
 }
 
-class MessageFRC: MessageFRCProtocol {
+class MessageFRC: IMessageFRC {
     
     //NSFetchedResultsController for ConversationViewController tableView
     func messagesFetchedResultsController(channelId id: String) -> NSFetchedResultsController<DBMessage> {

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ProfileServiceProtocol {
+protocol IProfileService {
     func getProfileName() -> String?
     func getProfileDescription() -> String?
     func getProfileImage() -> UIImage?
@@ -23,11 +23,11 @@ protocol ProfileServiceProtocol {
 ///Using (Core Components):
 ///-FileManager: FMGCDProfileRequest
 
-class GCDProfileService: ProfileServiceProtocol {
+class GCDProfileService: IProfileService {
     
-    let fmGCDProfileRequest: FMProfileRequestProtocol
+    let fmGCDProfileRequest: IFMProfileRequest
     
-    init(fmGCDProfileRequest: FMProfileRequestProtocol) {
+    init(fmGCDProfileRequest: IFMProfileRequest) {
         self.fmGCDProfileRequest = fmGCDProfileRequest
     }
     
@@ -61,11 +61,11 @@ class GCDProfileService: ProfileServiceProtocol {
 ///Using (Core Components):
 ///-FileManager: FMOperationProfileRequest
 
-class OperationProfileService: ProfileServiceProtocol {
+class OperationProfileService: IProfileService {
     
-    let fmOperationProfileRequest: FMProfileRequestProtocol
+    let fmOperationProfileRequest: IFMProfileRequest
     
-    init(fmOperationProfileRequest: FMProfileRequestProtocol) {
+    init(fmOperationProfileRequest: IFMProfileRequest) {
         self.fmOperationProfileRequest = fmOperationProfileRequest
     }
     

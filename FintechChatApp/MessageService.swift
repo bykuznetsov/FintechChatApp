@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MessageServiceProtocol {
+protocol IMessageService {
     func fetchAndCacheMessages(documentId: String)
     func addNewMessage(message: Message)
     func deleteMessage(at documentPath: String)
@@ -20,24 +20,24 @@ protocol MessageServiceProtocol {
 ///-Firestore: MessagePath
 ///-CoreData: SaveRequest, MessageRequest, ChannelRequest
 
-class MessageService: MessageServiceProtocol {
+class MessageService: IMessageService {
     
-    let saveRequest: SaveRequestProtocol
-    let messageRequest: MessageRequestProtocol
-    var messagePath: MessagePathProtocol
-    let fsMessageRequest: FSMessageRequestProtocol
-    let channelRequest: ChannelRequestProtocol
+    let saveRequest: ISaveRequest
+    let messageRequest: IMessageRequest
+    var messagePath: IMessagePath
+    let fsMessageRequest: IFSMessageRequest
+    let channelRequest: IChannelRequest
     
     var messages: [Message] = []
     
     var documentId: String?
     var channelCoreData: DBChannel?
     
-    init(saveRequest: SaveRequestProtocol,
-         messageRequest: MessageRequestProtocol,
-         messagePath: MessagePathProtocol,
-         channelRequest: ChannelRequestProtocol,
-         fsMessageRequest: FSMessageRequestProtocol,
+    init(saveRequest: ISaveRequest,
+         messageRequest: IMessageRequest,
+         messagePath: IMessagePath,
+         channelRequest: IChannelRequest,
+         fsMessageRequest: IFSMessageRequest,
          documentId: String) {
         
         self.saveRequest = saveRequest

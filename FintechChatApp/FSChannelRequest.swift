@@ -15,17 +15,17 @@ struct Channel {
     let lastActivity: Date?
 }
 
-protocol FSChannelRequestProtocol {
+protocol IFSChannelRequest {
     func addNewChannel(channel: Channel)
     func deleteChannel(at documentPath: String)
 }
 
 ///Request's with channels in Firestore (add, delete...)
-class FSChannelRequest: FSChannelRequestProtocol {
+class FSChannelRequest: IFSChannelRequest {
     
-    var channelPath: ChannelPathProtocol
+    var channelPath: IChannelPath
     
-    init(channelPath: ChannelPathProtocol) {
+    init(channelPath: IChannelPath) {
         self.channelPath = channelPath
     }
     

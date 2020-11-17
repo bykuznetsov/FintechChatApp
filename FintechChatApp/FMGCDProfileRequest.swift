@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class FMGCDProfileRequest: FMProfileRequestProtocol {
+class FMGCDProfileRequest: IFMProfileRequest {
     
     let savingSerialQueue = DispatchQueue(label: "com.bykuznetsov.savingSerialQueue", qos: .background, attributes: .concurrent)
     
-    let fmProfileRequest: FMProfileRequestProtocol
+    let fmProfileRequest: IFMProfileRequest
     
-    init(fmProfileRequest: FMProfileRequestProtocol) {
+    init(fmProfileRequest: IFMProfileRequest) {
         self.fmProfileRequest = fmProfileRequest
     }
     

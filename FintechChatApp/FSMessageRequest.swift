@@ -17,17 +17,17 @@ struct Message {
     let senderName: String
 }
 
-protocol FSMessageRequestProtocol {
+protocol IFSMessageRequest {
     func addNewMessage(message: Message)
     func deleteMessage(at documentPath: String)
 }
 
 ///Request's with messages in Firestore (add, delete...)
-class FSMessageRequest: FSMessageRequestProtocol {
+class FSMessageRequest: IFSMessageRequest {
     
-    var messagePath: MessagePathProtocol
+    var messagePath: IMessagePath
     
-    init(messagePath: MessagePathProtocol) {
+    init(messagePath: IMessagePath) {
         self.messagePath = messagePath
     }
     

@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-protocol MessageRequestProtocol {
+protocol IMessageRequest {
     func fetchMessageById(by id: String, in context: NSManagedObjectContext) -> DBMessage?
 }
 
-class MessageRequest: MessageRequestProtocol {
+class MessageRequest: IMessageRequest {
     
     func fetchMessageById(by id: String, in context: NSManagedObjectContext) -> DBMessage? {
         

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol FMProfileRequestProtocol {
+protocol IFMProfileRequest {
     var profileName: String? { get }
     var profileDescription: String? { get }
     var profileImage: UIImage? { get }
@@ -19,7 +19,7 @@ protocol FMProfileRequestProtocol {
     func updateProfileImage(with image: UIImage?)
 }
 
-class FMProfileRequest: FMProfileRequestProtocol {
+class FMProfileRequest: IFMProfileRequest {
     
     var profileName: String? {
         self.initProfileName()

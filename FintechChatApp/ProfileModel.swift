@@ -37,11 +37,11 @@ class ProfileModel: IProfileModel {
     
     var delegate: IProfileModelDelegate?
     
-    let gcdProfileService: ProfileServiceProtocol
-    let operationProfileService: ProfileServiceProtocol
-    let themeService: ThemeServiceProtocol
+    let gcdProfileService: IProfileService
+    let operationProfileService: IProfileService
+    let themeService: IThemeService
     
-    init(gcdProfileService: ProfileServiceProtocol, operationProfileService: ProfileServiceProtocol, themeService: ThemeServiceProtocol) {
+    init(gcdProfileService: IProfileService, operationProfileService: IProfileService, themeService: IThemeService) {
         self.gcdProfileService = gcdProfileService
         self.operationProfileService = operationProfileService
         self.themeService = themeService

@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-protocol ChannelFRCProtocol {
+protocol IChannelFRC {
     func channelsFetchedResultsController() -> NSFetchedResultsController<DBChannel>
 }
 
-class ChannelFRC: ChannelFRCProtocol {
+class ChannelFRC: IChannelFRC {
     
     //NSFetchedResultsController for ConversationListViewController tableView
     func channelsFetchedResultsController() -> NSFetchedResultsController<DBChannel> {

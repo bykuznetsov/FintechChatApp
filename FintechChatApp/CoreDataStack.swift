@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-protocol CoreDataStackProtocol {
+protocol ICoreDataStack {
     static var shared: CoreDataStack { get }
     
     var writterContext: NSManagedObjectContext { get }
@@ -17,7 +17,7 @@ protocol CoreDataStackProtocol {
     func saveContext() -> NSManagedObjectContext
 }
 
-class CoreDataStack: CoreDataStackProtocol {
+class CoreDataStack: ICoreDataStack {
     
     private init() {}
     

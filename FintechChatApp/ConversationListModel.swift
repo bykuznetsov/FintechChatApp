@@ -33,11 +33,11 @@ class ConversationListModel: IConversationListModel {
 
     weak var delegate: IConversationListModelDelegate?
     
-    let channelService: ChannelServiceProtocol
-    let channelFRC: ChannelFRCProtocol
-    let themeService: ThemeServiceProtocol
+    let channelService: IChannelService
+    let channelFRC: IChannelFRC
+    let themeService: IThemeService
     
-    init(channelService: ChannelServiceProtocol, channelFRC: ChannelFRCProtocol, themeService: ThemeServiceProtocol) {
+    init(channelService: IChannelService, channelFRC: IChannelFRC, themeService: IThemeService) {
         self.channelService = channelService
         self.channelFRC = channelFRC
         self.themeService = themeService

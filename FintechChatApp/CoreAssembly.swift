@@ -8,57 +8,57 @@
 
 import Foundation
 
-protocol CoreAssemblyProtocol {
+protocol ICoreAssembly {
     
     //CoreData
-    var coreDataStack: CoreDataStackProtocol { get }
+    var coreDataStack: ICoreDataStack { get }
     
-    var saveRequest: SaveRequestProtocol { get }
-    var channelRequest: ChannelRequestProtocol { get }
-    var messageRequest: MessageRequestProtocol { get }
+    var saveRequest: ISaveRequest { get }
+    var channelRequest: IChannelRequest { get }
+    var messageRequest: IMessageRequest { get }
     
     //Firestore
-    var channelPath: ChannelPathProtocol { get }
-    var messagePath: MessagePathProtocol { get }
+    var channelPath: IChannelPath { get }
+    var messagePath: IMessagePath { get }
     
-    var fsChannelRequest: FSChannelRequestProtocol { get }
-    var fsMessageRequest: FSMessageRequestProtocol { get }
+    var fsChannelRequest: IFSChannelRequest { get }
+    var fsMessageRequest: IFSMessageRequest { get }
     
     //UserDefaults
-    var userDefaultsEntity: UserDefaultsEntityProtocol { get }
+    var userDefaultsEntity: IUserDefaultsEntity { get }
     
     //File Manager
-    var fmProfileRequest: FMProfileRequestProtocol { get }
+    var fmProfileRequest: IFMProfileRequest { get }
     
-    var fmGCDProfileRequest: FMProfileRequestProtocol { get }
-    var fmOperationProfileRequest: FMProfileRequestProtocol { get }
+    var fmGCDProfileRequest: IFMProfileRequest { get }
+    var fmOperationProfileRequest: IFMProfileRequest { get }
     
 }
 
-class CoreAssembly: CoreAssemblyProtocol {
+class CoreAssembly: ICoreAssembly {
     
     //CoreData
-    lazy var coreDataStack: CoreDataStackProtocol = CoreDataStack.shared
+    lazy var coreDataStack: ICoreDataStack = CoreDataStack.shared
 
-    lazy var saveRequest: SaveRequestProtocol = SaveRequest(coreDataStack: self.coreDataStack)
+    lazy var saveRequest: ISaveRequest = SaveRequest(coreDataStack: self.coreDataStack)
     
-    lazy var channelRequest: ChannelRequestProtocol = ChannelRequest()
-    lazy var messageRequest: MessageRequestProtocol = MessageRequest()
+    lazy var channelRequest: IChannelRequest = ChannelRequest()
+    lazy var messageRequest: IMessageRequest = MessageRequest()
     
     //Firestore
-    lazy var channelPath: ChannelPathProtocol = ChannelPath()
-    lazy var messagePath: MessagePathProtocol = MessagePath(documentId: "")
+    lazy var channelPath: IChannelPath = ChannelPath()
+    lazy var messagePath: IMessagePath = MessagePath(documentId: "")
     
-    lazy var fsChannelRequest: FSChannelRequestProtocol = FSChannelRequest(channelPath: self.channelPath)
-    lazy var fsMessageRequest: FSMessageRequestProtocol = FSMessageRequest(messagePath: self.messagePath)
+    lazy var fsChannelRequest: IFSChannelRequest = FSChannelRequest(channelPath: self.channelPath)
+    lazy var fsMessageRequest: IFSMessageRequest = FSMessageRequest(messagePath: self.messagePath)
     
     //UserDefaults
-    lazy var userDefaultsEntity: UserDefaultsEntityProtocol = UserDefaultsEntity()
+    lazy var userDefaultsEntity: IUserDefaultsEntity = UserDefaultsEntity()
     
     //File Manager
-    internal lazy var fmProfileRequest: FMProfileRequestProtocol = FMProfileRequest()
+    internal lazy var fmProfileRequest: IFMProfileRequest = FMProfileRequest()
     
-    lazy var fmGCDProfileRequest: FMProfileRequestProtocol = FMGCDProfileRequest(fmProfileRequest: self.fmProfileRequest)
-    lazy var fmOperationProfileRequest: FMProfileRequestProtocol = FMOperationProfileRequest(fmProfileRequest: self.fmProfileRequest)
+    lazy var fmGCDProfileRequest: IFMProfileRequest = FMGCDProfileRequest(fmProfileRequest: self.fmProfileRequest)
+    lazy var fmOperationProfileRequest: IFMProfileRequest = FMOperationProfileRequest(fmProfileRequest: self.fmProfileRequest)
     
 }
