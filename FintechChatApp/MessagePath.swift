@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-protocol MessagePathProtocol {
+protocol IMessagePath {
     var db: Firestore { get }
     var reference: CollectionReference { get }
     
@@ -17,7 +17,7 @@ protocol MessagePathProtocol {
 }
 
 ///Make something with collection of messages in Firestore server (for example: fetching messages from server)
-class MessagePath: MessagePathProtocol {
+class MessagePath: IMessagePath {
     
     var documentId: String
     lazy var db: Firestore = Firestore.firestore()

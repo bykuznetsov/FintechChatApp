@@ -8,10 +8,10 @@
 
 import Foundation
 
-protocol UserDefaultsEntityProtocol {
+protocol IUserDefaultsEntity {
     var defaults: UserDefaults { get }
 }
 
-class UserDefaultsEntity: UserDefaultsEntityProtocol {
+class UserDefaultsEntity: IUserDefaultsEntity {
     var defaults: UserDefaults = UserDefaults.standard
 }

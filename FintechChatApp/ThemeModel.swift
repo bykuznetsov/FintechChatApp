@@ -22,9 +22,9 @@ class ThemesModel: IThemesModel {
     
     var delegate: IThemesModelDelegate?
     
-    var themeService: ThemeServiceProtocol
+    var themeService: IThemeService
     
-    init(themeService: ThemeServiceProtocol) {
+    init(themeService: IThemeService) {
         self.themeService = themeService
     }
     

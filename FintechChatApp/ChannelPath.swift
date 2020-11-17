@@ -9,13 +9,13 @@
 import Foundation
 import Firebase
 
-protocol ChannelPathProtocol {
+protocol IChannelPath {
     var db: Firestore { get }
     var reference: CollectionReference { get }
 }
 
 ///Make something with collection of channels in Firestore server (for example: fetching channels from server)
-class ChannelPath: ChannelPathProtocol {
+class ChannelPath: IChannelPath {
     lazy var db: Firestore = Firestore.firestore()
     lazy var reference: CollectionReference = db.collection("channels")
 }

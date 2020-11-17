@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class FMOperationProfileRequest: FMProfileRequestProtocol {
+class FMOperationProfileRequest: IFMProfileRequest {
     
     let savingSerialQueue = OperationQueue()
     
-    let fmProfileRequest: FMProfileRequestProtocol
+    let fmProfileRequest: IFMProfileRequest
     
-    init(fmProfileRequest: FMProfileRequestProtocol) {
+    init(fmProfileRequest: IFMProfileRequest) {
         self.fmProfileRequest = fmProfileRequest
         
         //Make queue serial

@@ -14,7 +14,7 @@ enum Theme {
     case night
 }
 
-protocol ThemeServiceProtocol {
+protocol IThemeService {
     func getTheme() -> Theme
     func setTheme(new theme: Theme)
 }
@@ -23,11 +23,11 @@ protocol ThemeServiceProtocol {
 ///Using (Core Components):
 ///-UserDefaults: UserDefaultsEntity
 
-class ThemeService: ThemeServiceProtocol {
+class ThemeService: IThemeService {
     
-    let userDefaultsEntity: UserDefaultsEntityProtocol
+    let userDefaultsEntity: IUserDefaultsEntity
     
-    init(userDefaultsEntity: UserDefaultsEntityProtocol) {
+    init(userDefaultsEntity: IUserDefaultsEntity) {
         self.userDefaultsEntity = userDefaultsEntity
         
         guard let themeFromDefaults = userDefaultsEntity.defaults.string(forKey: "Theme") else { return }

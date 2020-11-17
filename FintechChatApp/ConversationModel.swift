@@ -27,14 +27,14 @@ class ConversationModel: IConversationModel {
     
     var delegate: IConversationModelDelegate?
     
-    var messageService: MessageServiceProtocol
-    let messageFRC: MessageFRCProtocol
-    let themeService: ThemeServiceProtocol
-    let profileService: ProfileServiceProtocol
+    var messageService: IMessageService
+    let messageFRC: IMessageFRC
+    let themeService: IThemeService
+    let profileService: IProfileService
     
     var documentId: String
     
-    init(messageService: MessageServiceProtocol, messageFRC: MessageFRCProtocol, themeService: ThemeServiceProtocol, profileService: ProfileServiceProtocol, documentId: String) {
+    init(messageService: IMessageService, messageFRC: IMessageFRC, themeService: IThemeService, profileService: IProfileService, documentId: String) {
         self.messageService = messageService
         self.messageFRC = messageFRC
         self.themeService = themeService

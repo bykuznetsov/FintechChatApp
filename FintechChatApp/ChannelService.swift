@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-protocol ChannelServiceProtocol {
+protocol IChannelService {
     func fetchAndCacheChannels()
     func addNewChannel(channel: Channel)
     func deleteChannel(at documentPath: String)
@@ -20,16 +20,16 @@ protocol ChannelServiceProtocol {
 ///-Firestore: ChannelPath
 ///-CoreData: SaveRequest,  ChannelRequest
 
-class ChannelService: ChannelServiceProtocol {
+class ChannelService: IChannelService {
     
-    let saveRequest: SaveRequestProtocol
-    let channelRequest: ChannelRequestProtocol
-    let channelPath: ChannelPathProtocol
-    let fsChannelRequest: FSChannelRequestProtocol
+    let saveRequest: ISaveRequest
+    let channelRequest: IChannelRequest
+    let channelPath: IChannelPath
+    let fsChannelRequest: IFSChannelRequest
     
     var channels: [Channel]  = []
     
-    init(saveRequest: SaveRequestProtocol, channelRequest: ChannelRequestProtocol, channelPath: ChannelPathProtocol, fsChannelRequest: FSChannelRequestProtocol) {
+    init(saveRequest: ISaveRequest, channelRequest: IChannelRequest, channelPath: IChannelPath, fsChannelRequest: IFSChannelRequest) {
         self.saveRequest = saveRequest
         self.channelRequest = channelRequest
         self.channelPath = channelPath

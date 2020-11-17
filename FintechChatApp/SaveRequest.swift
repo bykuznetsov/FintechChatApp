@@ -9,16 +9,16 @@
 import Foundation
 import CoreData
 
-protocol SaveRequestProtocol {
+protocol ISaveRequest {
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void)
     func performSave(in context: NSManagedObjectContext)
 }
 
-class SaveRequest: SaveRequestProtocol {
+class SaveRequest: ISaveRequest {
     
-    let coreDataStack: CoreDataStackProtocol
+    let coreDataStack: ICoreDataStack
     
-    init(coreDataStack: CoreDataStackProtocol) {
+    init(coreDataStack: ICoreDataStack) {
         self.coreDataStack = coreDataStack
     }
     

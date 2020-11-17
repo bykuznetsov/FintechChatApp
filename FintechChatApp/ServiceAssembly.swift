@@ -8,43 +8,43 @@
 
 import Foundation
 
-protocol ServiceAssemblyProtocol {
-    var channelFRC: ChannelFRCProtocol { get }
-    var messageFRC: MessageFRCProtocol { get }
+protocol IServiceAssembly {
+    var channelFRC: IChannelFRC { get }
+    var messageFRC: IMessageFRC { get }
     
-    var channelService: ChannelServiceProtocol { get }
-    var messageService: MessageServiceProtocol { get }
+    var channelService: IChannelService { get }
+    var messageService: IMessageService { get }
     
-    var themeService: ThemeServiceProtocol { get }
+    var themeService: IThemeService { get }
     
-    var gcdProfileService: ProfileServiceProtocol { get }
-    var operationProfileService: ProfileServiceProtocol { get }
+    var gcdProfileService: IProfileService { get }
+    var operationProfileService: IProfileService { get }
 }
 
-class ServiceAssembly: ServiceAssemblyProtocol {
-    private let coreAssembly: CoreAssemblyProtocol
+class ServiceAssembly: IServiceAssembly {
+    private let coreAssembly: ICoreAssembly
     
-    init(coreAssembly: CoreAssemblyProtocol) {
+    init(coreAssembly: ICoreAssembly) {
         self.coreAssembly = coreAssembly
     }
     
-    lazy var channelFRC: ChannelFRCProtocol = ChannelFRC()
-    lazy var messageFRC: MessageFRCProtocol = MessageFRC()
+    lazy var channelFRC: IChannelFRC = ChannelFRC()
+    lazy var messageFRC: IMessageFRC = MessageFRC()
     
-    lazy var channelService: ChannelServiceProtocol = ChannelService(saveRequest: self.coreAssembly.saveRequest,
+    lazy var channelService: IChannelService = ChannelService(saveRequest: self.coreAssembly.saveRequest,
                                                                      channelRequest: self.coreAssembly.channelRequest,
                                                                      channelPath: self.coreAssembly.channelPath,
                                                                      fsChannelRequest: self.coreAssembly.fsChannelRequest)
     
-    lazy var messageService: MessageServiceProtocol = MessageService(saveRequest: self.coreAssembly.saveRequest,
+    lazy var messageService: IMessageService = MessageService(saveRequest: self.coreAssembly.saveRequest,
                                                                      messageRequest: self.coreAssembly.messageRequest,
                                                                      messagePath: self.coreAssembly.messagePath,
                                                                      channelRequest: self.coreAssembly.channelRequest,
                                                                      fsMessageRequest: self.coreAssembly.fsMessageRequest,
                                                                      documentId: "")
     
-    lazy var themeService: ThemeServiceProtocol = ThemeService(userDefaultsEntity: self.coreAssembly.userDefaultsEntity)
+    lazy var themeService: IThemeService = ThemeService(userDefaultsEntity: self.coreAssembly.userDefaultsEntity)
     
-    lazy var gcdProfileService: ProfileServiceProtocol = GCDProfileService(fmGCDProfileRequest: self.coreAssembly.fmGCDProfileRequest)
-    lazy var operationProfileService: ProfileServiceProtocol = OperationProfileService(fmOperationProfileRequest: self.coreAssembly.fmOperationProfileRequest)
+    lazy var gcdProfileService: IProfileService = GCDProfileService(fmGCDProfileRequest: self.coreAssembly.fmGCDProfileRequest)
+    lazy var operationProfileService: IProfileService = OperationProfileService(fmOperationProfileRequest: self.coreAssembly.fmOperationProfileRequest)
 }

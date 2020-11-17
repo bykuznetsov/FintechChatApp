@@ -29,9 +29,9 @@ protocol IPresentationAssembly {
 
 class PresentationAssembly: IPresentationAssembly {
     
-    private let serviceAssembly: ServiceAssemblyProtocol
+    private let serviceAssembly: IServiceAssembly
     
-    init(serviceAssembly: ServiceAssemblyProtocol) {
+    init(serviceAssembly: IServiceAssembly) {
         self.serviceAssembly = serviceAssembly
     }
     

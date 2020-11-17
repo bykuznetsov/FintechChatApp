@@ -9,13 +9,13 @@
 import Foundation
 import CoreData
 
-protocol ChannelRequestProtocol {
+protocol IChannelRequest {
     func fetchAllChannels(in context: NSManagedObjectContext) -> [DBChannel]?
     func fetchChannelById(by id: String, in context: NSManagedObjectContext) -> DBChannel?
     func deleteChannelById(by id: String, in context: NSManagedObjectContext)
 }
 
-class ChannelRequest: ChannelRequestProtocol {
+class ChannelRequest: IChannelRequest {
     
     func fetchAllChannels(in context: NSManagedObjectContext) -> [DBChannel]? {
         let fetchRequest: NSFetchRequest<DBChannel> = DBChannel.fetchRequest()
