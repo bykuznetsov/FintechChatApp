@@ -449,6 +449,13 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             }
         }))
         
+        //Selecting from Server.
+        actionSheet.addAction(UIAlertAction(title: "Load", style: .default, handler: { (_) in
+            guard let imagesVC = self.presentationAssembly?.imagesViewController() else { return }
+            let imagesVCWithNavigation = UINavigationController(rootViewController: imagesVC)
+            self.present(imagesVCWithNavigation, animated: true)
+        }))
+        
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
         }))
         

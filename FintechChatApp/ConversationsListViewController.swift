@@ -264,8 +264,6 @@ extension ConversationsListViewController: ThemeableViewController {
             changeTheme(with: model.getTheme())
             self.tableView.reloadData() //Change Theme of TableView
         }
-        //changeTheme(with: ThemeManager.shared.getTheme()) //Change theme of ViewController
-        //self.tableView.reloadData() //Change Theme of TableView
     }
     
     func changeTheme(with theme: Theme) {

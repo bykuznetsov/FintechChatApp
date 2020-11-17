@@ -19,6 +19,9 @@ protocol IPresentationAssembly {
     //Создание экрана профиля
     func profileViewController() -> ProfileViewController
     
+    //Создание экрана с картинками из сети для аватарки профиля
+    func imagesViewController() -> ImagesViewController
+    
     //Создание экрана со сменой темы в приложении
     func themesViewController() -> ThemesViewController
     
@@ -94,7 +97,21 @@ class PresentationAssembly: IPresentationAssembly {
                             operationProfileService: self.serviceAssembly.operationProfileService,
                             themeService: self.serviceAssembly.themeService)
     }
+    // MARK: - ImagesViewController
     
+    func imagesViewController() -> ImagesViewController {
+        guard let imagesVC = ImagesViewController.storyboardInstanceFromId(
+            storyboardName: "ImagesViewController",
+            vcIdentifier: "ImagesViewController") as? ImagesViewController else {
+                fatalError("Can't load ImagesViewController") }
+        
+        return imagesVC
+    }
+    
+    private func imagesModel() {
+        
+    }
+        
     // MARK: - ThemesViewController
     func themesViewController() -> ThemesViewController {
         

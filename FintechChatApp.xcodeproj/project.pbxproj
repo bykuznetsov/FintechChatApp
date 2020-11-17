@@ -43,6 +43,10 @@
 		5011D80F255D859F0065A65C /* ClassicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D80E255D859F0065A65C /* ClassicButton.swift */; };
 		5011D811255D85AB0065A65C /* DayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D810255D85AB0065A65C /* DayButton.swift */; };
 		5011D813255D85B60065A65C /* NightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D812255D85B60065A65C /* NightButton.swift */; };
+		5011D8182562E1660065A65C /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D8172562E1660065A65C /* ImagesViewController.swift */; };
+		5011D81B2562E1880065A65C /* ImagesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5011D81A2562E1880065A65C /* ImagesViewController.storyboard */; };
+		5011D81E2562E9E50065A65C /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5011D81D2562E9E50065A65C /* ImageCell.swift */; };
+		5011D8202562E9F10065A65C /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5011D81F2562E9F10065A65C /* ImageCell.xib */; };
 		502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FDAC0251403E400478792 /* ProfileViewController.swift */; };
 		5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6B252E33F800846ECC /* ThemeableView.swift */; };
 		5035DD70252E7E6D00846ECC /* ConversationServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */; };
@@ -113,6 +117,10 @@
 		5011D80E255D859F0065A65C /* ClassicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicButton.swift; sourceTree = "<group>"; };
 		5011D810255D85AB0065A65C /* DayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayButton.swift; sourceTree = "<group>"; };
 		5011D812255D85B60065A65C /* NightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightButton.swift; sourceTree = "<group>"; };
+		5011D8172562E1660065A65C /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
+		5011D81A2562E1880065A65C /* ImagesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImagesViewController.storyboard; sourceTree = "<group>"; };
+		5011D81D2562E9E50065A65C /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		5011D81F2562E9F10065A65C /* ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
 		502FDAC0251403E400478792 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5035DD6B252E33F800846ECC /* ThemeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeableView.swift; sourceTree = "<group>"; };
 		5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServerManager.swift; sourceTree = "<group>"; };
@@ -219,6 +227,7 @@
 				50505811252515B200FD73CA /* ConversationListViewController */,
 				50505812252515CD00FD73CA /* ConversationViewController */,
 				50505810252515A000FD73CA /* ProfileViewController */,
+				5011D8162562E11B0065A65C /* ImagesViewController */,
 				50505813252B9F3500FD73CA /* ThemesViewController */,
 			);
 			name = Modules;
@@ -465,6 +474,33 @@
 			name = CustomViews;
 			sourceTree = "<group>";
 		};
+		5011D8162562E11B0065A65C /* ImagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5011D8172562E1660065A65C /* ImagesViewController.swift */,
+				5011D8192562E1700065A65C /* View */,
+			);
+			name = ImagesViewController;
+			sourceTree = "<group>";
+		};
+		5011D8192562E1700065A65C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5011D81C2562E9C90065A65C /* CustomViews */,
+				5011D81A2562E1880065A65C /* ImagesViewController.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		5011D81C2562E9C90065A65C /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				5011D81D2562E9E50065A65C /* ImageCell.swift */,
+				5011D81F2562E9F10065A65C /* ImageCell.xib */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 		50505810252515A000FD73CA /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,6 +682,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5011D8202562E9F10065A65C /* ImageCell.xib in Resources */,
 				50B63E9A25227F8900B9E6CA /* ConversationViewController.storyboard in Resources */,
 				50CCDB32250E5E2300348C98 /* LaunchScreen.storyboard in Resources */,
 				50700C37251F87A2003A060B /* ConversationListCell.xib in Resources */,
@@ -653,6 +690,7 @@
 				50505817252BA03A00FD73CA /* ThemesViewController.storyboard in Resources */,
 				507DE6E125360EA700D797C6 /* ProfileDescription.plist in Resources */,
 				50CCDB2F250E5E2300348C98 /* Assets.xcassets in Resources */,
+				5011D81B2562E1880065A65C /* ImagesViewController.storyboard in Resources */,
 				50B63EA22523B57100B9E6CA /* ConversationCell.xib in Resources */,
 				50A294AC253CE3A3002E55C9 /* GoogleService-Info.plist in Resources */,
 				50700C33251F851C003A060B /* ConversationsListViewController.storyboard in Resources */,
@@ -767,6 +805,7 @@
 				5054DFD22540A7D800124432 /* ProfileViewControllerThemes.swift in Sources */,
 				5011D7E1255C6C670065A65C /* ConversationModel.swift in Sources */,
 				5011D7A8255ADA4F0065A65C /* SaveRequest.swift in Sources */,
+				5011D81E2562E9E50065A65C /* ImageCell.swift in Sources */,
 				50CCDB26250E5E1C00348C98 /* AppDelegate.swift in Sources */,
 				5011D7C6255B495E0065A65C /* FSMessageRequest.swift in Sources */,
 				5011D7992559AB9E0065A65C /* RootAssembly.swift in Sources */,
@@ -776,6 +815,7 @@
 				5011D7F0255D53D90065A65C /* SettingsButton.swift in Sources */,
 				5011D7EC255C92340065A65C /* ThemeModel.swift in Sources */,
 				5011D7C2255B475A0065A65C /* MessagePath.swift in Sources */,
+				5011D8182562E1660065A65C /* ImagesViewController.swift in Sources */,
 				50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */,
 				5011D7D0255C15190065A65C /* FMProfileRequest.swift in Sources */,
 				5011D7AA255ADEE70065A65C /* ChannelRequest.swift in Sources */,
