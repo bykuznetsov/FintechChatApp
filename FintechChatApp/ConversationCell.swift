@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversationCell: UITableViewCell, ConfigurableView {
-    
+
     let mySenderId = UIDevice.current.identifierForVendor?.uuidString
     
     @IBOutlet weak var senderNameLabel: UILabel!
@@ -35,7 +35,7 @@ class ConversationCell: UITableViewCell, ConfigurableView {
         let senderName: String
     }
     
-    func configure(with model: Message) {
+    func configure(with model: Message, with theme: Theme) {
         
         if model.senderId == self.mySenderId {
             senderNameLabel.text = ""
@@ -88,16 +88,10 @@ class ConversationCell: UITableViewCell, ConfigurableView {
             
         }
         
-        configureTheme(with: ThemeManager.shared.getTheme(), with: model)
+        //Flip cell's
+        self.transform = CGAffineTransform(scaleX: 1, y: -1)
         
-    }
-}
-
-// MARK: - ThemeableCell
-
-extension ConversationCell: ThemeableCell {
-    
-    func configureTheme(with theme: ThemeManager.Theme, with model: Message) {
+        //Configure Theme
         switch theme {
         case .classic:
             
@@ -134,5 +128,6 @@ extension ConversationCell: ThemeableCell {
                 self.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             }
         }
+    
     }
 }

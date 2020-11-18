@@ -13,6 +13,8 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    
+    private let rootAssembly = RootAssembly()
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         
@@ -20,10 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let conversationListVC = rootAssembly.presentationAssembly.conversationListViewController()
+        let conversationListVCWithNavigation = UINavigationController(rootViewController: conversationListVC)
+        conversationListVCWithNavigation.navigationBar.prefersLargeTitles = true
+        window?.rootViewController = conversationListVCWithNavigation
+        window?.makeKeyAndVisible()
         
         let coreDataStack = CoreDataStack.shared
         

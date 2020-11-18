@@ -1,15 +1,25 @@
 //
-//  ProfileDataManager.swift
+//  FMProfileRequest.swift
 //  FintechChatApp
 //
-//  Created by Никита Кузнецов on 13.10.2020.
+//  Created by Никита Кузнецов on 11.11.2020.
 //  Copyright © 2020 dreamTeam. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class ProfileDataManager {
+protocol IFMProfileRequest {
+    var profileName: String? { get }
+    var profileDescription: String? { get }
+    var profileImage: UIImage? { get }
+    
+    func updateProfileName(with name: String)
+    func updateProfileDescription(with description: String)
+    func updateProfileImage(with image: UIImage?)
+}
+
+class FMProfileRequest: IFMProfileRequest {
     
     var profileName: String? {
         self.initProfileName()
@@ -22,11 +32,11 @@ class ProfileDataManager {
     var profileImage: UIImage? {
         self.initProfileImage()
     }
-    
+        
     //Path's and file name's
-    private let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
-    private let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
-    private let profileImageName: String = "profileImage"
+     private let pathToProfileName = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileName.plist")
+     private let pathToProfileDescription = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("ProfileDescription.plist")
+     private let profileImageName: String = "profileImage"
     
     func updateProfileName(with name: String) {
         
@@ -145,5 +155,5 @@ class ProfileDataManager {
         }
         
     }
-    
+        
 }
