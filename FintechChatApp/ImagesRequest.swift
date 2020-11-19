@@ -20,7 +20,7 @@ class ImagesRequest: IRequest {
     private let apiKey: String
     private let q = "space"
     private let image_type = "photo"
-    private let per_page = "150"
+    private let per_page = "100"
     
     private var getParameters: [String: String] {
         return ["key": apiKey,

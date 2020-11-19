@@ -33,10 +33,13 @@ class ImagesModel: IImagesModel {
     }
     
     func fetchImages() {
-        imagesService.loadImages { (images) in
-            if let images = images {
-                let cells = images.map { ImageCellModel(id: $0.id, url: $0.webformatURL) }
-                self.delegate?.setup(dataSource: cells)
+        DispatchQueue.global(qos: .background).async {
+            self.imagesService.loadImages { (images) in
+                print(Thread.isMainThread)
+                if let images = images {
+                    let cells = images.map { ImageCellModel(id: $0.id, url: $0.webformatURL) }
+                    self.delegate?.setup(dataSource: cells)
+                }
             }
         }
     }
