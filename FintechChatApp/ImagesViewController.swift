@@ -195,6 +195,7 @@ extension ImagesViewController: ThemeableViewController {
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
         self.view.backgroundColor = .white
+        self.activityIndicator.color = .gray
         self.collectionView.backgroundColor = .white
     }
     
@@ -202,6 +203,7 @@ extension ImagesViewController: ThemeableViewController {
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
         self.view.backgroundColor = .white
+        self.activityIndicator.color = .gray
         self.collectionView.backgroundColor = .white
     }
     
@@ -209,6 +211,7 @@ extension ImagesViewController: ThemeableViewController {
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (small)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //small title color
         self.view.backgroundColor = .black
+        self.activityIndicator.color = .white
         self.collectionView.backgroundColor = .black
     }
     
