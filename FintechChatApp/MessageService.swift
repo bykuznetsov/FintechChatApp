@@ -60,12 +60,7 @@ class MessageService: IMessageService {
     
     func fetchAndCacheMessages(documentId: String) {
         
-        messagePath.reference.addSnapshotListener { [weak self] (snapshot, error) in
-            
-            if let error = error {
-                print(error)
-                return
-            }
+        messagePath.reference.addSnapshotListener { [weak self] (snapshot, _) in
             
             guard let documents = snapshot?.documents else { return }
             

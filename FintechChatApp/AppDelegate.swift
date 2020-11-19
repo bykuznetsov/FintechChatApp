@@ -28,9 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let conversationListVC = rootAssembly.presentationAssembly.imagesViewController()
+        let conversationListVC = rootAssembly.presentationAssembly.conversationListViewController()
         let conversationListVCWithNavigation = UINavigationController(rootViewController: conversationListVC)
-        conversationListVCWithNavigation.navigationBar.prefersLargeTitles = false
+        conversationListVCWithNavigation.navigationBar.prefersLargeTitles = true
         window?.rootViewController = conversationListVCWithNavigation
         window?.makeKeyAndVisible()
         

@@ -23,7 +23,7 @@ class SaveRequest: ISaveRequest {
     }
     
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        let context = coreDataStack.saveContext()
+        let context = self.coreDataStack.saveContext()
         context.perform { [weak self] in
             block(context)
             if context.hasChanges {

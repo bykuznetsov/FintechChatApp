@@ -17,7 +17,7 @@ class ImagesViewController: UIViewController, IImagesModelDelegate {
     
     //CollectionView values
     private let itemsPerRow: CGFloat = 3
-    private let sectionInserts = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    private let sectionInserts = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     
     private let cellIdentifier = String(describing: ImageCell.self)
     @IBOutlet weak var collectionView: UICollectionView!
@@ -27,6 +27,8 @@ class ImagesViewController: UIViewController, IImagesModelDelegate {
     
     // Display Model
     private var dataSource: [ImageCellModel] = []
+    
+    weak var delegate: ImageDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +130,11 @@ extension ImagesViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+        let itemNumber = NSNumber(value: indexPath.item)
+        if let cachedImage = self.cache.object(forKey: itemNumber) {
+            self.delegate?.imageTransfer(image: cachedImage)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
@@ -162,30 +168,52 @@ extension ImagesViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
-//class NetworkService {
-//
-//    private let token: String = "19155021-8859246a4990c09f3d480272b"
-//
-//    // MARK: - requestForStockInfo()
-//
-//    func requestForImages(completion: @escaping (Result <[String: Any], Error> ) -> Void) {
-//        guard let url = URL(string: "https://pixabay.com/api/?key=\(self.token)&q=space&image_type=photo&per_page=5") else { return }
-//        let urlSession = URLSession.shared
-//        let dataTask = urlSession.dataTask(with: url) { (data, response, error) in
-//            guard let data = data, (response as? HTTPURLResponse)?.statusCode == 200, error == nil else {
-//                completion(.failure(error!))
-//                return
-//            }
-//            do {
-//                let jsonObject = try JSONSerialization.jsonObject(with: data)
-//                guard let json = jsonObject as? [String: Any] else { return }
-//                completion(.success(json))
-//
-//            } catch let jsonError {
-//                completion(.failure(jsonError))
-//            }
-//        }
-//        dataTask.resume()
-//    }
-//
-//}
+// MARK: - ThemeableViewController
+
+extension ImagesViewController: ThemeableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let model = model {
+            changeTheme(with: model.getTheme())
+        }
+    }
+    
+    func changeTheme(with theme: Theme) {
+        switch theme {
+        case .classic:
+            self.setClassicTheme()
+        case .day:
+            self.setDayTheme()
+        case .night:
+            self.setNightTheme()
+        }
+    }
+    
+    func setClassicTheme() {
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
+        self.view.backgroundColor = .white
+        self.collectionView.backgroundColor = .white
+    }
+    
+    func setDayTheme() {
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1) //change navigation bar color (small)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black] //small title color ++
+        self.view.backgroundColor = .white
+        self.collectionView.backgroundColor = .white
+    }
+    
+    func setNightTheme() {
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) //change navigation bar color (small)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white] //small title color
+        self.view.backgroundColor = .black
+        self.collectionView.backgroundColor = .black
+    }
+    
+}
+
+protocol ImageDelegate: class {
+    func imageTransfer(image: UIImage)
+}

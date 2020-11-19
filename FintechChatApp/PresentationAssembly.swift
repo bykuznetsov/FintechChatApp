@@ -113,7 +113,8 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     private func imagesModel() -> ImagesModel {
-        return ImagesModel(imagesService: self.serviceAssembly.imagesService)
+        return ImagesModel(imagesService: self.serviceAssembly.imagesService,
+                           themeService: self.serviceAssembly.themeService)
     }
         
     // MARK: - ThemesViewController

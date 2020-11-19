@@ -453,6 +453,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         actionSheet.addAction(UIAlertAction(title: "Load", style: .default, handler: { (_) in
             guard let imagesVC = self.presentationAssembly?.imagesViewController() else { return }
             let imagesVCWithNavigation = UINavigationController(rootViewController: imagesVC)
+            imagesVC.delegate = self
             self.present(imagesVCWithNavigation, animated: true)
         }))
         
@@ -478,5 +479,15 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         self.saveWithGrandCentralDispatchButton.isEnabled = true
         self.saveWithOperationsButton.isEnabled = true
         
+    }
+}
+
+extension ProfileViewController: ImageDelegate {
+    func imageTransfer(image: UIImage) {
+        
+        self.profileImageView.image = image
+        
+        self.saveWithGrandCentralDispatchButton.isEnabled = true
+        self.saveWithOperationsButton.isEnabled = true
     }
 }

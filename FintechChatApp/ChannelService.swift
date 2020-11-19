@@ -46,12 +46,7 @@ class ChannelService: IChannelService {
     
     func fetchAndCacheChannels() {
         
-        channelPath.reference.addSnapshotListener { [weak self] (snapshot, error) in
-            
-            if let error = error {
-                print(error)
-                return
-            }
+        channelPath.reference.addSnapshotListener { [weak self] (snapshot, _) in
             
             guard let documents = snapshot?.documents else { return }
             

@@ -21,21 +21,23 @@ protocol IImagesModelDelegate: class {
 protocol IImagesModel: class {
     func fetchImages()
     func fetchImage(urlImage: String, completion: @escaping (UIImage) -> Void)
+    func getTheme() -> Theme
 }
 
 class ImagesModel: IImagesModel {
     var delegate: IImagesModelDelegate?
     
     let imagesService: IImagesService
+    let themeService: IThemeService
     
-    init(imagesService: IImagesService) {
+    init(imagesService: IImagesService, themeService: IThemeService) {
         self.imagesService = imagesService
+        self.themeService = themeService
     }
     
     func fetchImages() {
         DispatchQueue.global(qos: .background).async {
             self.imagesService.loadImages { (images) in
-                print(Thread.isMainThread)
                 if let images = images {
                     let cells = images.map { ImageCellModel(id: $0.id, url: $0.webformatURL) }
                     self.delegate?.setup(dataSource: cells)
@@ -54,5 +56,9 @@ class ImagesModel: IImagesModel {
                 }
             }
         }
+    }
+    
+    func getTheme() -> Theme {
+        return self.themeService.getTheme()
     }
 }
