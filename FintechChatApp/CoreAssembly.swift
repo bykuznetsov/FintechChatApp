@@ -33,6 +33,9 @@ protocol ICoreAssembly {
     var fmGCDProfileRequest: IFMProfileRequest { get }
     var fmOperationProfileRequest: IFMProfileRequest { get }
     
+    //Networking
+    var networkRequestSender: IRequestSender { get }
+    
 }
 
 class CoreAssembly: ICoreAssembly {
@@ -60,5 +63,8 @@ class CoreAssembly: ICoreAssembly {
     
     lazy var fmGCDProfileRequest: IFMProfileRequest = FMGCDProfileRequest(fmProfileRequest: self.fmProfileRequest)
     lazy var fmOperationProfileRequest: IFMProfileRequest = FMOperationProfileRequest(fmProfileRequest: self.fmProfileRequest)
+    
+    //Networking
+    lazy var networkRequestSender: IRequestSender = RequestSender()
     
 }

@@ -19,6 +19,8 @@ protocol IServiceAssembly {
     
     var gcdProfileService: IProfileService { get }
     var operationProfileService: IProfileService { get }
+    
+    var imagesService: IImagesService { get }
 }
 
 class ServiceAssembly: IServiceAssembly {
@@ -47,4 +49,6 @@ class ServiceAssembly: IServiceAssembly {
     
     lazy var gcdProfileService: IProfileService = GCDProfileService(fmGCDProfileRequest: self.coreAssembly.fmGCDProfileRequest)
     lazy var operationProfileService: IProfileService = OperationProfileService(fmOperationProfileRequest: self.coreAssembly.fmOperationProfileRequest)
+    
+    lazy var imagesService: IImagesService = ImagesService(networkRequestSender: self.coreAssembly.networkRequestSender)
 }

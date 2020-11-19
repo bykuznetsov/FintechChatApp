@@ -9,18 +9,13 @@
 import Foundation
 import UIKit
 
-class ImageCell: UICollectionViewCell, ConfigurableView {
-    
-    struct ImageCellModel {
-        let image: UIImage?
-    }
-    
+class ImageCell: UICollectionViewCell {
+
     @IBOutlet weak var imageView: UIImageView!
+    var url: String?
     
-    func configure(with model: ImageCellModel, with theme: Theme) {
-        if let image = model.image {
-            self.imageView.image = image
-        }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.imageView.image = UIImage(imageLiteralResourceName: "imagePlaceholder")
     }
-    
 }

@@ -105,11 +105,15 @@ class PresentationAssembly: IPresentationAssembly {
             vcIdentifier: "ImagesViewController") as? ImagesViewController else {
                 fatalError("Can't load ImagesViewController") }
         
+        let model = imagesModel()
+        imagesVC.applyDependencies(model: model, presentationAssembly: self)
+        model.delegate = imagesVC
+        
         return imagesVC
     }
     
-    private func imagesModel() {
-        
+    private func imagesModel() -> ImagesModel {
+        return ImagesModel(imagesService: self.serviceAssembly.imagesService)
     }
         
     // MARK: - ThemesViewController
