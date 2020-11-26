@@ -75,13 +75,13 @@ extension CustomTransition: UIViewControllerAnimatedTransitioning {
         let scaleDown = CGAffineTransform(scaleX: 0.8, y: 0.8)
         let moveOut = CGAffineTransform(translationX: 0, y: -viewToAnimate.frame.height)
         
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: .calculationModeCubicPaced, animations: {
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: .calculationModeLinear, animations: {
             
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
                 viewToAnimate.transform = scaleDown
             })
             
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 3, animations: {
                 viewToAnimate.transform = scaleDown.concatenating(moveOut)
             })
 

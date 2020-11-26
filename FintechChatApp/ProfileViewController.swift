@@ -455,7 +455,7 @@ extension ProfileViewController: UIViewControllerTransitioningDelegate {
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return CustomTransition(animationDuration: 1, animationType: .dismiss)
+        return CustomTransition(animationDuration: 2, animationType: .dismiss)
     }
     
 }
