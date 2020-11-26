@@ -41,6 +41,8 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         configureParticleEffect()
         initProfileInformation()
         addKeyboardNotifications()
+        
+        transitioningDelegate = self
     }
     
     func applyDependencies(model: IProfileModel, presentationAssembly: IPresentationAssembly) {
@@ -514,4 +516,17 @@ extension ProfileViewController: UIGestureRecognizerDelegate {
         return true
     }
 
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension ProfileViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        print("an")
+        return CustomTransition(animationDuration: 3.5, animationType: .present)
+    }
+    
 }
