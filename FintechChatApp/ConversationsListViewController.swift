@@ -75,11 +75,11 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     @IBAction func openProfile(_ sender: Any) {
         guard let profileVC = self.presentationAssembly?.profileViewController() else { return }
         let profileVCWithNavigation = UINavigationController(rootViewController: profileVC)
-        //profileVCWithNavigation.transitioningDelegate = self
-        //profileVCWithNavigation.modalPresentationStyle = .custom
-        //profileVC.modalPresentationStyle = .custom
         
-        self.present(profileVCWithNavigation, animated: true)
+        profileVCWithNavigation.transitioningDelegate = profileVC
+        profileVCWithNavigation.modalPresentationStyle = .fullScreen
+        
+        self.present(profileVCWithNavigation, animated: true, completion: nil)
     }
     
     //Func of addNewChannelButton.

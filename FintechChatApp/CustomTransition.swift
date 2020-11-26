@@ -47,12 +47,14 @@ extension CustomTransition: UIViewControllerAnimatedTransitioning {
             transitionContext.containerView.addSubview(toViewController.view)
             presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
         case .dismiss:
-            print("...")
+            transitionContext.containerView.addSubview(toViewController.view)
+            transitionContext.containerView.addSubview(fromViewController.view)
+            dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
         }
     }
     
     func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
-
+        
         viewToAnimate.clipsToBounds = true
         viewToAnimate.transform = CGAffineTransform(scaleX: 0, y: 0)
         
@@ -60,10 +62,32 @@ extension CustomTransition: UIViewControllerAnimatedTransitioning {
         
         UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.80, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: {
             viewToAnimate.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        }) { _ in
-            transitionContext.completeTransition(true )
-        }
+        }, completion: { _ in
+            transitionContext.completeTransition(true)
+        })
         
+    }
+    
+    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
+        
+        let duration = transitionDuration(using: transitionContext)
+        
+        let scaleDown = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        let moveOut = CGAffineTransform(translationX: 0, y: -viewToAnimate.frame.height)
+        
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: .calculationModeCubicPaced, animations: {
+            
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+                viewToAnimate.transform = scaleDown
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+                viewToAnimate.transform = scaleDown.concatenating(moveOut)
+            })
+
+        }, completion: { _ in
+            transitionContext.completeTransition(true)
+        })
     }
     
 }
