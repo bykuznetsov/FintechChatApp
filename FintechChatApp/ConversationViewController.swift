@@ -352,3 +352,13 @@ extension ConversationViewController: ThemeableViewController {
     }
     
 }
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ConversationViewController: UIGestureRecognizerDelegate {
+    
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+}

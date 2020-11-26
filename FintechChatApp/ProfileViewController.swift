@@ -13,10 +13,14 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
     var presentationAssembly: IPresentationAssembly?
     var model: IProfileModel?
     
+    private var tinkoffParticleGesture: TinkoffParticleGesture = TinkoffParticleGesture()
+    private var shakeAnimation: ShakeAnimation = ShakeAnimation()
+    
     @IBOutlet weak var saveWithGrandCentralDispatchButton: UIButton!
     @IBOutlet weak var saveWithOperationsButton: UIButton!
     
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var editButton: UIButton!
+    private var editMode: Bool = false
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileFieldForImage: UIView!
@@ -34,6 +38,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         configureNavigationBar()
         configureActivityIndicator()
         configureTextFields()
+        configureParticleEffect()
         initProfileInformation()
         addKeyboardNotifications()
     }
@@ -48,10 +53,23 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         self.profileDescriptionTextView.delegate = self
     }
     
+    private func configureParticleEffect() {
+        let longTapGestureRecognizer = self.tinkoffParticleGesture.longTapGestureRecognizer
+        let panGestureRecognizer = self.tinkoffParticleGesture.panGestureRecognizer
+        
+        longTapGestureRecognizer.delegate = self
+        panGestureRecognizer.delegate = self
+        
+        self.navigationController?.view.addGestureRecognizer(longTapGestureRecognizer)
+        self.navigationController?.view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
     //Left navigationBarItem.
     @IBAction func editProfile(_ sender: Any?) {
         
-        if self.editButton.title == "Edit" { //Switch to Edit mode.
+        if editMode == false { //Switch to Edit mode.
+            
+            editMode = true
             
             //Name Label
             self.profileNameLabel.isHidden = true
@@ -69,10 +87,11 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
             self.profileDescriptionTextView.layer.borderColor = UIColor.gray.cgColor
             
             //Edit Button
-            self.editButton.title = "Done"
-            self.editButton.style = .done
+            self.shakeAnimation.startShaking(view: self.editButton)
             
-        } else if self.editButton.title == "Done" { //Switch to Done mode.
+        } else if editMode { //Return from Edit mode
+            
+            editMode = false
             
             //Hide keyboard
             self.view.endEditing(true)
@@ -105,8 +124,10 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
             self.profileDescriptionTextView.layer.borderWidth = 0
             
             //Edit Button
-            self.editButton.title = "Edit"
-            self.editButton.style = .plain
+            self.editButton.isEnabled = false
+            self.shakeAnimation.stopShaking(view: self.editButton, completionHandler: { [weak self] in
+                self?.editButton.isEnabled = true
+            })
             
         }
         
@@ -153,11 +174,9 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         self.activityIndicator.stopAnimating()
         
         //Out of editing mode if we saving data (case when we change image)
-        if self.editButton.title != "Edit" {
-            
+        if editMode {
             //func of our EditButton
             self.editProfile(nil)
-            
         }
         
         if self.isAllDataSaved() {
@@ -207,7 +226,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
             self.activityIndicator.stopAnimating()
             
             //Out of editing mode if we saving data (case when we change image)
-            if self.editButton.title != "Edit" {
+            if editMode {
                 
                 //func of our EditButton
                 self.editProfile(nil)
@@ -221,7 +240,6 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
                     self.saveProfileWithOperations(nil)
                 }
             }
-        //}
     }
     
     //Use it after saving Data
@@ -249,19 +267,16 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
         let alert = UIAlertController(title: "Save changes", message: "After making edits", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "GCD", style: .default, handler: { (_) in
-            
             //func of our SaveButton
             self.saveProfileWithGrandCentralDispatch(nil)
         }))
         
         alert.addAction(UIAlertAction(title: "Operations", style: .default, handler: { (_) in
-            
             //func of our SaveButton
             self.saveProfileWithOperations(nil)
         }))
         
         alert.addAction(UIAlertAction(title: "Don't save", style: .default, handler: { (_) in
-            
             self.initProfileInformation()
             
             self.saveWithGrandCentralDispatchButton.isEnabled = false
@@ -270,8 +285,7 @@ class ProfileViewController: UIViewController, IProfileModelDelegate {
             self.editProfile(nil)
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
-        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in }))
         
         self.present(alert, animated: true)
     }
@@ -490,4 +504,14 @@ extension ProfileViewController: ImageDelegate {
         self.saveWithGrandCentralDispatchButton.isEnabled = true
         self.saveWithOperationsButton.isEnabled = true
     }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ProfileViewController: UIGestureRecognizerDelegate {
+
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
 }

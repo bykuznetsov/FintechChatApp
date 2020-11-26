@@ -16,6 +16,8 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
     private var presentationAssembly: IPresentationAssembly?
     private var model: IConversationListModel?
     
+    private var tinkoffParticleGesture: TinkoffParticleGesture = TinkoffParticleGesture()
+    
     //Cell Identifier (ConversationListCell).
     private let cellIdentifier = String(describing: ConversationListCell.self)
     @IBOutlet weak var tableView: UITableView!
@@ -34,6 +36,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         configureTableView()
         configureAlertWithAddingChannel()
         configureFetchedResultsController()
+        configureParticleEffect()
         
         if let model = self.model {
             model.fetchAndCacheChannels()
@@ -49,6 +52,17 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: String(describing: ConversationListCell.self), bundle: nil), forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    private func configureParticleEffect() {
+        let longTapGestureRecognizer = self.tinkoffParticleGesture.longTapGestureRecognizer
+        let panGestureRecognizer = self.tinkoffParticleGesture.panGestureRecognizer
+        
+        longTapGestureRecognizer.delegate = self
+        panGestureRecognizer.delegate = self
+        
+        self.navigationController?.view.addGestureRecognizer(longTapGestureRecognizer)
+        self.navigationController?.view.addGestureRecognizer(panGestureRecognizer)
     }
     
     //Func of settingsBarButton.
@@ -329,6 +343,16 @@ extension ConversationsListViewController: ThemeableViewController {
         //Adding channel Button
         addNewChannelButton.setTitleColor(.white, for: .normal)
         addNewChannelButton.setTitleColor(.gray, for: .highlighted)
+    }
+    
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ConversationsListViewController: UIGestureRecognizerDelegate {
+    
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
 }

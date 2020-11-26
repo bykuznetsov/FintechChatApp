@@ -15,6 +15,8 @@ class ImagesViewController: UIViewController, IImagesModelDelegate {
     private var presentationAssembly: IPresentationAssembly?
     private var model: IImagesModel?
     
+    private var tinkoffParticleGesture: TinkoffParticleGesture = TinkoffParticleGesture()
+    
     //CollectionView values
     private let itemsPerRow: CGFloat = 3
     private let sectionInserts = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
@@ -35,6 +37,7 @@ class ImagesViewController: UIViewController, IImagesModelDelegate {
         configureNavigationBar()
         configureCollectionView()
         configureActivityIndicator()
+        configureParticleEffect()
         
         self.activityIndicator.startAnimating()
         
@@ -68,6 +71,17 @@ class ImagesViewController: UIViewController, IImagesModelDelegate {
         self.activityIndicator.hidesWhenStopped = true
     }
     
+    private func configureParticleEffect() {
+        let longTapGestureRecognizer = self.tinkoffParticleGesture.longTapGestureRecognizer
+        let panGestureRecognizer = self.tinkoffParticleGesture.panGestureRecognizer
+        
+        longTapGestureRecognizer.delegate = self
+        panGestureRecognizer.delegate = self
+        
+        self.navigationController?.view.addGestureRecognizer(longTapGestureRecognizer)
+        self.navigationController?.view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
     // MARK: - IImagesModelDelegate
     
     func setup(dataSource: [ImageCellModel]) {
@@ -82,6 +96,8 @@ class ImagesViewController: UIViewController, IImagesModelDelegate {
     }
     
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension ImagesViewController: UICollectionViewDataSource {
     
@@ -102,8 +118,9 @@ extension ImagesViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
 }
+
+// MARK: - UICollectionViewDelegate
 
 extension ImagesViewController: UICollectionViewDelegate {
     
@@ -137,6 +154,8 @@ extension ImagesViewController: UICollectionViewDelegate {
         }
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension ImagesViewController: UICollectionViewDelegateFlowLayout {
     
@@ -217,6 +236,16 @@ extension ImagesViewController: ThemeableViewController {
     
 }
 
+// MARK: - ImageDelegate
 protocol ImageDelegate: class {
     func imageTransfer(image: UIImage)
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ImagesViewController: UIGestureRecognizerDelegate {
+    
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

@@ -96,6 +96,7 @@ class ThemesViewController: UIViewController, IThemesModelDelegate {
 }
 
 // MARK: - ThemeableViewController
+
 extension ThemesViewController: ThemeableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
@@ -190,4 +191,13 @@ extension ThemesViewController: ThemeableViewController {
         self.nightLabel.textColor = .white
     }
     
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ThemesViewController: UIGestureRecognizerDelegate {
+    
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }
