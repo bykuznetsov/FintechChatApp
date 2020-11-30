@@ -31,13 +31,13 @@
                             <view clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1TJ-IK-FNr" customClass="ProfileFieldForImage" customModule="FintechChatApp" customModuleProvider="target">
                                 <rect key="frame" x="87.5" y="109" width="200" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jn-SX-9vf">
+                                    <label opaque="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jn-SX-9vf">
                                         <rect key="frame" x="55.5" y="36.5" width="89" height="128"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="107"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G1z-Eq-0pj">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G1z-Eq-0pj">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="4fB-WP-vte"/>
@@ -79,7 +79,7 @@
                                     <action selector="saveProfileWithOperations:" destination="ycT-Fr-rxU" eventType="touchUpInside" id="0vJ-NF-b4i"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lye-ju-yia">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lye-ju-yia">
                                 <rect key="frame" x="38" y="327" width="35.5" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="frz-Vz-gQ6"/>
@@ -88,7 +88,7 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzx-kz-C8i">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzx-kz-C8i">
                                 <rect key="frame" x="38" y="413.5" width="69.5" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="3jF-TZ-b9S"/>
@@ -116,7 +116,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marina Dudarenko Nikita Kuznetsov" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiQ-0f-quT">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marina Dudarenko Nikita Kuznetsov" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiQ-0f-quT">
                                 <rect key="frame" x="38" y="349" width="299" height="50.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="fOX-1m-lg2"/>
@@ -169,10 +169,15 @@
                         <viewLayoutGuide key="safeArea" id="tHh-x1-HHu"/>
                     </view>
                     <navigationItem key="navigationItem" title="My profile" id="ZPm-an-hC4">
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="X7r-i9-9UB">
-                            <connections>
-                                <action selector="editProfile:" destination="ycT-Fr-rxU" id="KfH-gh-BjU"/>
-                            </connections>
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="Moc-9q-aTR">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fZG-ll-04y" customClass="EditButton" customModule="FintechChatApp" customModuleProvider="target">
+                                <rect key="frame" x="16" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="editProfile:" destination="ycT-Fr-rxU" eventType="touchUpInside" id="wuT-g9-kIk"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Close" width="10" id="LfY-ht-aIy">
                             <inset key="largeContentSizeImageInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
@@ -183,7 +188,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="7wz-ea-KMI" id="qex-Wo-vMH"/>
-                        <outlet property="editButton" destination="X7r-i9-9UB" id="meI-fs-JCj"/>
+                        <outlet property="editButton" destination="fZG-ll-04y" id="Ahl-cQ-Oti"/>
                         <outlet property="profileDescriptionTextView" destination="b3x-Xa-HBo" id="kcJ-TK-iB8"/>
                         <outlet property="profileFieldForImage" destination="1TJ-IK-FNr" id="7oX-Py-ZfR"/>
                         <outlet property="profileImageView" destination="G1z-Eq-0pj" id="mc1-ZP-MO1"/>

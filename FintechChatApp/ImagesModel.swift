@@ -25,7 +25,7 @@ protocol IImagesModel: class {
 }
 
 class ImagesModel: IImagesModel {
-    var delegate: IImagesModelDelegate?
+    weak var delegate: IImagesModelDelegate?
     
     let imagesService: IImagesService
     let themeService: IThemeService
@@ -37,10 +37,10 @@ class ImagesModel: IImagesModel {
     
     func fetchImages() {
         DispatchQueue.global(qos: .background).async {
-            self.imagesService.loadImages { (images) in
+            self.imagesService.loadImages { [weak self] (images) in
                 if let images = images {
                     let cells = images.map { ImageCellModel(id: $0.id, url: $0.webformatURL) }
-                    self.delegate?.setup(dataSource: cells)
+                    self?.delegate?.setup(dataSource: cells)
                 }
             }
         }

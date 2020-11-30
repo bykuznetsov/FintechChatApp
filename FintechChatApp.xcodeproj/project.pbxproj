@@ -61,6 +61,11 @@
 		5054DFD22540A7D800124432 /* ProfileViewControllerThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */; };
 		5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */; };
 		5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */; };
+		50614BCE256EE2B200888A29 /* TinkoffParticleGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50614BCD256EE2B200888A29 /* TinkoffParticleGesture.swift */; };
+		50614BD0256EED7700888A29 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50614BCF256EED7700888A29 /* EditButton.swift */; };
+		50614BD2256EFB3A00888A29 /* ShakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50614BD1256EFB3A00888A29 /* ShakeAnimation.swift */; };
+		50614BD4256FD31A00888A29 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50614BD3256FD31A00888A29 /* CustomTransition.swift */; };
+		50614BDC256FFFAE00888A29 /* ProfileViewControllerImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50614BDB256FFFAE00888A29 /* ProfileViewControllerImagePicker.swift */; };
 		50700C31251F84C0003A060B /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C30251F84C0003A060B /* ConversationsListViewController.swift */; };
 		50700C33251F851C003A060B /* ConversationsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50700C32251F851C003A060B /* ConversationsListViewController.storyboard */; };
 		50700C36251F87A2003A060B /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C34251F87A2003A060B /* ConversationListCell.swift */; };
@@ -141,6 +146,11 @@
 		5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerThemes.swift; sourceTree = "<group>"; };
 		5058C7CC25194D2400DAD08C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleViewController.swift; sourceTree = "<group>"; };
+		50614BCD256EE2B200888A29 /* TinkoffParticleGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffParticleGesture.swift; sourceTree = "<group>"; };
+		50614BCF256EED7700888A29 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
+		50614BD1256EFB3A00888A29 /* ShakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeAnimation.swift; sourceTree = "<group>"; };
+		50614BD3256FD31A00888A29 /* CustomTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
+		50614BDB256FFFAE00888A29 /* ProfileViewControllerImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerImagePicker.swift; sourceTree = "<group>"; };
 		50700C30251F84C0003A060B /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		50700C32251F851C003A060B /* ConversationsListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsListViewController.storyboard; sourceTree = "<group>"; };
 		50700C34251F87A2003A060B /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
@@ -186,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				5011D7922559AB490065A65C /* Assembly */,
+				50614BCC256EE26700888A29 /* Animations */,
 				5011D7932559AB4F0065A65C /* Modules */,
 			);
 			name = "1. PresentationLayer";
@@ -472,6 +483,7 @@
 			children = (
 				5011D805255D7FE00065A65C /* ProfileFieldForImage.swift */,
 				5011D807255D80D10065A65C /* SaveButton.swift */,
+				50614BCF256EED7700888A29 /* EditButton.swift */,
 				5011D809255D81B90065A65C /* ProfileNameTextField.swift */,
 				5011D80B255D82540065A65C /* ProfileDescriptionTextView.swift */,
 			);
@@ -555,6 +567,7 @@
 			isa = PBXGroup;
 			children = (
 				502FDAC0251403E400478792 /* ProfileViewController.swift */,
+				50614BDB256FFFAE00888A29 /* ProfileViewControllerImagePicker.swift */,
 				5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */,
 				5011D7E7255C91E80065A65C /* ProfileModel.swift */,
 				5011D7E3255C6CB30065A65C /* View */,
@@ -609,6 +622,16 @@
 				5058C7D025195B2200DAD08C /* LifeCycleViewController.swift */,
 			);
 			name = Debugging;
+			sourceTree = "<group>";
+		};
+		50614BCC256EE26700888A29 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				50614BCD256EE2B200888A29 /* TinkoffParticleGesture.swift */,
+				50614BD1256EFB3A00888A29 /* ShakeAnimation.swift */,
+				50614BD3256FD31A00888A29 /* CustomTransition.swift */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 		50B63E9C2523B21F00B9E6CA /* Protocols */ = {
@@ -819,11 +842,15 @@
 				5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */,
 				5058C7CD25194D2400DAD08C /* UIAlertControllerExtension.swift in Sources */,
 				5011D80F255D859F0065A65C /* ClassicButton.swift in Sources */,
+				50614BD0256EED7700888A29 /* EditButton.swift in Sources */,
 				50B63EA12523B57100B9E6CA /* ConversationCell.swift in Sources */,
 				5011D7CB255BFFB50065A65C /* UserDefaultsEntity.swift in Sources */,
 				5011D7CD255C00380065A65C /* ThemeService.swift in Sources */,
+				50614BD4256FD31A00888A29 /* CustomTransition.swift in Sources */,
+				50614BDC256FFFAE00888A29 /* ProfileViewControllerImagePicker.swift in Sources */,
 				502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */,
 				5011D82F2565546E0065A65C /* ImagesService.swift in Sources */,
+				50614BD2256EFB3A00888A29 /* ShakeAnimation.swift in Sources */,
 				50B63E9825227D9400B9E6CA /* ConversationViewController.swift in Sources */,
 				5011D7B7255B0A990065A65C /* MessageFRC.swift in Sources */,
 				5058C7D125195B2200DAD08C /* LifeCycleViewController.swift in Sources */,
@@ -841,6 +868,7 @@
 				5011D80C255D82540065A65C /* ProfileDescriptionTextView.swift in Sources */,
 				5011D7FE255D69910065A65C /* MessageTextField.swift in Sources */,
 				5011D828256549800065A65C /* ImagesParser.swift in Sources */,
+				50614BCE256EE2B200888A29 /* TinkoffParticleGesture.swift in Sources */,
 				5011D79D2559B4BA0065A65C /* ServiceAssembly.swift in Sources */,
 				507DE6DF2535D53700D797C6 /* ProfileDataModels.swift in Sources */,
 				5011D7C0255B45DD0065A65C /* ChannelPath.swift in Sources */,

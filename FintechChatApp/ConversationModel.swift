@@ -25,7 +25,7 @@ protocol IConversationModel: class {
 
 class ConversationModel: IConversationModel {
     
-    var delegate: IConversationModelDelegate?
+    weak var delegate: IConversationModelDelegate?
     
     var messageService: IMessageService
     let messageFRC: IMessageFRC

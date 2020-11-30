@@ -25,8 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        //Firebase Configure
         FirebaseApp.configure()
         
+        //Window Configure
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let conversationListVC = rootAssembly.presentationAssembly.conversationListViewController()
         let conversationListVCWithNavigation = UINavigationController(rootViewController: conversationListVC)
@@ -34,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = conversationListVCWithNavigation
         window?.makeKeyAndVisible()
         
+        //CoreDataStack Configure
         let coreDataStack = CoreDataStack.shared
         
         coreDataStack.enableObservers()
