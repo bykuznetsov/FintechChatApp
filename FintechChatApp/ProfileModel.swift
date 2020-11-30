@@ -35,7 +35,7 @@ protocol IProfileModel: class {
 
 class ProfileModel: IProfileModel {
     
-    var delegate: IProfileModelDelegate?
+    weak var delegate: IProfileModelDelegate?
     
     let gcdProfileService: IProfileService
     let operationProfileService: IProfileService

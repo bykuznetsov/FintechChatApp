@@ -37,7 +37,7 @@ class ConversationsListViewController: UIViewController, IConversationListModelD
         configureAlertWithAddingChannel()
         configureFetchedResultsController()
         configureParticleEffect()
-        
+        print("H")
         if let model = self.model {
             model.fetchAndCacheChannels()
         }

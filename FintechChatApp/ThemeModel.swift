@@ -20,7 +20,7 @@ protocol IThemesModel: class {
 
 class ThemesModel: IThemesModel {
     
-    var delegate: IThemesModelDelegate?
+    weak var delegate: IThemesModelDelegate?
     
     var themeService: IThemeService
     
