@@ -105,7 +105,6 @@ class FintechChatAppTests: XCTestCase {
 
         //Assert
         XCTAssertEqual(channelPathMock.gettingReferenceCount, 1)
-        //XCTAssertEqual(saveRequestMock.savingCount, 1)
     }
     
     func testAddingNewChannelInChannelService() throws {
