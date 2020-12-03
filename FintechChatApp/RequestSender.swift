@@ -18,6 +18,10 @@ protocol IRequestSender {
                       completionHandler: @escaping(Result<Parser.Model, Error>) -> Void)
 }
 
+struct ParseError: Error {
+    let message: String
+}
+
 class RequestSender: IRequestSender {
     
     let session = URLSession.shared
@@ -38,7 +42,8 @@ class RequestSender: IRequestSender {
             
             guard let data = data,
                 let parsedModel: Parser.Model = config.parser.parse(data: data) else {
-                    fatalError("Invalid data in RequestSender")
+                    completionHandler(.failure(ParseError(message: "Parse Error")))
+                    return
             }
             
             completionHandler(Result.success(parsedModel))
