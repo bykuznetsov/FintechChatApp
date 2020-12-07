@@ -1,0 +1,27 @@
+
+desc "Install CocoaPods, build for testing only (does not run test)"
+lane :build_for_testing do
+    cocoapods
+    scan(
+        clean: false,
+        build_for_testing: true
+    )
+end
+
+desc "Running tests"
+lane :run_all_tests do
+    scan(
+        clean: false,
+        skip_build: true
+    )
+end
+
+desc "Build for testing and then run tests"
+lane :build_and_test do
+    build_for_testing
+    run_all_tests
+end
+
+
+
+
