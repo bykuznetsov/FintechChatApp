@@ -29,7 +29,12 @@ Running tests
 ```
 fastlane build_and_test
 ```
-Build for testing and then run tests
+Build for testing and then run tests with Discord notification
+### discord_success_notification
+```
+fastlane discord_success_notification
+```
+Discird success notification
 
 ----
 
