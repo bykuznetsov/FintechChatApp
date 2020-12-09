@@ -14,8 +14,6 @@ protocol IRequest {
 
 class ImagesRequest: IRequest {
     
-    //https://pixabay.com/api/?key=19155021-8859246a4990c09f3d480272b&q=space&image_type=photo&per_page=200
-    
     private var baseUrl: String = "https://pixabay.com/api/"
     private let apiKey: String
     private let q = "space"

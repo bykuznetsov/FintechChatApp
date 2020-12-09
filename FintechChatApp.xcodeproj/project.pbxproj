@@ -206,6 +206,7 @@
 		50CCDB2E250E5E2300348C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50CCDB31250E5E2300348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50CCDB33250E5E2300348C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50CD1F39258195C5004DE60E /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		50FC12992576B6BB00944F0C /* FMProfileRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMProfileRequestMock.swift; sourceTree = "<group>"; };
 		50FC129B2577BDE900944F0C /* UserDefaultsEntityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEntityMock.swift; sourceTree = "<group>"; };
 		50FC129F2577C49F00944F0C /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
@@ -750,6 +751,7 @@
 				5011D790255999E00065A65C /* 3. CoreLayer */,
 				5011D79125599E430065A65C /* Supporting Files */,
 				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
+				50CD1F39258195C5004DE60E /* Config.xcconfig */,
 				5011D7982559AB9D0065A65C /* RootAssembly.swift */,
 				5058C7C925194C0E00DAD08C /* UIExtensions */,
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
@@ -1151,7 +1153,7 @@
 /* Begin XCBuildConfiguration section */
 		5042F2B025764C3700BFAEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B6FAE9221C1BB9743344F532 /* Pods-FintechChatAppTests.debug.xcconfig */;
+			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1174,7 +1176,7 @@
 		};
 		5042F2B125764C3700BFAEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 393BFE27BD07DDE2FCB73A50 /* Pods-FintechChatAppTests.release.xcconfig */;
+			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1355,7 +1357,7 @@
 		};
 		50CCDB37250E5E2300348C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6BB3CEBEBD11F241418293F /* Pods-FintechChatApp.debug.xcconfig */;
+			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1376,7 +1378,7 @@
 		};
 		50CCDB38250E5E2300348C98 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C900DE7CEA470C8A18A4F26F /* Pods-FintechChatApp.release.xcconfig */;
+			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

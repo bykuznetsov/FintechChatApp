@@ -27,7 +27,7 @@ end
 
 discord_webhook_url = ENV["DISCORD_WEBHOOK_URL"]
 
-desc "Discird success notification"
+desc "Discord success notification"
 lane :discord_success_notification do
     discord_notifier(
     webhook_url: discord_webhook_url,

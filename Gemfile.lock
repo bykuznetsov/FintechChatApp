@@ -268,7 +268,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods
-  fastlane
+  fastlane (= 2.170)
   fastlane-plugin-discord_notifier
 
 BUNDLED WITH
