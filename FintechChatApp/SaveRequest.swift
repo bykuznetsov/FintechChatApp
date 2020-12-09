@@ -11,7 +11,6 @@ import CoreData
 
 protocol ISaveRequest {
     func performSave(_ block: @escaping (NSManagedObjectContext) -> Void)
-    func performSave(in context: NSManagedObjectContext)
 }
 
 class SaveRequest: ISaveRequest {
@@ -38,7 +37,7 @@ class SaveRequest: ISaveRequest {
         }
     }
     
-    internal func performSave(in context: NSManagedObjectContext) {
+    private func performSave(in context: NSManagedObjectContext) {
         context.perform {
             do {
                 try context.save()

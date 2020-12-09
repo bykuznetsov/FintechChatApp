@@ -25,9 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //Firebase Configure
-        FirebaseApp.configure()
-        
         //Window Configure
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let conversationListVC = rootAssembly.presentationAssembly.conversationListViewController()
@@ -43,6 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         coreDataStack.didUpdateDataBase = { stack in
             stack.printDatabaseStatistics()
         }
+        
+        //Firebase Configure
+        FirebaseApp.configure()
         
         LogginClass.printAppLifeCycleEvent("Application moved from <Not running> to <Inactive>", #function)
         

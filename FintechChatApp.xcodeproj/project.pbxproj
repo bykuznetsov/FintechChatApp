@@ -56,6 +56,7 @@
 		502FDAC1251403E400478792 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502FDAC0251403E400478792 /* ProfileViewController.swift */; };
 		5035DD6C252E33F800846ECC /* ThemeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6B252E33F800846ECC /* ThemeableView.swift */; };
 		5035DD70252E7E6D00846ECC /* ConversationServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */; };
+		5042F2AC25764C3700BFAEC4 /* FintechChatAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5042F2AB25764C3700BFAEC4 /* FintechChatAppTests.swift */; };
 		50505815252B9FB700FD73CA /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50505814252B9FB700FD73CA /* ThemesViewController.swift */; };
 		50505817252BA03A00FD73CA /* ThemesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50505816252BA03A00FD73CA /* ThemesViewController.storyboard */; };
 		5054DFD22540A7D800124432 /* ProfileViewControllerThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */; };
@@ -70,6 +71,7 @@
 		50700C33251F851C003A060B /* ConversationsListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50700C32251F851C003A060B /* ConversationsListViewController.storyboard */; };
 		50700C36251F87A2003A060B /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50700C34251F87A2003A060B /* ConversationListCell.swift */; };
 		50700C37251F87A2003A060B /* ConversationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50700C35251F87A2003A060B /* ConversationListCell.xib */; };
+		50703F32257801A300238ED1 /* FintechChatAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50703F31257801A300238ED1 /* FintechChatAppUITests.swift */; };
 		5074653C25437E8400BFE7D6 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5074653B25437E8400BFE7D6 /* CoreDataStack.swift */; };
 		5074653F25437EBA00BFE7D6 /* Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5074653D25437EBA00BFE7D6 /* Chat.xcdatamodeld */; };
 		507DE6DC2535D40400D797C6 /* ProfileName.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507DE6DB2535D40400D797C6 /* ProfileName.plist */; };
@@ -87,11 +89,35 @@
 		50CCDB2D250E5E1C00348C98 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */; };
 		50CCDB2F250E5E2300348C98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB2E250E5E2300348C98 /* Assets.xcassets */; };
 		50CCDB32250E5E2300348C98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CCDB30250E5E2300348C98 /* LaunchScreen.storyboard */; };
+		50FC129A2576B6BB00944F0C /* FMProfileRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC12992576B6BB00944F0C /* FMProfileRequestMock.swift */; };
+		50FC129C2577BDE900944F0C /* UserDefaultsEntityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC129B2577BDE900944F0C /* UserDefaultsEntityMock.swift */; };
+		50FC12A02577C49F00944F0C /* RequestSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC129F2577C49F00944F0C /* RequestSenderMock.swift */; };
+		50FC12A22577CADC00944F0C /* MocksForChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC12A12577CADC00944F0C /* MocksForChannelService.swift */; };
+		50FC12A42577D72400944F0C /* MocksForMessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC12A32577D72400944F0C /* MocksForMessageService.swift */; };
 		50FCEBD7250E85CF00C85DDA /* LoggingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEBD6250E85CF00C85DDA /* LoggingClass.swift */; };
 		BFB429603F026575A84BBEFD /* Pods_FintechChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76FC6120AE59E06C4359904B /* Pods_FintechChatApp.framework */; };
+		FC8CFF6463ACAAE8FAC05CE0 /* Pods_FintechChatAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF10BC655B17F8E4AA2E4572 /* Pods_FintechChatAppTests.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5042F2AE25764C3700BFAEC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50CCDB1A250E5E1C00348C98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50CCDB21250E5E1C00348C98;
+			remoteInfo = FintechChatApp;
+		};
+		50703F34257801A300238ED1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50CCDB1A250E5E1C00348C98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50CCDB21250E5E1C00348C98;
+			remoteInfo = FintechChatApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		393BFE27BD07DDE2FCB73A50 /* Pods-FintechChatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FintechChatAppTests.release.xcconfig"; path = "Target Support Files/Pods-FintechChatAppTests/Pods-FintechChatAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		5011D7982559AB9D0065A65C /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		5011D79A2559AE440065A65C /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		5011D79C2559B4BA0065A65C /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -141,6 +167,9 @@
 		502FDAC0251403E400478792 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5035DD6B252E33F800846ECC /* ThemeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeableView.swift; sourceTree = "<group>"; };
 		5035DD6F252E7E6D00846ECC /* ConversationServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServerManager.swift; sourceTree = "<group>"; };
+		5042F2A925764C3700BFAEC4 /* FintechChatAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FintechChatAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5042F2AB25764C3700BFAEC4 /* FintechChatAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FintechChatAppTests.swift; sourceTree = "<group>"; };
+		5042F2AD25764C3700BFAEC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50505814252B9FB700FD73CA /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		50505816252BA03A00FD73CA /* ThemesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ThemesViewController.storyboard; sourceTree = "<group>"; };
 		5054DFD12540A7D800124432 /* ProfileViewControllerThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerThemes.swift; sourceTree = "<group>"; };
@@ -155,6 +184,9 @@
 		50700C32251F851C003A060B /* ConversationsListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConversationsListViewController.storyboard; sourceTree = "<group>"; };
 		50700C34251F87A2003A060B /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		50700C35251F87A2003A060B /* ConversationListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationListCell.xib; sourceTree = "<group>"; };
+		50703F2F257801A300238ED1 /* FintechChatAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FintechChatAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50703F31257801A300238ED1 /* FintechChatAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FintechChatAppUITests.swift; sourceTree = "<group>"; };
+		50703F33257801A300238ED1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5074653B25437E8400BFE7D6 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		5074653E25437EBA00BFE7D6 /* Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chat.xcdatamodel; sourceTree = "<group>"; };
 		507DE6DB2535D40400D797C6 /* ProfileName.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProfileName.plist; sourceTree = "<group>"; };
@@ -174,13 +206,35 @@
 		50CCDB2E250E5E2300348C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50CCDB31250E5E2300348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50CCDB33250E5E2300348C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50FC12992576B6BB00944F0C /* FMProfileRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMProfileRequestMock.swift; sourceTree = "<group>"; };
+		50FC129B2577BDE900944F0C /* UserDefaultsEntityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEntityMock.swift; sourceTree = "<group>"; };
+		50FC129F2577C49F00944F0C /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
+		50FC12A12577CADC00944F0C /* MocksForChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksForChannelService.swift; sourceTree = "<group>"; };
+		50FC12A32577D72400944F0C /* MocksForMessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksForMessageService.swift; sourceTree = "<group>"; };
 		50FCEBD6250E85CF00C85DDA /* LoggingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingClass.swift; sourceTree = "<group>"; };
 		76FC6120AE59E06C4359904B /* Pods_FintechChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FintechChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6FAE9221C1BB9743344F532 /* Pods-FintechChatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FintechChatAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FintechChatAppTests/Pods-FintechChatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C900DE7CEA470C8A18A4F26F /* Pods-FintechChatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FintechChatApp.release.xcconfig"; path = "Target Support Files/Pods-FintechChatApp/Pods-FintechChatApp.release.xcconfig"; sourceTree = "<group>"; };
 		D6BB3CEBEBD11F241418293F /* Pods-FintechChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FintechChatApp.debug.xcconfig"; path = "Target Support Files/Pods-FintechChatApp/Pods-FintechChatApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EF10BC655B17F8E4AA2E4572 /* Pods_FintechChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FintechChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5042F2A625764C3700BFAEC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC8CFF6463ACAAE8FAC05CE0 /* Pods_FintechChatAppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50703F2C257801A300238ED1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CCDB1F250E5E1C00348C98 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -563,6 +617,20 @@
 			name = RequestSender;
 			sourceTree = "<group>";
 		};
+		5042F2AA25764C3700BFAEC4 /* FintechChatAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				5042F2AB25764C3700BFAEC4 /* FintechChatAppTests.swift */,
+				50FC12A12577CADC00944F0C /* MocksForChannelService.swift */,
+				50FC12A32577D72400944F0C /* MocksForMessageService.swift */,
+				50FC129F2577C49F00944F0C /* RequestSenderMock.swift */,
+				50FC129B2577BDE900944F0C /* UserDefaultsEntityMock.swift */,
+				50FC12992576B6BB00944F0C /* FMProfileRequestMock.swift */,
+				5042F2AD25764C3700BFAEC4 /* Info.plist */,
+			);
+			path = FintechChatAppTests;
+			sourceTree = "<group>";
+		};
 		50505810252515A000FD73CA /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,6 +702,15 @@
 			name = Animations;
 			sourceTree = "<group>";
 		};
+		50703F30257801A300238ED1 /* FintechChatAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				50703F31257801A300238ED1 /* FintechChatAppUITests.swift */,
+				50703F33257801A300238ED1 /* Info.plist */,
+			);
+			path = FintechChatAppUITests;
+			sourceTree = "<group>";
+		};
 		50B63E9C2523B21F00B9E6CA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +724,8 @@
 			isa = PBXGroup;
 			children = (
 				50CCDB24250E5E1C00348C98 /* FintechChatApp */,
+				5042F2AA25764C3700BFAEC4 /* FintechChatAppTests */,
+				50703F30257801A300238ED1 /* FintechChatAppUITests */,
 				50CCDB23250E5E1C00348C98 /* Products */,
 				9070C63ABD3C2024DA4BE403 /* Pods */,
 				8FC6C454CF510F86EBE40C9C /* Frameworks */,
@@ -657,6 +736,8 @@
 			isa = PBXGroup;
 			children = (
 				50CCDB22250E5E1C00348C98 /* FintechChatApp.app */,
+				5042F2A925764C3700BFAEC4 /* FintechChatAppTests.xctest */,
+				50703F2F257801A300238ED1 /* FintechChatAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -681,6 +762,7 @@
 			isa = PBXGroup;
 			children = (
 				76FC6120AE59E06C4359904B /* Pods_FintechChatApp.framework */,
+				EF10BC655B17F8E4AA2E4572 /* Pods_FintechChatAppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -690,6 +772,8 @@
 			children = (
 				D6BB3CEBEBD11F241418293F /* Pods-FintechChatApp.debug.xcconfig */,
 				C900DE7CEA470C8A18A4F26F /* Pods-FintechChatApp.release.xcconfig */,
+				B6FAE9221C1BB9743344F532 /* Pods-FintechChatAppTests.debug.xcconfig */,
+				393BFE27BD07DDE2FCB73A50 /* Pods-FintechChatAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -697,12 +781,50 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5042F2A825764C3700BFAEC4 /* FintechChatAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5042F2B225764C3800BFAEC4 /* Build configuration list for PBXNativeTarget "FintechChatAppTests" */;
+			buildPhases = (
+				F48E076B0A2B9DEF2AA11A48 /* [CP] Check Pods Manifest.lock */,
+				5042F2A525764C3700BFAEC4 /* Sources */,
+				5042F2A625764C3700BFAEC4 /* Frameworks */,
+				5042F2A725764C3700BFAEC4 /* Resources */,
+				5E63C343BD1F382BBA1BA13E /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5042F2AF25764C3700BFAEC4 /* PBXTargetDependency */,
+			);
+			name = FintechChatAppTests;
+			productName = FintechChatAppTests;
+			productReference = 5042F2A925764C3700BFAEC4 /* FintechChatAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		50703F2E257801A300238ED1 /* FintechChatAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50703F38257801A300238ED1 /* Build configuration list for PBXNativeTarget "FintechChatAppUITests" */;
+			buildPhases = (
+				50703F2B257801A300238ED1 /* Sources */,
+				50703F2C257801A300238ED1 /* Frameworks */,
+				50703F2D257801A300238ED1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50703F35257801A300238ED1 /* PBXTargetDependency */,
+			);
+			name = FintechChatAppUITests;
+			productName = FintechChatAppUITests;
+			productReference = 50703F2F257801A300238ED1 /* FintechChatAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		50CCDB21250E5E1C00348C98 /* FintechChatApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50CCDB36250E5E2300348C98 /* Build configuration list for PBXNativeTarget "FintechChatApp" */;
 			buildPhases = (
-				5054DFCE25409D9B00124432 /* ShellScript */,
 				EB4E075DA5CF919AF937260A /* [CP] Check Pods Manifest.lock */,
+				5054DFCE25409D9B00124432 /* ShellScript */,
 				50CCDB1E250E5E1C00348C98 /* Sources */,
 				50CCDB1F250E5E1C00348C98 /* Frameworks */,
 				50CCDB20250E5E1C00348C98 /* Resources */,
@@ -727,6 +849,14 @@
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = dreamTeam;
 				TargetAttributes = {
+					5042F2A825764C3700BFAEC4 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 50CCDB21250E5E1C00348C98;
+					};
+					50703F2E257801A300238ED1 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 50CCDB21250E5E1C00348C98;
+					};
 					50CCDB21250E5E1C00348C98 = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
@@ -746,11 +876,27 @@
 			projectRoot = "";
 			targets = (
 				50CCDB21250E5E1C00348C98 /* FintechChatApp */,
+				5042F2A825764C3700BFAEC4 /* FintechChatAppTests */,
+				50703F2E257801A300238ED1 /* FintechChatAppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5042F2A725764C3700BFAEC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50703F2D257801A300238ED1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CCDB20250E5E1C00348C98 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -808,6 +954,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		5E63C343BD1F382BBA1BA13E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FintechChatAppTests/Pods-FintechChatAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FintechChatAppTests/Pods-FintechChatAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FintechChatAppTests/Pods-FintechChatAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EB4E075DA5CF919AF937260A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -830,9 +993,52 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F48E076B0A2B9DEF2AA11A48 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FintechChatAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5042F2A525764C3700BFAEC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50FC12A22577CADC00944F0C /* MocksForChannelService.swift in Sources */,
+				5042F2AC25764C3700BFAEC4 /* FintechChatAppTests.swift in Sources */,
+				50FC129C2577BDE900944F0C /* UserDefaultsEntityMock.swift in Sources */,
+				50FC12A02577C49F00944F0C /* RequestSenderMock.swift in Sources */,
+				50FC129A2576B6BB00944F0C /* FMProfileRequestMock.swift in Sources */,
+				50FC12A42577D72400944F0C /* MocksForMessageService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50703F2B257801A300238ED1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50703F32257801A300238ED1 /* FintechChatAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50CCDB1E250E5E1C00348C98 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -910,6 +1116,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5042F2AF25764C3700BFAEC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50CCDB21250E5E1C00348C98 /* FintechChatApp */;
+			targetProxy = 5042F2AE25764C3700BFAEC4 /* PBXContainerItemProxy */;
+		};
+		50703F35257801A300238ED1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50CCDB21250E5E1C00348C98 /* FintechChatApp */;
+			targetProxy = 50703F34257801A300238ED1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		50CCDB2B250E5E1C00348C98 /* ProfileViewController.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -930,6 +1149,94 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5042F2B025764C3700BFAEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B6FAE9221C1BB9743344F532 /* Pods-FintechChatAppTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W394H5D9V7;
+				INFOPLIST_FILE = FintechChatAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = mh_bundle;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.FintechChatAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FintechChatApp.app/FintechChatApp";
+			};
+			name = Debug;
+		};
+		5042F2B125764C3700BFAEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 393BFE27BD07DDE2FCB73A50 /* Pods-FintechChatAppTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W394H5D9V7;
+				INFOPLIST_FILE = FintechChatAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = mh_bundle;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.FintechChatAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FintechChatApp.app/FintechChatApp";
+			};
+			name = Release;
+		};
+		50703F36257801A300238ED1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W394H5D9V7;
+				INFOPLIST_FILE = FintechChatAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = mh_bundle;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.FintechChatAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = FintechChatApp;
+			};
+			name = Debug;
+		};
+		50703F37257801A300238ED1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W394H5D9V7;
+				INFOPLIST_FILE = FintechChatAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = mh_bundle;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.FintechChatAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = FintechChatApp;
+			};
+			name = Release;
+		};
 		50CCDB34250E5E2300348C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -981,6 +1288,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1035,6 +1343,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1057,6 +1366,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1077,6 +1387,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1087,6 +1398,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5042F2B225764C3800BFAEC4 /* Build configuration list for PBXNativeTarget "FintechChatAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5042F2B025764C3700BFAEC4 /* Debug */,
+				5042F2B125764C3700BFAEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50703F38257801A300238ED1 /* Build configuration list for PBXNativeTarget "FintechChatAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50703F36257801A300238ED1 /* Debug */,
+				50703F37257801A300238ED1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		50CCDB1D250E5E1C00348C98 /* Build configuration list for PBXProject "FintechChatApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

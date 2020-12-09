@@ -16,6 +16,6 @@ protocol IChannelPath {
 
 ///Make something with collection of channels in Firestore server (for example: fetching channels from server)
 class ChannelPath: IChannelPath {
-    lazy var db: Firestore = Firestore.firestore()
+    internal lazy var db: Firestore = Firestore.firestore()
     lazy var reference: CollectionReference = db.collection("channels")
 }

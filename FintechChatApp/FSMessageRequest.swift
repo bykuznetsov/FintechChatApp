@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-struct Message {
+struct Message: Equatable {
     let identifier: String
     let content: String
     let created: Date
