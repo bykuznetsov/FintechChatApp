@@ -1153,7 +1153,7 @@
 /* Begin XCBuildConfiguration section */
 		5042F2B025764C3700BFAEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
+			baseConfigurationReference = B6FAE9221C1BB9743344F532 /* Pods-FintechChatAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1176,7 +1176,7 @@
 		};
 		5042F2B125764C3700BFAEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
+			baseConfigurationReference = 393BFE27BD07DDE2FCB73A50 /* Pods-FintechChatAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1357,7 +1357,7 @@
 		};
 		50CCDB37250E5E2300348C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
+			baseConfigurationReference = D6BB3CEBEBD11F241418293F /* Pods-FintechChatApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1378,7 +1378,7 @@
 		};
 		50CCDB38250E5E2300348C98 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50CD1F39258195C5004DE60E /* Config.xcconfig */;
+			baseConfigurationReference = C900DE7CEA470C8A18A4F26F /* Pods-FintechChatApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
