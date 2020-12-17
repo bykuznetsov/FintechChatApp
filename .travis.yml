@@ -1,0 +1,11 @@
+os: osx
+osx_image: xcode11.4.1
+language: swift
+before_install:
+  - yes | gem update --system --force
+  - brew install libsodium
+  - gem install bundler
+install: 
+  - bundle install
+script:
+  - bundle exec fastlane build_and_test

@@ -12,8 +12,16 @@ struct RequestFactory {
     
     struct ImagesRequests {
         static func imagesConfig() -> RequestConfig<ImagesParser> {
-            let request = ImagesRequest(apiKey: "19155021-8859246a4990c09f3d480272b")
+            
+            let requestString = Bundle.main.infoDictionary?["pixabayapikey"] as? String ?? ""
+            print(requestString)
+            if requestString == "" {
+                print("Add Config.xcconfig with API key")
+            }
+            
+            let request = ImagesRequest(apiKey: requestString)
             return RequestConfig(request: request, parser: ImagesParser())
+            
         }
         
         static func imageConfig(urlImage: String) -> RequestConfig<ImageParser> {

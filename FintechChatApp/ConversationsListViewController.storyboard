@@ -46,6 +46,7 @@
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="og1-MU-WBP" customClass="ProfileButton" customModule="FintechChatApp" customModuleProvider="target">
                                     <rect key="frame" x="276" y="7" width="83" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <accessibility key="accessibilityConfiguration" identifier="openProfileButton"/>
                                     <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="openProfile:" destination="aTP-aC-K4p" eventType="touchUpInside" id="ovu-LH-7Ip"/>

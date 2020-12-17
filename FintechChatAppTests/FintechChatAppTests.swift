@@ -26,66 +26,6 @@ class FintechChatAppTests: XCTestCase {
         XCTAssertEqual(userDefaultsEntityMock.gettingDefaultsCount, 2)
     }
     
-    // MARK: - ProfileService
-    
-    func testGCDProfileService() throws {
-        //Arrange
-        let fmProfileRequestMock = FMProfileRequestMock()
-        let profileService: IProfileService = GCDProfileService(fmGCDProfileRequest: fmProfileRequestMock)
-        let profileName = "Nikita Kuznetsov"
-        let profileDescription = "Hello World!"
-        let profileImage = UIImage(imageLiteralResourceName: "tinkoffParticle")
-        
-        //Act
-        _ = profileService.getProfileName()
-        _ = profileService.getProfileDescription()
-        _ = profileService.getProfileImage()
-        _ = profileService.updateProfileName(with: profileName)
-        _ = profileService.updateProfileDescription(with: profileDescription)
-        _ = profileService.updateProfileImage(with: profileImage)
-        
-        //Assert
-        XCTAssertEqual(fmProfileRequestMock.gettingProfileNameCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.gettingProfileDescriptionCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.gettingProfileImageCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.settingProfileNameCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.settingProfileDescriptionCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.settingProfileImageCount, 1)
-        
-        XCTAssertEqual(fmProfileRequestMock.settedProfileName, profileName)
-        XCTAssertEqual(fmProfileRequestMock.settedProfileDescription, profileDescription)
-        XCTAssertEqual(fmProfileRequestMock.settedProfileImage, profileImage)
-    }
-    
-    func testOperationProfileService() throws {
-        //Arrange
-        let fmProfileRequestMock = FMProfileRequestMock()
-        let profileService: IProfileService = OperationProfileService(fmOperationProfileRequest: fmProfileRequestMock)
-        let profileName = "Nikita Kuznetsov"
-        let profileDescription = "Hello World!"
-        let profileImage = UIImage(imageLiteralResourceName: "tinkoffParticle")
-        
-        //Act
-        _ = profileService.getProfileName()
-        _ = profileService.getProfileDescription()
-        _ = profileService.getProfileImage()
-        _ = profileService.updateProfileName(with: profileName)
-        _ = profileService.updateProfileDescription(with: profileDescription)
-        _ = profileService.updateProfileImage(with: profileImage)
-        
-        //Assert
-        XCTAssertEqual(fmProfileRequestMock.gettingProfileNameCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.gettingProfileDescriptionCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.gettingProfileImageCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.settingProfileNameCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.settingProfileDescriptionCount, 1)
-        XCTAssertEqual(fmProfileRequestMock.settingProfileImageCount, 1)
-        
-        XCTAssertEqual(fmProfileRequestMock.settedProfileName, profileName)
-        XCTAssertEqual(fmProfileRequestMock.settedProfileDescription, profileDescription)
-        XCTAssertEqual(fmProfileRequestMock.settedProfileImage, profileImage)
-    }
-    
     // MARK: - ChannelService
     
     func testFetchingAndCachingChannelsInChannelService() throws {

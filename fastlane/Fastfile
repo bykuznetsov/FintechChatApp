@@ -1,0 +1,42 @@
+
+desc "Install CocoaPods, build for testing only (does not run test)"
+lane :build_for_testing do
+    cocoapods
+    scan(
+        clean: false,
+        build_for_testing: true,
+        devices: ["iPhone 11"]
+    )
+end
+
+desc "Running tests"
+lane :run_all_tests do
+    scan(
+        clean: false,
+        skip_build: true,
+        devices: ["iPhone 11"]
+    )
+end
+
+desc "Build for testing and then run tests with Discord notification"
+lane :build_and_test do
+    build_for_testing
+    run_all_tests
+    discord_success_notification
+end
+
+discord_webhook_url = ENV["DISCORD_WEBHOOK_URL"]
+
+desc "Discord success notification"
+lane :discord_success_notification do
+    discord_notifier(
+    webhook_url: discord_webhook_url,
+    title: "FintechChatApp",
+    description: "Test build Succeeded",
+    thumbnail_url: "https://acdn.tinkoff.ru/static/documents/5e06ad5e-059d-4e73-8298-5bd919da35ad.png"
+  )
+end
+
+
+
+

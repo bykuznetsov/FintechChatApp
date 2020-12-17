@@ -77,6 +77,7 @@
 		507DE6DC2535D40400D797C6 /* ProfileName.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507DE6DB2535D40400D797C6 /* ProfileName.plist */; };
 		507DE6DF2535D53700D797C6 /* ProfileDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507DE6DE2535D53700D797C6 /* ProfileDataModels.swift */; };
 		507DE6E125360EA700D797C6 /* ProfileDescription.plist in Resources */ = {isa = PBXBuildFile; fileRef = 507DE6E025360EA700D797C6 /* ProfileDescription.plist */; };
+		50819ACF258B64700088B2E6 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50819ACE258B64700088B2E6 /* ProfileTests.swift */; };
 		50A294AC253CE3A3002E55C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50A294AB253CE3A3002E55C9 /* GoogleService-Info.plist */; };
 		50B63E6C2520E64C00B9E6CA /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */; };
 		50B63E9825227D9400B9E6CA /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B63E9725227D9400B9E6CA /* ConversationViewController.swift */; };
@@ -192,6 +193,7 @@
 		507DE6DB2535D40400D797C6 /* ProfileName.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProfileName.plist; sourceTree = "<group>"; };
 		507DE6DE2535D53700D797C6 /* ProfileDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataModels.swift; sourceTree = "<group>"; };
 		507DE6E025360EA700D797C6 /* ProfileDescription.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ProfileDescription.plist; sourceTree = "<group>"; };
+		50819ACE258B64700088B2E6 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
 		50A294AB253CE3A3002E55C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50B63E6B2520E64C00B9E6CA /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		50B63E9725227D9400B9E6CA /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		50CCDB2E250E5E2300348C98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50CCDB31250E5E2300348C98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50CCDB33250E5E2300348C98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50CD1F39258195C5004DE60E /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		50FC12992576B6BB00944F0C /* FMProfileRequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMProfileRequestMock.swift; sourceTree = "<group>"; };
 		50FC129B2577BDE900944F0C /* UserDefaultsEntityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEntityMock.swift; sourceTree = "<group>"; };
 		50FC129F2577C49F00944F0C /* RequestSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSenderMock.swift; sourceTree = "<group>"; };
@@ -621,6 +624,7 @@
 			isa = PBXGroup;
 			children = (
 				5042F2AB25764C3700BFAEC4 /* FintechChatAppTests.swift */,
+				50819ACE258B64700088B2E6 /* ProfileTests.swift */,
 				50FC12A12577CADC00944F0C /* MocksForChannelService.swift */,
 				50FC12A32577D72400944F0C /* MocksForMessageService.swift */,
 				50FC129F2577C49F00944F0C /* RequestSenderMock.swift */,
@@ -750,6 +754,7 @@
 				5011D790255999E00065A65C /* 3. CoreLayer */,
 				5011D79125599E430065A65C /* Supporting Files */,
 				50CCDB25250E5E1C00348C98 /* AppDelegate.swift */,
+				50CD1F39258195C5004DE60E /* Config.xcconfig */,
 				5011D7982559AB9D0065A65C /* RootAssembly.swift */,
 				5058C7C925194C0E00DAD08C /* UIExtensions */,
 				50B63E9C2523B21F00B9E6CA /* Protocols */,
@@ -789,7 +794,7 @@
 				5042F2A525764C3700BFAEC4 /* Sources */,
 				5042F2A625764C3700BFAEC4 /* Frameworks */,
 				5042F2A725764C3700BFAEC4 /* Resources */,
-				5E63C343BD1F382BBA1BA13E /* [CP] Embed Pods Frameworks */,
+				93501C8AFBE6265526B2C00C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -954,7 +959,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
-		5E63C343BD1F382BBA1BA13E /* [CP] Embed Pods Frameworks */ = {
+		93501C8AFBE6265526B2C00C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1025,6 +1030,7 @@
 				50FC12A22577CADC00944F0C /* MocksForChannelService.swift in Sources */,
 				5042F2AC25764C3700BFAEC4 /* FintechChatAppTests.swift in Sources */,
 				50FC129C2577BDE900944F0C /* UserDefaultsEntityMock.swift in Sources */,
+				50819ACF258B64700088B2E6 /* ProfileTests.swift in Sources */,
 				50FC12A02577C49F00944F0C /* RequestSenderMock.swift in Sources */,
 				50FC129A2576B6BB00944F0C /* FMProfileRequestMock.swift in Sources */,
 				50FC12A42577D72400944F0C /* MocksForMessageService.swift in Sources */,

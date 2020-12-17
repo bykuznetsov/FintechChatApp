@@ -15,11 +15,11 @@ class FintechChatAppUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         
-        let profileButton = app.navigationBars["Channels"].buttons["N"]
+        let profileButton = app.buttons["openProfileButton"]
         _ = profileButton.waitForExistence(timeout: 3)
         profileButton.tap()
         
-        let editProfileButton = app.navigationBars["My profile"].buttons["Edit"]
+        let editProfileButton = app.buttons["editProfileButton"]
         _ = editProfileButton.waitForExistence(timeout: 3)
         editProfileButton.tap()
         
