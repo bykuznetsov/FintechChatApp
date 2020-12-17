@@ -34,7 +34,7 @@ Build for testing and then run tests with Discord notification
 ```
 fastlane discord_success_notification
 ```
-Discird success notification
+Discord success notification
 
 ----
 

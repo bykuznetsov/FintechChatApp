@@ -173,6 +173,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fZG-ll-04y" customClass="EditButton" customModule="FintechChatApp" customModuleProvider="target">
                                 <rect key="frame" x="16" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="editProfileButton"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="editProfile:" destination="ycT-Fr-rxU" eventType="touchUpInside" id="wuT-g9-kIk"/>
